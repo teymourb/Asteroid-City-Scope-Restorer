@@ -8,7 +8,7 @@
     <a href="https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases" target="_blank" rel="noopener"><img src="https://img.shields.io/github/release/teymourb/Asteroid-City-Scope-Restorer.svg" alt="Latest releases" /></a>
 </p>
 
-***Asteroid-City-Scope-Restorer*** is an experimental program from the fanedit community which allows you to restore the Scope theatrical version of the Blu-Ray of *Asteroid City* .
+***Asteroid-City-Scope-Restorer*** is an experimental program from the fanedit community which allows you to restore the Scope theatrical version of the Blu-Ray of *Asteroid City*.
 
 
 #### REQUIREMENTS:  
