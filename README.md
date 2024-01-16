@@ -43,6 +43,7 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 ---
 
 # Theatrical Scope version (unmasked)
+> Blu-ray compliant
   - Black and White sequences downscaled to **1102 x 804** (**2.39:1**) active picture, 1430 x 804 (1.78:1) container, then
   - Black and White sequences container **windowboxed** (pillarboxed + letterboxed) to 1920 x 1080 (1.78:1)
   - Scope sequences left unaltered at active picture of **1920 x 804** (**2.39:1**), **pillarboxed** within a 1920 x 1080 (1.78:1) container
