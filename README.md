@@ -13,8 +13,8 @@
 Choose between 2 **constant-width** IMAX Restorations:
 <!-- toc -->
 
-- [1. Theatrical Scope 1.78:1 (unmasked) - Blu-ray compliant](#1-imax-1781)
-- [2. Theatrical Scope 2.39:1 (masked)](#2-imax-1431-unmasked)
+- [1. Theatrical Scope (unmasked) - Blu-ray compliant](#1-theatrical-scope-version-unmasked)
+- [2. Theatrical Scope (masked)](#2-theatrical-scope-version-masked)
 
 <!-- tocstop -->
 
