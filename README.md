@@ -10,7 +10,7 @@
 
 ***Asteroid-City-Scope-Restorer*** is an experimental program from the fanedit community which allows you to restore the Scope theatrical version of the Blu-Ray of *Asteroid City*.
 
-Choose between 2 **constant-width** IMAX Restorations:
+Choose between 2 **constant-height** Scope Restorations:
 <!-- toc -->
 
 - [1. Theatrical Scope (unmasked) - Blu-ray compliant](#1-theatrical-scope-version-unmasked)
