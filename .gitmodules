@@ -10,3 +10,6 @@
 [submodule "docs/programs/mkvtoolnix"]
 	path = docs/programs/mkvtoolnix
 	url = https://gitlab.com/mbunkus/mkvtoolnix.git
+[submodule "HandBrake"]
+	path = HandBrake
+	url = https://github.com/HandBrake/HandBrake
