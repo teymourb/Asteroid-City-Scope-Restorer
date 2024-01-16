@@ -10,6 +10,13 @@
 
 ***Asteroid-City-Scope-Restorer*** is an experimental program from the fanedit community which allows you to restore the Scope theatrical version of the Blu-Ray of *Asteroid City*.
 
+Choose between 2 **constant-width** IMAX Restorations:
+<!-- toc -->
+
+- [1. Theatrical Scope 1.78:1 (unmasked) - Blu-ray compliant](#1-imax-1781)
+- [2. Theatrical Scope 2.39:1 (masked)](#2-imax-1431-unmasked)
+
+<!-- tocstop -->
 
 #### REQUIREMENTS:  
 - An unaltered .mkv rip of the Blu-ray disc *Asteroid City*
@@ -42,7 +49,7 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 
 ---
 
-# Theatrical Scope version (unmasked)
+# 1. Theatrical Scope version (unmasked)
 > Blu-ray compliant
   - Black and White sequences downscaled to **1102 x 804** (**2.39:1**) active picture, 1430 x 804 (1.78:1) container, then
   - Black and White sequences container **windowboxed** (pillarboxed + letterboxed) to 1920 x 1080 (1.78:1)
@@ -54,6 +61,7 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 <br>
 
 **Best suited for:**
+  - Burning to Blu-ray disc
   - Projectors with ~2.39:1 wall/screen (or with decent masking options)
   - ~2.39:1 displays
   - VR (if viewing app has a cropping tool or if letterboxing won't be noticeable/distracting)
@@ -62,6 +70,30 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 
 <br>
 
-![AsteroidCity_Restoration](https://github.com/teymourb/Asteroid-City-Scope-Restorer/assets/53331006/4e4f65af-85f6-47ba-9376-ea7a1e053c2b)
+![AsteroidCity_Scope(unmasked)](https://github.com/teymourb/Asteroid-City-Scope-Restorer/assets/53331006/4e4f65af-85f6-47ba-9376-ea7a1e053c2b)
 
+<br>
+<br>
+<br>
+
+---
+
+# 2. Theatrical Scope version (masked)
+  - Black and White sequences downscaled to **1102 x 804** (**2.39:1**) active picture, 1430 x 804 (1.78:1) container, then
+  - Black and White sequences container **pillarboxed** to 1920 x 804 (2.39:1)
+  - Scope sequences **cropped** to 1920 x 1080 (2.39:1)
+  - Picture Variable width: 1102 (Black and White 1.37:1 sequences), 1920 (Scope 2.39:1 sequences), Constant height: 804
+  - Active image: 1920 x 804 (2.39:1)
+  - **Container**: 1920 x 804 (1.78:1)
+
+<br>
+
+**Best suited for:**
+  - Projectors with ~2.39:1 wall/screen (or with decent masking options)
+  - ~2.39:1 displays
+  - VR
+
+<br>
+
+![AsteroidCity_Scope(masked)](https://github.com/teymourb/Asteroid-City-Scope-Restorer/assets/53331006/d9e14010-d28d-4c89-b79f-5df0ed05434a)
 
