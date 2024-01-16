@@ -97,3 +97,8 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 
 ![AsteroidCity_Scope(masked)](https://github.com/teymourb/Asteroid-City-Scope-Restorer/assets/53331006/d9e14010-d28d-4c89-b79f-5df0ed05434a)
 
+---
+
+### See also:
+
+[Reddit | r/Bluray Proportions between aspect ratios was changed](https://www.reddit.com/r/Bluray/comments/195op7k/asteroid_city_bluray_the_proportions_between/)
