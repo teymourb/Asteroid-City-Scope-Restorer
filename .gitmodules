@@ -1,3 +1,3 @@
-[submodule "docs/programs/HandBrake"]
-	path = docs/programs/HandBrake
+[submodule "HandBrake"]
+	path = HandBrake
 	url = https://github.com/HandBrake/HandBrake
