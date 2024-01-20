@@ -101,4 +101,5 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 
 ### See also:
 
+[Reddit | r/fanedits Program thread](https://www.reddit.com/r/fanedits/comments/199y61n/fanedit_program_asteroid_city_theatrical_scope/)
 [Reddit | r/Bluray Proportions between aspect ratios was changed](https://www.reddit.com/r/Bluray/comments/195op7k/asteroid_city_bluray_the_proportions_between/)
