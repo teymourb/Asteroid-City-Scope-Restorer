@@ -71,10 +71,7 @@ if %version%==1 (
 
 	docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "%file%"
 
-	::Extracting 7 unaltered (Scope) files
-	echo Splitting AsteroidCity_1s.mkv
-	docs\programs\ffmpeg\ffmpeg -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 898 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_1s.mkv"
-
+	::Extracting 6 unaltered (Scope) files
 	echo Splitting AsteroidCity_3s.mkv
 	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:03:54.609 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 20792 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_3s.mkv"
 
@@ -93,6 +90,18 @@ if %version%==1 (
 	echo Splitting AsteroidCity_13s.mkv
 	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:33:46.746 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_13s.mkv"
 
+	
+	
+	::Extracting, encoding(letterboxing) and deleting(original) logos
+	echo Splitting AsteroidCity_Logo.mkv
+	docs\programs\ffmpeg\ffmpeg -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 898 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_Logo.mkv"
+	
+	echo Letterboxing AsteroidCity_Logo.mkv
+	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_Logo.mkv" -o "docs\temp\AsteroidCity_Logo_Letterboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic --pad "width=1920:height=1080"
+	
+	echo Deleting AsteroidCity_Logo.mkv
+	del "docs\temp\AsteroidCity_Logo.mkv"
+	
 
 
 	::Extracting, encoding(windowboxing) and deleting(original) for the 6 other files (Black and White)
@@ -160,13 +169,13 @@ if %version%==1 (
 
 	::Concatenating all 13 files
 	echo Exporting...
-	docs\programs\avidemux\avidemux_cli --load "docs\temp\AsteroidCity_1s.mkv" --append "docs\temp\AsteroidCity_2a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_3s.mkv" --append "docs\temp\AsteroidCity_4a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_5s.mkv" --append "docs\temp\AsteroidCity_6a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_7s.mkv" --append "docs\temp\AsteroidCity_8a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_9s.mkv" --append "docs\temp\AsteroidCity_10a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_11s.mkv" --append "docs\temp\AsteroidCity_12a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_13s.mkv" --video-codec copy --audio-codec copy --output-format mkv --save "docs\temp\AsteroidCity_S.mkv"
+	docs\programs\avidemux\avidemux_cli --load "docs\temp\AsteroidCity_Logo_Letterboxed.mkv" --append "docs\temp\AsteroidCity_2a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_3s.mkv" --append "docs\temp\AsteroidCity_4a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_5s.mkv" --append "docs\temp\AsteroidCity_6a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_7s.mkv" --append "docs\temp\AsteroidCity_8a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_9s.mkv" --append "docs\temp\AsteroidCity_10a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_11s.mkv" --append "docs\temp\AsteroidCity_12a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_13s.mkv" --video-codec copy --audio-codec copy --output-format mkv --save "docs\temp\AsteroidCity_S.mkv"
 
 
 
 	::Deleting 13 split files
 	echo Deleting Leftover Files
-	del "docs\temp\AsteroidCity_1s.mkv"
+	del "docs\temp\AsteroidCity_Logo_Letterboxed.mkv"
 	del "docs\temp\AsteroidCity_2a_Windowboxed.mkv"
 	del "docs\temp\AsteroidCity_3s.mkv"
 	del "docs\temp\AsteroidCity_4a_Windowboxed.mkv"
@@ -199,7 +208,13 @@ if %version%==1 (
 
 	docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "%file%"
 
-	::Extracting 13 unaltered (scope) files
+	
+	::Extracting 1 logos file
+	echo Splitting AsteroidCity_Logo.mkv
+	docs\programs\ffmpeg\ffmpeg -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 898 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_Logo.mkv"
+	
+	
+	::Extracting 12 (scope) files
 	echo Splitting AsteroidCity_1s.mkv
 	docs\programs\ffmpeg\ffmpeg -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 898 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_1s.mkv"
 
@@ -239,13 +254,18 @@ if %version%==1 (
 	echo Splitting AsteroidCity_13s.mkv
 	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:33:46.746 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_13s.mkv"
 	
-	::Encoding(Cropping black bars) and deleting (original) for 7 files (Scope)
-	echo Windowboxing AsteroidCity_1s.mkv
-	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_1s.mkv" -o "docs\temp\AsteroidCity_1s_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic
 	
-	echo Deleting AsteroidCity_1s.mkv
-	del "docs\temp\AsteroidCity_1s.mkv"
 	
+	::Encoding(cropping) and deleting(original) logos
+	echo Cropping AsteroidCity_Logo.mkv
+	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_Logo.mkv" -o "docs\temp\AsteroidCity_Logo_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic
+	
+	echo Deleting AsteroidCity_Logo.mkv
+	del "docs\temp\AsteroidCity_Logo.mkv"
+	
+	
+	
+	::Encoding(Cropping black bars) and deleting (original) for 6 files (Scope)
 	echo Windowboxing AsteroidCity_3s.mkv
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_3s.mkv" -o "docs\temp\AsteroidCity_3s_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic
 
@@ -325,12 +345,12 @@ if %version%==1 (
 	
 	::Concatenating all 13 files
 	echo Exporting...
-	docs\programs\avidemux\avidemux_cli --load "docs\temp\AsteroidCity_1s_Cropped.mkv" --append "docs\temp\AsteroidCity_2a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_3s_Cropped.mkv" --append "docs\temp\AsteroidCity_4a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_5s_Cropped.mkv" --append "docs\temp\AsteroidCity_6a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_7s_Cropped.mkv" --append "docs\temp\AsteroidCity_8a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_9s_Cropped.mkv" --append "docs\temp\AsteroidCity_10a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_11s_Cropped.mkv" --append "docs\temp\AsteroidCity_12a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_13s_Cropped.mkv" --video-codec copy --audio-codec copy --output-format mkv --save "docs\temp\AsteroidCity_S.mkv"
+	docs\programs\avidemux\avidemux_cli --load "docs\temp\AsteroidCity_Logo_Cropped.mkv" --append "docs\temp\AsteroidCity_2a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_3s_Cropped.mkv" --append "docs\temp\AsteroidCity_4a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_5s_Cropped.mkv" --append "docs\temp\AsteroidCity_6a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_7s_Cropped.mkv" --append "docs\temp\AsteroidCity_8a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_9s_Cropped.mkv" --append "docs\temp\AsteroidCity_10a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_11s_Cropped.mkv" --append "docs\temp\AsteroidCity_12a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_13s_Cropped.mkv" --video-codec copy --audio-codec copy --output-format mkv --save "docs\temp\AsteroidCity_S.mkv"
 	
 	
 	::Deleting 13 split files
 	echo Deleting Leftover Files
-	del "docs\temp\AsteroidCity_1s_Cropped.mkv"
+	del "docs\temp\AsteroidCity_Logo_Cropped.mkv"
 	del "docs\temp\AsteroidCity_2a_Pillarboxed.mkv"
 	del "docs\temp\AsteroidCity_3s_Cropped.mkv"
 	del "docs\temp\AsteroidCity_4a_Pillarboxed.mkv"
