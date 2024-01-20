@@ -14,7 +14,7 @@ if exist temp (
 )
 
 ::Making sure batch file drive location has enough space
-echo Please make sure you have extracted the 7z zip file to a drive with 60GB of free space.
+echo Please make sure you have extracted the 7z zip file to a drive with 50GB of free space.
 echo If this is correct press Enter
 echo If not, please close this program and extract the 7z zip file to an appropriate location.
 pause
@@ -55,7 +55,7 @@ echo You chose !folder!
 :a
 
 
-echo Enter the number for the constant-width IMAX version you would like:
+echo Enter the number for the constant-height Scope version you would like:
 echo 1^) Scope Theatrical 1.78:1 ^(Black and White scenes windowboxed - unmasked 16:9 container^)
 echo 2^) Scope Theatrical 2.39:1 ^(Black and White scenes pillarboxed - masked 2.39:1 container^)
 
