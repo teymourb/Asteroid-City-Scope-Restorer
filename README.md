@@ -23,7 +23,7 @@ Choose between 2 **constant-height** Scope Restorations:
 - 50 GB of free space (not including the source .mkv file)
 
 > [!WARNING]
-> No other version will work with this program! You are free to keep whichever audio and subtitle tracks you wish when ripping your disc. Only the video track needs to be the same.
+> No  other version will work with this program! You are free to keep whichever audio and subtitle tracks you wish when ripping your disc. Only the video track needs to be the same.
 
 <br>
 
