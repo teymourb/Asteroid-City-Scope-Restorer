@@ -22,7 +22,7 @@ pause
 echo Please select your Blu-ray Asteroid City rip .mkv file
 echo DISCLAIMER: This will not work with any other version of the movie. Only an unaltered file (video track) ripped from this specific disc will work with the program.
 ::File selection
-Title Asteroid City Theatrical Scope Restorer v1.0.0-beta.4
+Title Asteroid City Theatrical Scope Restorer
 (
     echo Function GetFileDlgEx(sIniDir,sFilter,sTitle^) 
     echo Set oDlg = CreateObject("WScript.Shell"^).Exec("mshta.exe ""about:<object id=d classid=clsid:3050f4e1-98b5-11cf-bb82-00aa00bdce0b></object><script>moveTo(0,-9999);eval(new ActiveXObject('Scripting.FileSystemObject').GetStandardStream(0).Read("^&Len(sIniDir^)^+Len(sFilter^)^+Len(sTitle^)+41^&"));function window.onload(){var p=/[^\0]*/;new ActiveXObject('Scripting.FileSystemObject').GetStandardStream(1).Write(p.exec(d.object.openfiledlg(iniDir,null,filter,title)));close();}</script><hta:application showintaskbar=no />"""^) 
@@ -37,6 +37,18 @@ Title Asteroid City Theatrical Scope Restorer v1.0.0-beta.4
 )>"%tmp%\%~n0.vbs"
 for /f "tokens=* delims=" %%p in ('Cscript /NoLogo "%tmp%\%~n0.vbs"') do set "file=%%p"
 echo %file%
+
+
+::In case file path prompt wasn't successful
+echo Did a dialog prompt you to select your file and if so, were you successful? [y/n]
+
+set /p dialog=Input:
+
+if %dialog%==n (
+	echo Please enter the full path to your file.
+	echo You may be able to drag and drop the file on the terminal for the same result:
+	set /p "file=Enter file path: "
+)
 pause
 
 
@@ -51,6 +63,23 @@ for /f "usebackq delims=" %%I in (`powershell %psCommand%`) do set "folder=%%I"
 setlocal enabledelayedexpansion
 echo You chose !folder!
 
+
+::In case file path prompt wasn't successful
+echo Did a dialog prompt you to select your folder and if so, were you successful? [y/n]
+
+set /p dialog2=Input:
+
+if %dialog2%==n (
+	echo Please enter the full path to your folder:
+	echo You may be able to drag and drop the folder on the terminal for the same result:
+	set /p "folder=Enter folder path: "
+	set "folder=!folder:"=!"
+	if not "!folder:~-1!"=="\" set "folder=!folder!\"
+	echo !folder!
+)
+pause
+
+
 ::Define loop point for incorrect input
 :a
 
@@ -64,12 +93,17 @@ set /p version=Input:
 
 ::Check what version to use and make sure the user selected the right one
 if %version%==1 (
+
 	echo You have selected: Scope Theatrical ^(1.78:1, unmasked^)
 	echo If this is correct press Enter
 	echo If this was the wrong choice please restart this program
 	PAUSE
 
-	docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "%file%"
+	if %dialog%==y (
+		docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "%file%"
+	) else if %dialog%==n (
+		docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags !file!
+	)
 
 	::Extracting 6 unaltered (Scope) files
 	echo Splitting AsteroidCity_3s.mkv
@@ -202,22 +236,40 @@ if %version%==1 (
 
 	::Merging altered video with source rip, keeping only video track of the first and all but video track of the latter for the output file
 	echo Remuxing audio and subtitles
-	docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (unmasked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%"
-	
+	set "hello=Asteroid City Theatrical Scope Restoration (unmasked).mkv"
+	set "result=!folder!!hello!"
+	if %dialog%==y (
+		if %dialog2%==y (
+			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (unmasked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%"
+		) else if %dialog2%==n (
+			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv.mkv" -D --no-video "%file%"
+		)
+	) else if %dialog%==n (
+		if %dialog2%==y (
+			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (unmasked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file!
+		) else if %dialog2%==n (
+			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv.mkv" -D --no-video !file!
+		)
+	)
+
 	endlocal
 
 	::Deleting altered video with incorrect non-video tracks
 	echo Deleting AsteroidCity_S.mkv
 	del "docs\temp\AsteroidCity_S.mkv"
 ) else if %version%==2 (
+
 	echo You have selected: Scope Theatrical ^(2.39:1, masked^)
 	echo If this is correct press Enter
 	echo If this was the wrong choice please restart this program
 	PAUSE
 
-	docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "%file%"
-	
-	
+	if %dialog%==y (
+		docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "%file%"
+	) else if %dialog%==n (
+		docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags !file!
+	)
+
 	::Extracting 12 files
 	echo Splitting AsteroidCity_2a.mkv
 	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:00:38.580 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4700 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_2a.mkv"
@@ -384,7 +436,21 @@ if %version%==1 (
 	
 	::Merging altered video with source rip, keeping only video track of the first and all but video track of the latter for the output file
 	echo Remuxing audio and subtitles
-	docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (masked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%"
+	set "hello=Asteroid City Theatrical Scope Restoration (masked).mkv"
+	set "result=!folder!!hello!"
+	if %dialog%==y (
+		if %dialog2%==y (
+			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (masked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%"
+		) else if %dialog2%==n (
+			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%"
+		)
+	) else if %dialog%==n (
+		if %dialog2%==y (
+			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (masked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file!
+		) else if %dialog2%==n (
+			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file!
+		)
+	)
 	
 	endlocal
 	
