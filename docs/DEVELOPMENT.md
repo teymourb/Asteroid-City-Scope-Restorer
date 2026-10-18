@@ -1,194 +1,85 @@
-# Development and current status
+# Development status — 2026-10-18
 
-## Accepted scope and workflow
+## Current state
 
-The owner approved the Asteroid City final-remux repair on 2026-10-18, then
-authorized branch publication, pull-request review, Windows testing and merging
-validated changes into main. Public release publication still requires approval.
-Develop on macOS; Windows remains the current application target. Keep both
-existing repositories and release histories. Use a short-lived fix branch,
-local tests and commits, then a reviewed pull request and Windows evidence.
-`main` is stable integration; public tagged release packages are user downloads.
-There is no separate production server or staging deployment for this utility.
+Asteroid City remains a Windows batch utility. The original v1.0.1 download is
+unchanged; v1.0.2 is an unreleased maintenance target. Final-remux protection and
+package-audit tooling are merged (PRs #1/#2). PR #3 adds workspace safety and the
+first matching helper routines used in both film launchers. No film-processing
+arguments, cuts, framing, encoder settings or successful output names changed.
 
-Local edits, ordinary troubleshooting, tests, review, documentation, and commits
-are authorized in this scope. Pushes, PR creation, CI tool downloads and merging
-this validated fix are now authorized. Public tags/releases, substantial new
-dependencies outside this test scope, and protected-media access need separate
-approval. The GitHub connection alone is not publication approval. No private films or credentials belong in Git,
-CI, logs, or test artifacts. Do not execute the full legacy script on macOS.
+- Final-remux warnings/errors retain assembled video and diagnostics; absent or
+  empty output is rejected before final cleanup.
+- Startup enters the launcher directory, requires docs, refuses ANY existing
+  docs/temp and checks mkdir before processing. This preserves recoverable work
+  and prevents simultaneous runs from sharing a workspace.
+- Success cleanup removes only the known final-remux log and uses nonrecursive
+  rmdir. Unknown leftovers survive with a cleanup warning. Explicit exits restore
+  the caller directory. There is no automatic resume yet.
+- prepare_workspace and cleanup_workspace, plus generic workspace tests, are
+  byte-identical to BvS. Film-specific media commands remain separate.
 
-## Current work
+## Authorization and workflow
 
-- Branch: `fix/final-remux-safety`, based on published `v1.0.1` (`f1d467d`).
-- Target: `1.0.2`, not tagged or released.
-- Correct two unmasked/manual-destination input paths; protect both modes' final
-  remux with status checks, diagnostic capture, and output-presence/size checks.
-- MKVToolNix status 0 means success; 1 means warnings requiring review; 2 means
-  error. Missing tools and other positive error statuses also stop cleanup.
-  Reference: https://mkvtoolnix.download/doc/mkvmerge.html#mkvmerge.exit_codes
-- Warning/error exits retain `docs/temp/AsteroidCity_S.mkv` and the log. Startup
-  still clears that workspace: copy retained work elsewhere before restarting.
-- Earlier processing, cleanup safety, source identity, existing-output protection,
-  special-character path support, and authoritative output validation remain
-  separate work. Do not describe this patch as solving those problems.
+The owner approved these maintenance/refactoring tasks, useful parallel work,
+source-only branches/PRs, Windows CI, and merging validated changes. Local commits
+and routine troubleshooting are autonomous. Release assets/tags/publication,
+major architecture/dependency changes, and private-film access need separate
+approval. No release, binary or logo has been uploaded by this work.
 
-## Tests
+Develop on macOS; validate batch behavior on actual Windows runners. Keep both
+repository histories and release lines. Use small reviewed changes, then qualify
+and prepare releases separately. GitHub connector writes work as teymourb; shell
+Git has no HTTPS credentials. Use connector writes and public fetch; never paste
+or store tokens. Local pre-upload snapshots remain on local/* branches.
 
-Run `python3 -m unittest discover -s tests -v` on macOS, or
-`python -m unittest discover -s tests -v` on Windows. Python is a development-only
-requirement; users still launch the batch file.
+## Validation evidence
 
-Three source regression tests run on any OS. They protect the v1.0.1 processing
-command baseline (normalizing only the approved filename fix/log redirection),
-check all eight final-remux command branches, and check the terminal handlers.
+Run `python3 -m unittest discover -s tests -v` locally (`python` on Windows).
+Python/C# compilation are development-only requirements, not user installation.
 
-Windows tests extract the actual two final-remux blocks and terminal handlers
-into disposable harnesses. They bypass dialogs, previous processing and PAUSE;
-therefore they do not validate the full batch script or desktop dialogs. A native
-C# executable stub, compiled using Windows' .NET Framework compiler, tests both
-modes, both source-entry branches, both destination-entry branches, and success,
-warning, error, missing-executable, and empty/missing-output behavior. Paths
-contain spaces. Tests verify original-source sentinel bytes remain unchanged.
-All test workspaces are isolated temporary directories.
+- macOS: four source checks PASS; eight Windows-only methods SKIP as intended.
+- Windows Server 2022: all 12 test methods PASS without skips in the real-tool
+  stage, with MKVToolNix 78.0 and 102.0. Run:
+  https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39156005808
+- The 78.0 executable SHA-256 equals the historical bundled executable:
+  f707365fc6374db58c875d69fe8d3c3f572ab54369b28a863bc9aaad3ebc09ef.
+- Tests cover 32 remux branch/status cases, missing tools/output, both synthetic
+  remux modes (video packet hashes + PCM bytes preserved), unrelated caller cwd
+  and sentinel files, missing docs, temp as file, repeated restart with retained
+  work, concurrent launch, unknown nested leftovers, and warning/error exits.
+- The first workspace run caught an inner environment scope restoring cwd too
+  early. The correction is protected by actual processing-cwd and untouched-
+  caller-directory assertions. Diagnostic ampersand quoting was also corrected.
+- Test helpers execute production startup/remux/helper/exit sections; dialogs,
+  earlier media processing and PAUSE are bypassed. Full-film output, HDR, real
+  source timing, Windows 10/11 desktop UI and general special-character media
+  paths have NOT been qualified. An actual ACL/disk-full fixture is not included.
+- Source command digests remain unchanged; diff checks pass. No private media used.
 
-The real synthetic test uses FFmpeg to generate one second of blue video/tone,
-runs the production final-remux block with real mkvmerge, then compares FFprobe video-packet
-SHA-256 hashes and concatenated PCM audio sample bytes with the synthetic source.
-PCM packet boundaries may change during remuxing, so sample bytes are compared
-without decoding or requiring identical packet sizes.
-Set `RESTORER_REAL_MKVMERGE` to an absolute mkvmerge executable path to enable it
-on Windows. It does not exercise film cuts, encoding stages, logos, HDR, chapters,
-subtitles, full-film synchronization, or complete restoration quality.
+## Package and release state
 
-The workflow uses Windows Server 2022, a pinned checkout action, no
-submodules, sparse checkout excluding the commercial logo, read-only repository
-permissions, no persisted checkout credentials, and a 15-minute timeout. It
-runs native stubs before downloading test-only MKVToolNix 102.0 from its official
-site (pinned SHA-256) and FFmpeg 7.1.1 via Chocolatey (Gyan binary package).
-These test versions do not update the application's distributed dependencies.
-Workflow triggers are pull requests and manual dispatch, with no publishing job.
-Only approved code/tests and synthetic data are used; logs remain on GitHub.
+See PACKAGE-AUDIT-1.0.2.md and THIRD-PARTY-NOTICES.md for the audited old download,
+versions, hashes and open redistribution/source-provision gaps.
 
-## Validation evidence — 2026-10-18
+The old local ZIP at sibling ../release-candidates/asteroid-city/1.0.2/ is a
+review snapshot from fdd245f and DOES NOT contain the new workspace-safety fix.
+It is 174202948 bytes, SHA-256
+083b2d8e99b78dadf0bb9b36ef64dbf7842a94d460daf1a874ec6113b416e227.
+Two builds were byte-identical, all 625 payloads verified, and tools/logo retained
+byte-for-byte. Adjacent manifest/checksums/VERIFICATION.txt describe that snapshot.
+Do not publish it as the current release. Rebuild after source/qualification and
+redistribution decisions are settled, then obtain owner publication approval.
 
-- macOS ARM64, system Python 3.9.6: three source tests PASS; three Windows test
-  methods SKIPPED as intended. This is static evidence only.
-- `git diff --check`: PASS at local review.
-- Regression sensitivity: the final-remux branch check rejects unpatched v1.0.1
-  as expected (missing guards), then passes on the patched source.
-- Existing local mkvmerge 96.0 launches. Existing FFmpeg 8.0.1 fails to launch
-  because its x265 dylib is missing. No system dependencies were modified.
-- First Windows run: native batch matrix (32 cases) and three missing-tool/
-  output cases PASS. Synthetic test exposed an invalid test assumption about
-  PCM packet boundaries. The revised test compares video packet hashes and
-  exact PCM sample bytes. The corrected rerun passes, confirming that sample
-  bytes are preserved despite the original packet-hash comparison failure.
-  Run: https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39126761694
-- Windows Server 2022, Python 3.12.10, MKVToolNix 102.0, FFmpeg/FFprobe 7.1.1:
-  all six test methods PASS with no skips in the real-tool stage. This includes
-  32 branch/status combinations, three missing-tool/output cases, and synthetic
-  remuxes in both modes with identical video packet hashes and PCM sample bytes.
-  Passing run: https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39126930925
-  Application source has not changed since this run; the final follow-up commit
-  only records this evidence and release qualification limits.
-- Full-film qualification: NOT RUN; no private media accessed.
-- Historical archive audited; see PACKAGE-AUDIT-1.0.2.md for exact versions,
-  hashes and observed provenance/redistribution gaps. Review-only ZIP preparation
-  is authorized. Targeted exact-legacy-mkvmerge Windows tests are pending.
-  Automatic approval review rejected uploading the packaging/CI source branch,
-  interpreting the local-only candidate boundary to include those source files.
-  No candidate archive/binaries were uploaded. Request explicit source-branch/CI
-  upload approval before attempting that remote step again.
+The existing local FFmpeg 8.0.1 has a missing x265 dylib; it was not repaired or
+used for qualification. Windows uses isolated, versioned test tools. This does
+not change the processing binaries bundled for users.
 
-## Release gate and next steps
+## Next engineering work
 
-PR: https://github.com/teymourb/Asteroid-City-Scope-Restorer/pull/1
-
-The GitHub plugin is authenticated as teymourb and successfully published the
-branch and opened the PR. Both repositories report push/admin account permissions.
-Shell Git has no HTTPS credentials; use the authenticated plugin for writes and
-public Git fetch for local synchronization. Do not request or store tokens. The
-initial local commit is preserved on local/final-remux-safety-initial; the plugin
-created an equivalent remote commit with the identical source tree.
-
-PR #1 is merged at 055496b. The owner subsequently approved auditing the old
-download and preparing a local 1.0.2 candidate. Work is on
-release/1.0.2-candidate. The prior branch/PR/CI workflow remains authorized;
-public release publication remains unapproved. A hosted Server run does not establish Windows 10/11 desktop
-behavior. Before release, complete exact-mkvmerge Windows evidence and resolve the
-package audit gaps documented in PACKAGE-AUDIT-1.0.2.md. Preserve historical downloads. Prepare
-an exact candidate package, checksums, and evidence for owner publication approval.
-Until then, do not recommend public release.
-
-Follow-up priority: safe startup/cleanup and consistent stage failure handling.
-Portable planning/profile extraction can follow useful Windows maintenance fixes.
-
-## Local candidate evidence — 2026-10-18
-
-- Source commit: fdd245f0517c447771a21745520397b396a6a075.
-- Built candidate lives outside Git at sibling path
-  ../release-candidates/asteroid-city/1.0.2/.
-- ZIP: Asteroid-City-Scope-Restorer_v1.0.2-candidate.zip, 174202948 bytes,
-  SHA-256 083b2d8e99b78dadf0bb9b36ef64dbf7842a94d460daf1a874ec6113b416e227.
-- Two independent builds produce identical ZIP, manifest and checksum bytes.
-  All 625 archived files pass CRC and exact decompressed hash verification.
-  Retained tool files and public logo are byte-identical to the old release.
-  Windows CRLF verified; no test/temp/uninstaller payloads included.
-- Wrong baseline and existing output directory are rejected without overwriting.
-- Three local source tests still pass; Windows tests remain platform skips here.
-- Packaging/CI source changes are committed only locally. Automatic approval
-  review rejected their remote upload as conflicting with the local-only boundary.
-  Ask for explicit packaging/CI source-branch upload permission; do not bypass it.
-- Exact MKVToolNix 78.0 Windows tests, dependency corresponding-source provision,
-  public logo redistribution and owner release approval remain open. Do not
-  publish this review candidate or describe it as release-qualified.
-
-## Follow-up authorization — 2026-10-18
-
-The owner explicitly approved uploading only packaging/CI source changes and
-opening a PR to run the exact-legacy-mkvmerge Windows checks. This resolves the
-prior automatic-review restriction on that source upload. Candidate ZIP,
-binaries, logo and private media remain excluded from upload. Publication of
-release assets/tags remains unapproved. Existing permission to merge validated
-source changes through the agreed PR workflow remains applicable.
-
-## Exact legacy-tool Windows evidence — 2026-10-18
-
-PR #2: https://github.com/teymourb/Asteroid-City-Scope-Restorer/pull/2
-Run: https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39154387126
-
-Both matrix jobs PASS: MKVToolNix 78.0 and 102.0, each with all six test methods
-passing in the real-tool stage. The 78.0 executable SHA-256 is required to equal
-f707365fc6374db58c875d69fe8d3c3f572ab54369b28a863bc9aaad3ebc09ef, the actual
-binary in the audited old download. Both modes preserve synthetic video packet
-hashes and PCM sample bytes. This closes the targeted legacy-mkvmerge test gate.
-No application processing command changed in the packaging branch.
-
-The local ZIP remains the immutable fdd245f review snapshot at the recorded
-checksum; its older embedded audit says exact-version CI was pending. This newer
-record and the adjacent VERIFICATION.txt supersede that status only. No archive,
-binary or logo has been uploaded. Source-provision, logo redistribution and owner
-release approval remain open; whole-film and desktop-dialog limits still apply.
-
-## Active reliability task — 2026-10-18
-
-The owner authorized the next maintenance/refactoring tasks, useful parallel
-work, and the established local/PR/Windows-test/validated-merge workflow. Public
-release publication and private-media access remain separately gated.
-
-Branch fix/workspace-safety introduces the first matching helper routines for
-both launchers: checked script-directory entry, refusal of every existing
-workspace, checked creation, nonrecursive cleanup and balanced caller-directory
-restoration. A fresh workspace is exclusively acquired using checked mkdir;
-a second run cannot reuse it. Existing work is never erased at startup.
-Successful cleanup deletes only final-remux.log and removes the now-empty temp
-directory. Unexpected leftovers survive and produce a cleanup warning.
-
-No film-processing command arguments changed. This is not resume support,
-full-stage failure checking, or a general fix for delayed-expansion/special-
-character media filenames. Windows workspace tests bypass dialogs/tools and
-exercise the actual startup/helper/exit code with sentinel files. Exact remux
-synthetic tests remain in the same Windows workflow. Local static checks pass;
-Windows evidence is pending. The old local candidate ZIP predates this task and
-must not be presented as containing these new safety changes.
+Add stage-level failure handling for source preparation, extraction, encoding and
+assembly before deleting their inputs. Then simplify repeated input/remux branch
+logic with equivalent command tests. Grow portable planning/profile components
+from demonstrated shared needs; no new engine language or GUI stack is selected.
+Source-fingerprint research is a separate synthetic-first task and does not block
+these maintenance fixes. Real-media qualification requires explicit authorization.
