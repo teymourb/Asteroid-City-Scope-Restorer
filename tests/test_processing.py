@@ -88,7 +88,7 @@ class WindowsProcessing(unittest.TestCase):
         env = os.environ.copy()
         env.update(file=str(source), STAGE_MARKER=str(root / 'called.txt'),
                    STAGE_EXIT=str(code), STAGE_OUTPUT=kind)
-        result = subprocess.run(['cmd.exe', '/d', '/c', str(harness)], cwd=root,
+        result = subprocess.run(['cmd.exe', '/d', '/c', 'stage.cmd'], cwd=root,
                                 env=env, capture_output=True, text=True, timeout=15)
         self.assertEqual(source.read_bytes(), b'original synthetic source')
         self.assertEqual(sentinel.read_bytes(), b'preserved previous result')
