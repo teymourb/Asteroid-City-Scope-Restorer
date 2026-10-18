@@ -34,7 +34,7 @@ Choose between 2 **constant-height** Scope Restorations:
 - Select your source rip .mkv file when prompted  
 - Select your destination folder for the output file  
 - If prompted to accept or decline a command towards the end of the encoding, enter y for yes
-- In version 1.0.2, a final-remux warning or error retains the assembled video and `docs/temp/final-remux.log`. A new run preserves existing temporary work and stops. Move the retained `docs/temp` folder somewhere safe before starting a new restoration. A destination file left after an error may be incomplete. Earlier-stage failure handling is unchanged.
+- In the unreleased version 1.0.2, source preparation, splitting and encoding stop on reported errors or missing/empty outputs. Progress and diagnostics are in `docs/temp/processing.log`; final-remux diagnostics are in `docs/temp/final-remux.log`. All intermediate videos and logs remain for review, even when an output is created, because Avidemux does not reliably report append/save failures. A final output must be checked for completeness. This uses substantially more disk space. After review, move or manually remove `docs/temp` before another run; startup preserves any existing workspace. A destination file left after an error may be incomplete. Automatic resume and assembly-completeness verification are not implemented.
 
 <br>
 
