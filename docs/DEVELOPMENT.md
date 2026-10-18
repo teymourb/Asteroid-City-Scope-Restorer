@@ -75,10 +75,33 @@ The existing local FFmpeg 8.0.1 has a missing x265 dylib; it was not repaired or
 used for qualification. Windows uses isolated, versioned test tools. This does
 not change the processing binaries bundled for users.
 
+## Processing safeguard branch — pending Windows evidence
+
+The next bounded patch guards all 57 preparation, splitting, encoding and
+assembly invocations. Commands and media settings are preserved; stdout/stderr
+append to processing.log. MKVToolNix warnings stop separately; positive errors
+and negative native crash statuses stop dependent processing. Each stage requires
+a nonempty regular output, and both assembly branches precheck every load/append
+input including the external logo. These are minimum structural checks, not
+media integrity or completeness proof.
+
+Avidemux 2.8.1 CLI does not reliably propagate append/save failure through its
+process status. Therefore ALL intermediate videos and logs remain even after a
+successful final remux. The launcher reports that the output needs completeness
+review and exits with the existing retained-work warning (1). This intentionally
+increases disk use; automatic cleanup cannot be restored without independent
+assembly qualification. There is no automatic resume.
+
+New Windows native-stub tests exercise every command gate with success, positive
+error, negative crash, warning, missing/empty/directory output, missing tools and
+missing assembly inputs. Downstream work must not run after a failed gate, and
+source/predecessor sentinel bytes must survive. macOS source checks pass; Windows
+execution remains pending until CI evidence is recorded here.
+
 ## Next engineering work
 
-Add stage-level failure handling for source preparation, extraction, encoding and
-assembly before deleting their inputs. Then simplify repeated input/remux branch
+Qualify the new stage safeguards on Windows, then add an independent assembly
+completeness check before considering automatic cleanup. Simplify repeated input/remux branch
 logic with equivalent command tests. Grow portable planning/profile components
 from demonstrated shared needs; no new engine language or GUI stack is selected.
 Source-fingerprint research is a separate synthetic-first task and does not block
