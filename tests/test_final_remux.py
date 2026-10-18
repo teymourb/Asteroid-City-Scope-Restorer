@@ -177,16 +177,27 @@ class WindowsRemux(unittest.TestCase):
                     self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                     self.assertFalse(intermediate.exists())
                     output = next(output_dir.glob('*.mkv'))
-                    # Verify video and audio packets are preserved by remuxing.
-                    for stream in ('v:0', 'a:0'):
-                        def packets(path):
-                            return subprocess.check_output([
-                                'ffprobe', '-v', 'error', '-select_streams', stream,
-                                '-show_packets', '-show_data_hash', 'sha256',
-                                '-show_entries', 'packet=data_hash', '-of', 'csv=p=0', str(path)])
-                        expected = packets(source)
+                    # H.264 packet payloads should remain identical. PCM audio may
+                    # be re-packetized by mkvmerge: compare its concatenated sample
+                    # bytes, rather than requiring identical packet boundaries.
+                    def video_packets(path):
+                        return subprocess.check_output([
+                            'ffprobe', '-v', 'error', '-select_streams', 'v:0',
+                            '-show_packets', '-show_data_hash', 'sha256',
+                            '-show_entries', 'packet=data_hash', '-of', 'csv=p=0', str(path)])
+                    with self.subTest(mode=mode, stream='video'):
+                        expected = video_packets(source)
                         self.assertTrue(expected.strip())
-                        self.assertEqual(packets(output), expected)
+                        self.assertEqual(video_packets(output), expected)
+                    def pcm_samples(path):
+                        return subprocess.check_output([
+                            ffmpeg, '-v', 'error', '-i', str(path), '-map', '0:a:0',
+                            '-c:a', 'copy', '-f', 's16le', 'pipe:1'])
+                    with self.subTest(mode=mode, stream='PCM audio'):
+                        expected = pcm_samples(source)
+                        self.assertEqual(len(expected), 48000 * 2)  # 1 s, mono, 16-bit
+                        self.assertEqual(pcm_samples(output), expected)
+
 
 
 if __name__ == '__main__':

@@ -2,7 +2,9 @@
 
 ## Accepted scope and workflow
 
-The owner approved a local Asteroid City final-remux repair on 2026-10-18.
+The owner approved the Asteroid City final-remux repair on 2026-10-18, then
+authorized branch publication, pull-request review, Windows testing and merging
+validated changes into main. Public release publication still requires approval.
 Develop on macOS; Windows remains the current application target. Keep both
 existing repositories and release histories. Use a short-lived fix branch,
 local tests and commits, then a reviewed pull request and Windows evidence.
@@ -10,9 +12,10 @@ local tests and commits, then a reviewed pull request and Windows evidence.
 There is no separate production server or staging deployment for this utility.
 
 Local edits, ordinary troubleshooting, tests, review, documentation, and commits
-are authorized in this scope. Ask before pushes, merges, public tags/releases,
-substantial new dependencies, or protected-media access. The GitHub connection
-alone is not publication approval. No private films or credentials belong in Git,
+are authorized in this scope. Pushes, PR creation, CI tool downloads and merging
+this validated fix are now authorized. Public tags/releases, substantial new
+dependencies outside this test scope, and protected-media access need separate
+approval. The GitHub connection alone is not publication approval. No private films or credentials belong in Git,
 CI, logs, or test artifacts. Do not execute the full legacy script on macOS.
 
 ## Current work
@@ -50,13 +53,15 @@ contain spaces. Tests verify original-source sentinel bytes remain unchanged.
 All test workspaces are isolated temporary directories.
 
 The real synthetic test uses FFmpeg to generate one second of blue video/tone,
-runs the production final-remux block with real mkvmerge, then uses FFprobe packet
-SHA-256 hashes to compare both video and audio with the synthetic source.
+runs the production final-remux block with real mkvmerge, then compares FFprobe video-packet
+SHA-256 hashes and concatenated PCM audio sample bytes with the synthetic source.
+PCM packet boundaries may change during remuxing, so sample bytes are compared
+without decoding or requiring identical packet sizes.
 Set `RESTORER_REAL_MKVMERGE` to an absolute mkvmerge executable path to enable it
 on Windows. It does not exercise film cuts, encoding stages, logos, HDR, chapters,
 subtitles, full-film synchronization, or complete restoration quality.
 
-The proposed workflow uses Windows Server 2022, a pinned checkout action, no
+The workflow uses Windows Server 2022, a pinned checkout action, no
 submodules, sparse checkout excluding the commercial logo, read-only repository
 permissions, no persisted checkout credentials, and a 15-minute timeout. It
 runs native stubs before downloading test-only MKVToolNix 102.0 from its official
@@ -74,15 +79,26 @@ Only approved code/tests and synthetic data are used; logs remain on GitHub.
   as expected (missing guards), then passes on the patched source.
 - Existing local mkvmerge 96.0 launches. Existing FFmpeg 8.0.1 fails to launch
   because its x265 dylib is missing. No system dependencies were modified.
-- Windows matrix and real synthetic remux: NOT RUN. Proposed workflow has not
-  been executed or validated on a runner.
+- First Windows run: native batch matrix (32 cases) and three missing-tool/
+  output cases PASS. Synthetic test exposed an invalid test assumption about
+  PCM packet boundaries. The revised test compares video packet hashes and
+  exact PCM sample bytes; its rerun is pending.
+  Run: https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39126761694
 - Full-film qualification: NOT RUN; no private media accessed.
 - Release archives and bundled tool versions: NOT audited or repackaged.
 
 ## Release gate and next steps
 
-Review the local diff, approve a branch push/PR and CI tool downloads, then obtain
-Windows results. A hosted Server run does not establish Windows 10/11 desktop
+PR: https://github.com/teymourb/Asteroid-City-Scope-Restorer/pull/1
+
+The GitHub plugin is authenticated as teymourb and successfully published the
+branch and opened the PR. Both repositories report push/admin account permissions.
+Shell Git has no HTTPS credentials; use the authenticated plugin for writes and
+public Git fetch for local synchronization. Do not request or store tokens. The
+initial local commit is preserved on local/final-remux-safety-initial; the plugin
+created an equivalent remote commit with the identical source tree.
+
+Obtain Windows results and merge only after review and passing checks. A hosted Server run does not establish Windows 10/11 desktop
 behavior. Before release, audit the existing downloadable package and qualify the
 patch against its actual mkvmerge binary. Preserve historical downloads. Prepare
 an exact candidate package, checksums, and evidence for owner publication approval.
