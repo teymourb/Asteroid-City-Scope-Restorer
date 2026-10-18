@@ -170,3 +170,25 @@ checksum; its older embedded audit says exact-version CI was pending. This newer
 record and the adjacent VERIFICATION.txt supersede that status only. No archive,
 binary or logo has been uploaded. Source-provision, logo redistribution and owner
 release approval remain open; whole-film and desktop-dialog limits still apply.
+
+## Active reliability task — 2026-10-18
+
+The owner authorized the next maintenance/refactoring tasks, useful parallel
+work, and the established local/PR/Windows-test/validated-merge workflow. Public
+release publication and private-media access remain separately gated.
+
+Branch fix/workspace-safety introduces the first matching helper routines for
+both launchers: checked script-directory entry, refusal of every existing
+workspace, checked creation, nonrecursive cleanup and balanced caller-directory
+restoration. A fresh workspace is exclusively acquired using checked mkdir;
+a second run cannot reuse it. Existing work is never erased at startup.
+Successful cleanup deletes only final-remux.log and removes the now-empty temp
+directory. Unexpected leftovers survive and produce a cleanup warning.
+
+No film-processing command arguments changed. This is not resume support,
+full-stage failure checking, or a general fix for delayed-expansion/special-
+character media filenames. Windows workspace tests bypass dialogs/tools and
+exercise the actual startup/helper/exit code with sentinel files. Exact remux
+synthetic tests remain in the same Windows workflow. Local static checks pass;
+Windows evidence is pending. The old local candidate ZIP predates this task and
+must not be presented as containing these new safety changes.

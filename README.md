@@ -34,7 +34,7 @@ Choose between 2 **constant-height** Scope Restorations:
 - Select your source rip .mkv file when prompted  
 - Select your destination folder for the output file  
 - If prompted to accept or decline a command towards the end of the encoding, enter y for yes
-- In version 1.0.2, a final-remux warning or error retains the assembled video and `docs/temp/final-remux.log`. Copy retained files somewhere safe before restarting: startup still deletes temporary files. A destination file left after an error may be incomplete. Earlier-stage failure handling is unchanged.
+- In version 1.0.2, a final-remux warning or error retains the assembled video and `docs/temp/final-remux.log`. A new run preserves existing temporary work and stops. Move the retained `docs/temp` folder somewhere safe before starting a new restoration. A destination file left after an error may be incomplete. Earlier-stage failure handling is unchanged.
 
 <br>
 
