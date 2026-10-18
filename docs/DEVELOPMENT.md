@@ -82,8 +82,16 @@ Only approved code/tests and synthetic data are used; logs remain on GitHub.
 - First Windows run: native batch matrix (32 cases) and three missing-tool/
   output cases PASS. Synthetic test exposed an invalid test assumption about
   PCM packet boundaries. The revised test compares video packet hashes and
-  exact PCM sample bytes; its rerun is pending.
+  exact PCM sample bytes. The corrected rerun passes, confirming that sample
+  bytes are preserved despite the original packet-hash comparison failure.
   Run: https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39126761694
+- Windows Server 2022, Python 3.12.10, MKVToolNix 102.0, FFmpeg/FFprobe 7.1.1:
+  all six test methods PASS with no skips in the real-tool stage. This includes
+  32 branch/status combinations, three missing-tool/output cases, and synthetic
+  remuxes in both modes with identical video packet hashes and PCM sample bytes.
+  Passing run: https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39126930925
+  Application source has not changed since this run; the final follow-up commit
+  only records this evidence and release qualification limits.
 - Full-film qualification: NOT RUN; no private media accessed.
 - Release archives and bundled tool versions: NOT audited or repackaged.
 
@@ -98,7 +106,9 @@ public Git fetch for local synchronization. Do not request or store tokens. The
 initial local commit is preserved on local/final-remux-safety-initial; the plugin
 created an equivalent remote commit with the identical source tree.
 
-Obtain Windows results and merge only after review and passing checks. A hosted Server run does not establish Windows 10/11 desktop
+The focused Windows checks pass. Review the PR and verify the final head checks
+before merging. Merge authorization is already recorded above; release approval
+is still required. A hosted Server run does not establish Windows 10/11 desktop
 behavior. Before release, audit the existing downloadable package and qualify the
 patch against its actual mkvmerge binary. Preserve historical downloads. Prepare
 an exact candidate package, checksums, and evidence for owner publication approval.

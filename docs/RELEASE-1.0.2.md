@@ -14,7 +14,8 @@ The required source edition, cuts, framing, encoding settings, audio/subtitle
 selection and successful output filenames are unchanged. Windows remains the
 only application target; this patch does not add macOS/Linux support.
 
-Publication is pending Windows regression/synthetic testing, audit and targeted
-qualification of the actual downloadable package/tool version, packaging and owner
-approval. No downloadable candidate has been assembled yet. Existing releases
+Windows Server 2022 regression and synthetic-media tests pass (all six test
+methods; see DEVELOPMENT.md for evidence and coverage). Publication is pending
+audit and targeted qualification of the actual downloadable package/tool version,
+packaging and owner approval. No downloadable candidate has been assembled yet. Existing releases
 remain available. See DEVELOPMENT.md for exact evidence and limitations.
