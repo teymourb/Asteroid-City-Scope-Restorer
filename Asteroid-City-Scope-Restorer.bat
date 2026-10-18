@@ -498,31 +498,30 @@ exit /b 1
 
 :: Workspace helpers: shared structure in both film launchers.
 :prepare_workspace
-setlocal DisableDelayedExpansion
 pushd "%~dp0"
 if errorlevel 1 (
     echo Cannot open the restorer program folder. Processing has not started.
-    endlocal & exit /b 2
+    exit /b 2
 )
 if not exist "docs\" (
     echo The docs folder is missing. Extract the complete application archive.
     popd
-    endlocal & exit /b 2
+    exit /b 2
 )
 if exist "docs\temp" (
     echo Temporary work already exists in "%~dp0docs\temp".
     echo Preserve or move that folder before starting another restoration.
     echo No existing temporary files have been deleted.
     popd
-    endlocal & exit /b 2
+    exit /b 2
 )
 mkdir "docs\temp"
 if errorlevel 1 (
     echo Cannot create the temporary workspace. Processing has not started.
     popd
-    endlocal & exit /b 2
+    exit /b 2
 )
-endlocal & exit /b 0
+exit /b 0
 
 :cleanup_workspace
 setlocal DisableDelayedExpansion
