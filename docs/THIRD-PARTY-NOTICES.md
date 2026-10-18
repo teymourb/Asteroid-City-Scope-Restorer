@@ -1,0 +1,35 @@
+# Third-party components — review candidate
+
+The restoration script has its own MIT license in LICENSE.txt. That license does
+not cover the separate processing applications or film-derived logo asset.
+
+This candidate retains the processing binaries from the public v1.0.1 archive,
+without updating/rebuilding them. Existing Avidemux/MKVToolNix notices are retained.
+Missing top-level HandBrake and FFmpeg GPL texts are added under docs/licenses.
+Adding texts and upstream links does not, by itself, establish complete source
+correspondence or satisfy every redistribution obligation. This candidate is for
+owner review; resolve the gaps below before public distribution.
+
+| Component | Observed version | Upstream/reference | Candidate notice |
+| --- | --- | --- | --- |
+| MKVToolNix | 78.0 | https://mkvtoolnix.download/ | Existing doc/COPYING and doc/licenses retained |
+| HandBrakeCLI | 1.6.1 (2023012300) | https://github.com/HandBrake/HandBrake/tree/1.6.1 | GPL-2.0 text from that tag added |
+| Avidemux CLI | PE product 2.8.1.22260 | https://github.com/mean00/avidemux2 | Existing Licenses/license.txt retained |
+| FFmpeg | N-112110-g5acc3c4cff-20230917 | https://github.com/FFmpeg/FFmpeg/tree/5acc3c4cff | GPL-3.0 text added; binary has --enable-gpl and --enable-version3 |
+
+The FFmpeg configuration resembles a BtbN build, but this is only an inference.
+Its exact distributor, dependency source set and build recipe have not been
+verified. The embedded FFmpeg commit alone is not the complete corresponding
+source for this statically linked binary and all enabled components. HandBrake's
+exact executable provenance also remains unverified. Source submodule pointers
+in the restorer repository are not proof of matching binary source.
+
+The public package includes docs/logos/AsteroidCity_Logo1.mkv. Its legacy release
+notes identify a Focus Features logo sourced from another commercial Blu-ray.
+It is preserved byte-for-byte locally to retain behavior. No independent license
+or permission to redistribute that footage has been established by this audit.
+It is excluded from all new remote tests and must not be described as MIT-licensed.
+No private film files were accessed or used.
+
+References: https://ffmpeg.org/legal.html and the licenses shipped alongside the
+tools. This is an engineering provenance inventory, not a legal certification.

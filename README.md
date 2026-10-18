@@ -28,12 +28,13 @@ Choose between 2 **constant-height** Scope Restorations:
 <br>
 
 #### INSTRUCTIONS:  
-- Extract the zip file in a drive where you have at least 50 GB of free space
-- Launch *Asteroid-City-Scope-Restorer.bat* and disregard the unknow publisher prompt  
+- Download the versioned application archive from Releases. GitHub Source code archives do not include the processing executables.
+- Extract the complete application folder to a drive with at least 50 GB of free space
+- Launch *Asteroid-City-Scope-Restorer.bat* from the extracted application folder
 - Select your source rip .mkv file when prompted  
 - Select your destination folder for the output file  
 - If prompted to accept or decline a command towards the end of the encoding, enter y for yes
-- If the program is interrupted at any point or has failed, making sure to delete the *temp* folder in /docs/. This will be done automatically if the program is executed again.
+- In version 1.0.2, a final-remux warning or error retains the assembled video and `docs/temp/final-remux.log`. Copy retained files somewhere safe before restarting: startup still deletes temporary files. A destination file left after an error may be incomplete. Earlier-stage failure handling is unchanged.
 
 <br>
 
