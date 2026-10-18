@@ -42,7 +42,7 @@ class WindowsWorkspace(unittest.TestCase):
         (caller / 'never-delete.txt').write_bytes(b'caller root sentinel')
         # Simulate a stage without executing a dialog or video tool.
         stage = '''echo PROCESSING_STARTED
-echo STAGE_CWD=%CD%
+echo STAGE_CWD="%CD%"
 echo STAGE_OUTCOME=%TEST_OUTCOME%
 > "docs\\temp\\final-remux.log" echo synthetic diagnostic
 if "%TEST_OUTCOME%"=="hold" (
@@ -82,15 +82,12 @@ exit /b %restorer_result%
         result = subprocess.run(['cmd.exe', '/d', '/v:off', '/c', 'wrapper.bat'],
                                 cwd=caller, env=env, input='\n', capture_output=True,
                                 text=True, timeout=30)
-        if result.returncode != 0:
-            print('WORKSPACE DIAGNOSTIC', outcome, result.returncode, repr(result.stdout), repr(result.stderr),
-                  [(str(p.relative_to(install)), p.stat().st_size) for p in install.rglob('*') if p.is_file()])
         self.assertIn('CALLER_AFTER=' + str(caller), result.stdout)
         self.assertEqual((caller / 'never-delete.txt').read_bytes(), b'caller root sentinel')
         self.assertEqual((caller / 'docs/temp/never-delete.txt').read_bytes(), b'caller sentinel')
         self.assertEqual(sorted(p.name for p in (caller / 'docs/temp').iterdir()), ['never-delete.txt'])
         if 'PROCESSING_STARTED' in result.stdout:
-            self.assertIn('STAGE_CWD=' + str(install), result.stdout)
+            self.assertIn('STAGE_CWD="' + str(install) + '"', result.stdout)
             self.assertIn('STAGE_OUTCOME=' + outcome, result.stdout)
         return result
 
