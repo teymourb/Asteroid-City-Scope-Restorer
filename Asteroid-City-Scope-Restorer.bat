@@ -238,19 +238,32 @@ if %version%==1 (
 	echo Remuxing audio and subtitles
 	set "hello=Asteroid City Theatrical Scope Restoration (unmasked).mkv"
 	set "result=!folder!!hello!"
+	set "final_output=!result!"
+	if "%dialog2%"=="y" set "final_output=!folder!\!hello!"
 	if %dialog%==y (
 		if %dialog2%==y (
-			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (unmasked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%"
+			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (unmasked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%" > "docs\temp\final-remux.log" 2>&1
+			if errorlevel 2 goto remux_failed
+			if errorlevel 1 goto remux_warning
 		) else if %dialog2%==n (
-			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv.mkv" -D --no-video "%file%"
+			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%" > "docs\temp\final-remux.log" 2>&1
+			if errorlevel 2 goto remux_failed
+			if errorlevel 1 goto remux_warning
 		)
 	) else if %dialog%==n (
 		if %dialog2%==y (
-			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (unmasked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file!
+			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (unmasked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file! > "docs\temp\final-remux.log" 2>&1
+			if errorlevel 2 goto remux_failed
+			if errorlevel 1 goto remux_warning
 		) else if %dialog2%==n (
-			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv.mkv" -D --no-video !file!
+			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file! > "docs\temp\final-remux.log" 2>&1
+			if errorlevel 2 goto remux_failed
+			if errorlevel 1 goto remux_warning
 		)
 	)
+
+	if not exist "!final_output!" goto remux_failed
+	for %%F in ("!final_output!") do if %%~zF EQU 0 goto remux_failed
 
 	endlocal
 
@@ -438,20 +451,33 @@ if %version%==1 (
 	echo Remuxing audio and subtitles
 	set "hello=Asteroid City Theatrical Scope Restoration (masked).mkv"
 	set "result=!folder!!hello!"
+	set "final_output=!result!"
+	if "%dialog2%"=="y" set "final_output=!folder!\!hello!"
 	if %dialog%==y (
 		if %dialog2%==y (
-			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (masked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%"
+			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (masked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%" > "docs\temp\final-remux.log" 2>&1
+			if errorlevel 2 goto remux_failed
+			if errorlevel 1 goto remux_warning
 		) else if %dialog2%==n (
-			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%"
+			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video "%file%" > "docs\temp\final-remux.log" 2>&1
+			if errorlevel 2 goto remux_failed
+			if errorlevel 1 goto remux_warning
 		)
 	) else if %dialog%==n (
 		if %dialog2%==y (
-			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (masked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file!
+			docs\programs\mkvtoolnix\mkvmerge -o "!folder!\Asteroid City Theatrical Scope Restoration (masked).mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file! > "docs\temp\final-remux.log" 2>&1
+			if errorlevel 2 goto remux_failed
+			if errorlevel 1 goto remux_warning
 		) else if %dialog2%==n (
-			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file!
+			docs\programs\mkvtoolnix\mkvmerge -o "!result!" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "docs\temp\AsteroidCity_S.mkv" -D --no-video !file! > "docs\temp\final-remux.log" 2>&1
+			if errorlevel 2 goto remux_failed
+			if errorlevel 1 goto remux_warning
 		)
 	)
 	
+	if not exist "!final_output!" goto remux_failed
+	for %%F in ("!final_output!") do if %%~zF EQU 0 goto remux_failed
+
 	endlocal
 	
 	::Deleting altered video with incorrect non-video tracks
@@ -475,3 +501,20 @@ cd ..
 
 echo Done!
 PAUSE
+exit /b 0
+
+:remux_warning
+echo Final remux completed with warnings. The output needs review.
+echo The assembled video is retained at docs\temp\AsteroidCity_S.mkv
+echo Details are in docs\temp\final-remux.log
+echo Do not restart this program yet: startup deletes retained temporary files.
+PAUSE
+exit /b 1
+
+:remux_failed
+echo Final remux failed. Any destination output may be incomplete; do not use it.
+echo The assembled video is retained at docs\temp\AsteroidCity_S.mkv
+echo Details are in docs\temp\final-remux.log
+echo Do not restart this program yet: startup deletes retained temporary files.
+PAUSE
+exit /b 2
