@@ -1,0 +1,60 @@
+name: Windows final-remux regression
+
+on:
+  pull_request:
+    paths:
+      - 'Asteroid-City-Scope-Restorer.bat'
+      - 'tests/**'
+      - '.github/workflows/windows-remux.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  remux:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          submodules: false
+          # Tests do not use the commercial logo or upstream tool submodules.
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /Asteroid-City-Scope-Restorer.bat
+            /tests/
+      - name: Run batch regression matrix with native executable stub
+        shell: pwsh
+        run: |
+          python --version
+          python -m unittest discover -s tests -v
+          if ($LASTEXITCODE -ne 0) { throw 'Batch regression tests failed' }
+      - name: Prepare synthetic-media test tools
+        shell: pwsh
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'mkvtoolnix-102.0.7z'
+          Invoke-WebRequest 'https://mkvtoolnix.download/windows/releases/102.0/mkvtoolnix-64-bit-102.0.7z' -OutFile $archive
+          $expected = 'cd63c42caee3d9e5b631e029657b3bd322beba77e150cecbfc9ae4923638b049'
+          if ((Get-FileHash $archive -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) {
+            throw 'MKVToolNix archive checksum mismatch'
+          }
+          $toolDir = Join-Path $env:RUNNER_TEMP 'remux-tools'
+          7z x $archive "-o$toolDir" -y
+          if ($LASTEXITCODE -ne 0) { throw 'Tool extraction failed' }
+          $mkvmerge = Get-ChildItem $toolDir -Recurse -Filter mkvmerge.exe | Select-Object -First 1
+          if (-not $mkvmerge) { throw 'mkvmerge.exe missing' }
+          "RESTORER_REAL_MKVMERGE=$($mkvmerge.FullName)" >> $env:GITHUB_ENV
+          # Test-only, versioned community package containing the Gyan Windows build.
+          # No processing tools are installed on the developer's Mac or repackaged.
+          choco install ffmpeg --version=7.1.1 --yes --no-progress --allow-downgrade
+          if ($LASTEXITCODE -ne 0) { throw 'FFmpeg fixture tool installation failed' }
+      - name: Run synthetic packet-preservation test
+        shell: pwsh
+        run: |
+          & $env:RESTORER_REAL_MKVMERGE --version
+          ffmpeg -version
+          ffprobe -version
+          python -m unittest discover -s tests -v
+          if ($LASTEXITCODE -ne 0) { throw 'Synthetic remux test failed' }
