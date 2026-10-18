@@ -152,3 +152,21 @@ prior automatic-review restriction on that source upload. Candidate ZIP,
 binaries, logo and private media remain excluded from upload. Publication of
 release assets/tags remains unapproved. Existing permission to merge validated
 source changes through the agreed PR workflow remains applicable.
+
+## Exact legacy-tool Windows evidence — 2026-10-18
+
+PR #2: https://github.com/teymourb/Asteroid-City-Scope-Restorer/pull/2
+Run: https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39154387126
+
+Both matrix jobs PASS: MKVToolNix 78.0 and 102.0, each with all six test methods
+passing in the real-tool stage. The 78.0 executable SHA-256 is required to equal
+f707365fc6374db58c875d69fe8d3c3f572ab54369b28a863bc9aaad3ebc09ef, the actual
+binary in the audited old download. Both modes preserve synthetic video packet
+hashes and PCM sample bytes. This closes the targeted legacy-mkvmerge test gate.
+No application processing command changed in the packaging branch.
+
+The local ZIP remains the immutable fdd245f review snapshot at the recorded
+checksum; its older embedded audit says exact-version CI was pending. This newer
+record and the adjacent VERIFICATION.txt supersede that status only. No archive,
+binary or logo has been uploaded. Source-provision, logo redistribution and owner
+release approval remain open; whole-film and desktop-dialog limits still apply.

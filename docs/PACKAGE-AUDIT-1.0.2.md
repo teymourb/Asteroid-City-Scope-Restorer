@@ -40,10 +40,13 @@ https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/3912712097
 
 The source batch has not changed during packaging. These tests bypass dialogs,
 earlier processing and PAUSE. They do not establish full-film correctness.
-The exact-78.0 workflow is prepared locally but has not run; automatic approval
-review rejected uploading the packaging/CI source branch under the local-only
-candidate boundary. Explicit upload/CI authorization is needed for that step.
-No candidate archive, binaries or logo were uploaded.
+After explicit source-only upload permission, both Windows matrix jobs (78.0
+and 102.0) pass all six test methods. The 78.0 executable checksum is required
+to match the audited bundled binary. Passing run:
+https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39154387126
+No candidate archive, binaries or logo were uploaded. The immutable local ZIP
+contains an earlier audit snapshot; the adjacent verification record carries
+this subsequent CI evidence.
 
 ## Candidate contents and build
 
@@ -79,7 +82,7 @@ must be new and outside Git; historical assets are never modified.
 
 This is a review-only full candidate, not approved for release publication.
 
-- Targeted Windows tests must pass with the exact legacy mkvmerge executable.
+- Targeted exact-legacy-mkvmerge Windows tests: PASS (run linked above).
 - FFmpeg and HandBrake lacked their own license texts in the old package. Added
   license files improve notices, but complete matching source/build/dependency
   provision still needs resolution. Upstream source submodules do not prove it.
