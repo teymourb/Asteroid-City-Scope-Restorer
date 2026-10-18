@@ -2,6 +2,11 @@
 
 ## 1.0.2 — unreleased candidate
 
+- Anchor execution to the launcher folder and refuse an existing temporary
+  workspace instead of deleting retained work on restart.
+- Remove wildcard cleanup; preserve unexpected temporary files/subdirectories
+  and restore the caller directory on success, warnings and errors.
+
 - Fix unmasked restoration's final remux when the destination is entered manually:
   use `AsteroidCity_S.mkv`, rather than the nonexistent `.mkv.mkv` filename.
 - In both modes, stop before cleanup on final-remux errors, and retain the
