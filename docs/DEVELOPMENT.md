@@ -93,7 +93,13 @@ Only approved code/tests and synthetic data are used; logs remain on GitHub.
   Application source has not changed since this run; the final follow-up commit
   only records this evidence and release qualification limits.
 - Full-film qualification: NOT RUN; no private media accessed.
-- Release archives and bundled tool versions: NOT audited or repackaged.
+- Historical archive audited; see PACKAGE-AUDIT-1.0.2.md for exact versions,
+  hashes and observed provenance/redistribution gaps. Review-only ZIP preparation
+  is authorized. Targeted exact-legacy-mkvmerge Windows tests are pending.
+  Automatic approval review rejected uploading the packaging/CI source branch,
+  interpreting the local-only candidate boundary to include those source files.
+  No candidate archive/binaries were uploaded. Request explicit source-branch/CI
+  upload approval before attempting that remote step again.
 
 ## Release gate and next steps
 
@@ -106,13 +112,61 @@ public Git fetch for local synchronization. Do not request or store tokens. The
 initial local commit is preserved on local/final-remux-safety-initial; the plugin
 created an equivalent remote commit with the identical source tree.
 
-The focused Windows checks pass. Review the PR and verify the final head checks
-before merging. Merge authorization is already recorded above; release approval
-is still required. A hosted Server run does not establish Windows 10/11 desktop
-behavior. Before release, audit the existing downloadable package and qualify the
-patch against its actual mkvmerge binary. Preserve historical downloads. Prepare
+PR #1 is merged at 055496b. The owner subsequently approved auditing the old
+download and preparing a local 1.0.2 candidate. Work is on
+release/1.0.2-candidate. The prior branch/PR/CI workflow remains authorized;
+public release publication remains unapproved. A hosted Server run does not establish Windows 10/11 desktop
+behavior. Before release, complete exact-mkvmerge Windows evidence and resolve the
+package audit gaps documented in PACKAGE-AUDIT-1.0.2.md. Preserve historical downloads. Prepare
 an exact candidate package, checksums, and evidence for owner publication approval.
 Until then, do not recommend public release.
 
 Follow-up priority: safe startup/cleanup and consistent stage failure handling.
 Portable planning/profile extraction can follow useful Windows maintenance fixes.
+
+## Local candidate evidence — 2026-10-18
+
+- Source commit: fdd245f0517c447771a21745520397b396a6a075.
+- Built candidate lives outside Git at sibling path
+  ../release-candidates/asteroid-city/1.0.2/.
+- ZIP: Asteroid-City-Scope-Restorer_v1.0.2-candidate.zip, 174202948 bytes,
+  SHA-256 083b2d8e99b78dadf0bb9b36ef64dbf7842a94d460daf1a874ec6113b416e227.
+- Two independent builds produce identical ZIP, manifest and checksum bytes.
+  All 625 archived files pass CRC and exact decompressed hash verification.
+  Retained tool files and public logo are byte-identical to the old release.
+  Windows CRLF verified; no test/temp/uninstaller payloads included.
+- Wrong baseline and existing output directory are rejected without overwriting.
+- Three local source tests still pass; Windows tests remain platform skips here.
+- Packaging/CI source changes are committed only locally. Automatic approval
+  review rejected their remote upload as conflicting with the local-only boundary.
+  Ask for explicit packaging/CI source-branch upload permission; do not bypass it.
+- Exact MKVToolNix 78.0 Windows tests, dependency corresponding-source provision,
+  public logo redistribution and owner release approval remain open. Do not
+  publish this review candidate or describe it as release-qualified.
+
+## Follow-up authorization — 2026-10-18
+
+The owner explicitly approved uploading only packaging/CI source changes and
+opening a PR to run the exact-legacy-mkvmerge Windows checks. This resolves the
+prior automatic-review restriction on that source upload. Candidate ZIP,
+binaries, logo and private media remain excluded from upload. Publication of
+release assets/tags remains unapproved. Existing permission to merge validated
+source changes through the agreed PR workflow remains applicable.
+
+## Exact legacy-tool Windows evidence — 2026-10-18
+
+PR #2: https://github.com/teymourb/Asteroid-City-Scope-Restorer/pull/2
+Run: https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39154387126
+
+Both matrix jobs PASS: MKVToolNix 78.0 and 102.0, each with all six test methods
+passing in the real-tool stage. The 78.0 executable SHA-256 is required to equal
+f707365fc6374db58c875d69fe8d3c3f572ab54369b28a863bc9aaad3ebc09ef, the actual
+binary in the audited old download. Both modes preserve synthetic video packet
+hashes and PCM sample bytes. This closes the targeted legacy-mkvmerge test gate.
+No application processing command changed in the packaging branch.
+
+The local ZIP remains the immutable fdd245f review snapshot at the recorded
+checksum; its older embedded audit says exact-version CI was pending. This newer
+record and the adjacent VERIFICATION.txt supersede that status only. No archive,
+binary or logo has been uploaded. Source-provision, logo redistribution and owner
+release approval remain open; whole-film and desktop-dialog limits still apply.

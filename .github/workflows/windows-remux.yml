@@ -13,6 +13,17 @@ permissions:
 
 jobs:
   remux:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - mkv_version: '78.0'
+            archive_sha256: '28aeb942e88b9bde8ad93b00020c9ab5289836bffd6df36582a6fd652cc7fdba'
+            executable_sha256: 'f707365fc6374db58c875d69fe8d3c3f572ab54369b28a863bc9aaad3ebc09ef'
+          - mkv_version: '102.0'
+            archive_sha256: 'cd63c42caee3d9e5b631e029657b3bd322beba77e150cecbfc9ae4923638b049'
+            executable_sha256: ''
+    name: remux (MKVToolNix ${{ matrix.mkv_version }})
     runs-on: windows-2022
     timeout-minutes: 15
     steps:
@@ -34,9 +45,10 @@ jobs:
       - name: Prepare synthetic-media test tools
         shell: pwsh
         run: |
-          $archive = Join-Path $env:RUNNER_TEMP 'mkvtoolnix-102.0.7z'
-          Invoke-WebRequest 'https://mkvtoolnix.download/windows/releases/102.0/mkvtoolnix-64-bit-102.0.7z' -OutFile $archive
-          $expected = 'cd63c42caee3d9e5b631e029657b3bd322beba77e150cecbfc9ae4923638b049'
+          $version = '${{ matrix.mkv_version }}'
+          $archive = Join-Path $env:RUNNER_TEMP "mkvtoolnix-$version.7z"
+          Invoke-WebRequest "https://mkvtoolnix.download/windows/releases/$version/mkvtoolnix-64-bit-$version.7z" -OutFile $archive
+          $expected = '${{ matrix.archive_sha256 }}'
           if ((Get-FileHash $archive -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) {
             throw 'MKVToolNix archive checksum mismatch'
           }
@@ -45,6 +57,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Tool extraction failed' }
           $mkvmerge = Get-ChildItem $toolDir -Recurse -Filter mkvmerge.exe | Select-Object -First 1
           if (-not $mkvmerge) { throw 'mkvmerge.exe missing' }
+          $expectedExe = '${{ matrix.executable_sha256 }}'
+          if ($expectedExe -and (Get-FileHash $mkvmerge.FullName -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expectedExe) {
+            throw 'mkvmerge.exe differs from the audited release binary'
+          }
           "RESTORER_REAL_MKVMERGE=$($mkvmerge.FullName)" >> $env:GITHUB_ENV
           # Test-only, versioned community package containing the Gyan Windows build.
           # No processing tools are installed on the developer's Mac or repackaged.

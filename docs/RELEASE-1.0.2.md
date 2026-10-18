@@ -15,7 +15,12 @@ selection and successful output filenames are unchanged. Windows remains the
 only application target; this patch does not add macOS/Linux support.
 
 Windows Server 2022 regression and synthetic-media tests pass (all six test
-methods; see DEVELOPMENT.md for evidence and coverage). Publication is pending
+methods; see PACKAGE-AUDIT-1.0.2.md for evidence and coverage). Publication is pending
 audit and targeted qualification of the actual downloadable package/tool version,
-packaging and owner approval. No downloadable candidate has been assembled yet. Existing releases
+resolution of the source/redistribution gaps in PACKAGE-AUDIT-1.0.2.md and owner
+approval. A local review candidate is prepared using the audited original tools;
+see its adjacent manifest for the exact source commit, checksum and contents. Existing releases
 remain available. See DEVELOPMENT.md for exact evidence and limitations.
+
+The candidate uses ZIP packaging and removes unused copied-installation
+uninstallers. Existing processing binaries are retained byte-for-byte.
