@@ -2,22 +2,31 @@
 
 ## Current state
 
-Asteroid City remains a Windows batch utility. The original v1.0.1 download is
-unchanged; v1.0.2 is an unreleased maintenance target. Final-remux protection and
-package-audit tooling are merged (PRs #1/#2). PR #3 adds workspace safety and the
-first matching helper routines used in both film launchers. No film-processing
-arguments, cuts, framing, encoder settings or successful output names changed.
+Asteroid City remains a Windows batch utility. Published v1.0.1 is unchanged;
+v1.0.2 is the unreleased maintenance target. Final-remux protection, workspace
+safety and package-audit tooling are integrated. Processing safeguards merged in
+PR #4 at 1da68de5. They add the following behavior without changing film cuts, framing, media arguments,
+encoder settings or successful output names:
 
-- Final-remux warnings/errors retain assembled video and diagnostics; absent or
-  empty output is rejected before final cleanup.
 - Startup enters the launcher directory, requires docs, refuses ANY existing
-  docs/temp and checks mkdir before processing. This preserves recoverable work
-  and prevents simultaneous runs from sharing a workspace.
-- Success cleanup removes only the known final-remux log and uses nonrecursive
-  rmdir. Unknown leftovers survive with a cleanup warning. Explicit exits restore
-  the caller directory. There is no automatic resume yet.
-- prepare_workspace and cleanup_workspace, plus generic workspace tests, are
-  byte-identical to BvS. Film-specific media commands remain separate.
+  docs/temp and checks workspace creation. Existing work and concurrent runs
+  cannot share or overwrite the same workspace.
+- All 57 preparation, splitting, encoding and assembly invocations have immediate
+  process-status gates and require a nonempty regular output. MKVToolNix warnings
+  stop separately; positive errors and negative native crashes stop downstream
+  work. Both assembly branches precheck every load/append input, including the
+  external logo. These are minimum structural checks, not completeness proof.
+- Stage progress and diagnostics append to docs/temp/processing.log; final-remux
+  diagnostics go to docs/temp/final-remux.log. Final-remux warning/error or absent
+  or empty final output prevents successful completion.
+- Avidemux 2.8.1 does not reliably propagate append/save failures into its process
+  status. Therefore ALL intermediate videos and logs remain after output creation
+  too. The launcher asks for completeness review and returns warning status 1.
+  This intentionally increases disk use. Review the output before moving or
+  manually removing the workspace. Startup preserves it until it is moved aside.
+- Explicit exits restore the caller directory. Generic workspace/output helpers
+  match BvS; film-specific processing remains separate. There is no automatic
+  resume or independently qualified assembly-completeness check.
 
 ## Authorization and workflow
 
@@ -38,24 +47,46 @@ or store tokens. Local pre-upload snapshots remain on local/* branches.
 Run `python3 -m unittest discover -s tests -v` locally (`python` on Windows).
 Python/C# compilation are development-only requirements, not user installation.
 
-- macOS: four source checks PASS; eight Windows-only methods SKIP as intended.
-- Windows Server 2022: all 12 test methods PASS without skips in the real-tool
-  stage, with MKVToolNix 78.0 and 102.0. Run:
-  https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39156005808
+- macOS: five source checks PASS; eleven Windows-only methods SKIP as intended.
+  Source-command digests remain unchanged and diff checks pass.
+- Validated processing-safeguard source head: c988930. Windows Server 2022 CI:
+  https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/39157814277.
+  Both MKVToolNix 78.0 and 102.0 jobs PASS, with all 16 methods passing and no
+  skips in each real-tool stage. Job logs were checked before merging.
 - The 78.0 executable SHA-256 equals the historical bundled executable:
   f707365fc6374db58c875d69fe8d3c3f572ab54369b28a863bc9aaad3ebc09ef.
-- Tests cover 32 remux branch/status cases, missing tools/output, both synthetic
-  remux modes (video packet hashes + PCM bytes preserved), unrelated caller cwd
-  and sentinel files, missing docs, temp as file, repeated restart with retained
-  work, concurrent launch, unknown nested leftovers, and warning/error exits.
-- The first workspace run caught an inner environment scope restoring cwd too
-  early. The correction is protected by actual processing-cwd and untouched-
-  caller-directory assertions. Diagnostic ampersand quoting was also corrected.
-- Test helpers execute production startup/remux/helper/exit sections; dialogs,
-  earlier media processing and PAUSE are bypassed. Full-film output, HDR, real
-  source timing, Windows 10/11 desktop UI and general special-character media
-  paths have NOT been qualified. An actual ACL/disk-full fixture is not included.
-- Source command digests remain unchanged; diff checks pass. No private media used.
+- Native-stub tests exercise every processing command with success, positive
+  error, negative crash plus partial output, missing/empty/directory output,
+  missing tools and missing assembly inputs. They require downstream work to
+  stop and original/predecessor sentinel bytes to survive. Complete production
+  mode control flow is also exercised for both source-selection branches, with
+  success/retained-work and failure cases. Dialogs and PAUSE are bypassed; tools
+  and the logo are synthetic fixtures.
+- Final-remux tests cover all source/destination/mode branches, warning/error and
+  negative-crash statuses, missing tools/output, plus both actual synthetic remux
+  modes with video packet hashes and PCM sample bytes preserved.
+- Workspace tests cover unrelated caller cwd and sentinels, missing docs, temp as
+  file, repeated restart with retained work, concurrent launch and unknown nested
+  leftovers. Tests protect against prior cwd/environment-scope and diagnostic
+  ampersand bugs. An actual ACL-denial/disk-full fixture is not included.
+- Initial stage CI exposed an absolute test-harness launch path being parsed by
+  cmd.exe at spaces/special characters. The fixture now launches stage.cmd
+  relative to its working directory; the current run verifies that correction.
+- Stub success does not prove real extraction/encoding/assembly correctness.
+  Full-film output, assembly completeness, HDR, real source timing, Windows
+  10/11 desktop UI and general special-character media paths remain unqualified.
+  No private media has been accessed.
+
+## Avidemux status limitation
+
+Avidemux 2.8.1 source inspection found that its CLI append callback discards the
+append result, save callback does not propagate failure, and normal CLI shutdown
+returns zero. A nonempty file and exit 0 therefore cannot justify deleting
+assembly inputs. Independent completeness qualification is required before
+restoring automatic cleanup.
+
+- [Avidemux 2.8.1 automation callbacks](https://raw.githubusercontent.com/mean00/avidemux2/2.8.1/avidemux/common/ADM_toolkit/automation.cpp)
+- [Avidemux 2.8.1 CLI UI_RunApp](https://raw.githubusercontent.com/mean00/avidemux2/2.8.1/avidemux/cli/ADM_userInterfaces/ADM_dialog/DIA_none.cpp)
 
 ## Package and release state
 
@@ -75,34 +106,14 @@ The existing local FFmpeg 8.0.1 has a missing x265 dylib; it was not repaired or
 used for qualification. Windows uses isolated, versioned test tools. This does
 not change the processing binaries bundled for users.
 
-## Processing safeguard branch — pending Windows evidence
-
-The next bounded patch guards all 57 preparation, splitting, encoding and
-assembly invocations. Commands and media settings are preserved; stdout/stderr
-append to processing.log. MKVToolNix warnings stop separately; positive errors
-and negative native crash statuses stop dependent processing. Each stage requires
-a nonempty regular output, and both assembly branches precheck every load/append
-input including the external logo. These are minimum structural checks, not
-media integrity or completeness proof.
-
-Avidemux 2.8.1 CLI does not reliably propagate append/save failure through its
-process status. Therefore ALL intermediate videos and logs remain even after a
-successful final remux. The launcher reports that the output needs completeness
-review and exits with the existing retained-work warning (1). This intentionally
-increases disk use; automatic cleanup cannot be restored without independent
-assembly qualification. There is no automatic resume.
-
-New Windows native-stub tests exercise every command gate with success, positive
-error, negative crash, warning, missing/empty/directory output, missing tools and
-missing assembly inputs. Downstream work must not run after a failed gate, and
-source/predecessor sentinel bytes must survive. macOS source checks pass; Windows
-execution remains pending until CI evidence is recorded here.
-
 ## Next engineering work
 
-Qualify the new stage safeguards on Windows, then add an independent assembly
-completeness check before considering automatic cleanup. Simplify repeated input/remux branch
-logic with equivalent command tests. Grow portable planning/profile components
-from demonstrated shared needs; no new engine language or GUI stack is selected.
-Source-fingerprint research is a separate synthetic-first task and does not block
-these maintenance fixes. Real-media qualification requires explicit authorization.
+Add an independent assembly-completeness check before considering automatic
+cleanup. Complete owner-run full-film qualification before release. Simplify
+repeated input/remux branches with equivalent command tests. Grow portable
+planning/profile components from demonstrated shared needs; no engine language
+or GUI stack is selected. Source-fingerprint research remains a separate,
+synthetic-first task and does not block maintenance fixes. Real-media
+qualification requires explicit authorization. Resolve package redistribution
+and source-provision questions before preparing a current release candidate;
+publication remains separately approved.
