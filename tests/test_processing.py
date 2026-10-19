@@ -32,6 +32,13 @@ def stages():
 
 
 class ProcessingSource(unittest.TestCase):
+    def test_assembly_manifests_match_actual_append_order(self):
+        commands = [line for line in TEXT.splitlines() if 'avidemux_cli --load' in line]
+        for mode, command in zip(('unmasked', 'masked'), commands):
+            expected = re.findall(r'--(?:load|append) "([^"]+)"', command)
+            self.assertEqual((ROOT / 'docs/scripts' / ('assembly-inputs-' + mode + '.txt')).read_text().splitlines(), expected)
+            self.assertIn('call :validate_assembly "' + mode + '" "docs\\temp\\AsteroidCity_S.mkv"', TEXT)
+
     def test_every_stage_has_status_and_output_gate(self):
         self.assertEqual(len(stages()), 57)
         for block, command, output in stages():
@@ -136,13 +143,17 @@ class WindowsProcessing(unittest.TestCase):
         pipeline = re.sub(r'(?im)^\s*PAUSE\s*$', 'rem noninteractive', pipeline)
         for mode in (1, 2):
             for dialog in ('y', 'n'):
-                for fail_at in (0, 2):
-                    with self.subTest(mode=mode, dialog=dialog, fail_at=fail_at), tempfile.TemporaryDirectory(prefix='full processing ') as td:
+                for fail_at, validator_code, missing_validator in ((0, 0, False), (2, 0, False), (0, 2, False), (0, -1, False), (0, 0, True)):
+                    with self.subTest(mode=mode, dialog=dialog, fail_at=fail_at, validator_code=validator_code, missing_validator=missing_validator), tempfile.TemporaryDirectory(prefix='full processing ') as td:
                         root = Path(td)
                         (root / 'docs' / 'temp').mkdir(parents=True)
                         logo = root / 'docs' / 'logos' / 'AsteroidCity_Logo1.mkv'
                         logo.parent.mkdir()
                         logo.write_bytes(b'synthetic logo sentinel')
+                        scripts = root / 'docs/scripts'
+                        scripts.mkdir()
+                        if not missing_validator:
+                            (scripts / 'Validate-Assembly.ps1').write_text('exit ' + str(validator_code) + '\n')
                         for tool in ('mkvtoolnix/mkvmerge', 'ffmpeg/ffmpeg',
                                      'handbrake/HandBrakeCLI', 'avidemux/avidemux_cli'):
                             target = root / 'docs' / 'programs' / (tool + '.exe')
@@ -159,7 +170,8 @@ class WindowsProcessing(unittest.TestCase):
                                                        + pipeline, encoding='utf-8')
                         result = subprocess.run(['cmd.exe', '/d', '/c', 'full.cmd'], cwd=root,
                                                 env=env, capture_output=True, text=True, timeout=30)
-                        self.assertEqual(result.returncode, 2 if fail_at else 1, result.stdout + result.stderr)
+                        rejected = bool(fail_at or validator_code or missing_validator)
+                        self.assertEqual(result.returncode, 2 if rejected else 1, result.stdout + result.stderr)
                         self.assertEqual(source.read_bytes(), b'original synthetic source')
                         self.assertEqual(logo.read_bytes(), b'synthetic logo sentinel')
                         self.assertTrue((root / 'docs' / 'temp' / 'AsteroidCity.mkv').exists())
@@ -167,7 +179,10 @@ class WindowsProcessing(unittest.TestCase):
                         if fail_at:
                             self.assertEqual(len((root / 'called.txt').read_text().splitlines()), 2)
                             self.assertFalse((root / 'docs' / 'temp' / 'AsteroidCity_S.mkv').exists())
+                        elif validator_code or missing_validator:
+                            self.assertTrue((root / 'docs/temp/AsteroidCity_S.mkv').exists())
+                            self.assertFalse((root / 'docs/temp/final-remux.log').exists())
                         else:
-                            self.assertIn('Assembly completeness still needs review', result.stdout)
+                            self.assertIn('independent assembly validation passed', result.stdout)
                             self.assertTrue((root / 'docs' / 'temp' / 'AsteroidCity_S.mkv').exists())
                             self.assertTrue((root / 'docs' / 'temp' / 'final-remux.log').exists())

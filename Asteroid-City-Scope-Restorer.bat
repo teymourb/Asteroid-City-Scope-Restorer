@@ -366,6 +366,8 @@ if %version%==1 (
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_S.mkv"
 	if errorlevel 1 goto stage_failed
+	call :validate_assembly "unmasked" "docs\temp\AsteroidCity_S.mkv"
+	if errorlevel 1 goto stage_failed
 
 
 
@@ -755,6 +757,8 @@ if %version%==1 (
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_S.mkv"
 	if errorlevel 1 goto stage_failed
+	call :validate_assembly "masked" "docs\temp\AsteroidCity_S.mkv"
+	if errorlevel 1 goto stage_failed
 
 
 
@@ -811,7 +815,8 @@ popd
 exit /b 0
 
 :cleanup_incomplete
-echo An output was created. Assembly completeness still needs review.
+echo An output was created; independent assembly validation passed.
+echo Full restoration quality still needs review.
 echo Temporary inputs and logs remain in "%~dp0docs\temp".
 echo Review or move them before starting another restoration.
 PAUSE
@@ -819,6 +824,19 @@ popd
 exit /b 1
 
 :: Processing helpers: never remove predecessors on a failed stage.
+:validate_assembly
+set "stage_name=independent assembly validation: %~1"
+echo Stage: !stage_name!>> "docs\temp\processing.log"
+if not exist "docs\scripts\Validate-Assembly.ps1" (
+ echo Missing assembly validator.>> "docs\temp\processing.log"
+ exit /b 2
+)
+powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "docs\scripts\Validate-Assembly.ps1" -FFmpegPath "docs\programs\ffmpeg\ffmpeg.exe" -AssemblyPath "%~2" -InputListPath "docs\scripts\assembly-inputs-%~1.txt" -WorkDirectory "docs\temp\assembly-validation-%~1" >> "docs\temp\processing.log" 2>&1
+if errorlevel 1 exit /b 2
+if not errorlevel 0 exit /b 2
+exit /b 0
+
+:: Structural output check only; does not qualify media contents.
 :require_stage_output
 setlocal DisableDelayedExpansion
 if not exist "%~1" (endlocal & exit /b 1)

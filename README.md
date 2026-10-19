@@ -105,3 +105,18 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 [Reddit | r/fanedits Program thread](https://www.reddit.com/r/fanedits/comments/199y61n/fanedit_program_asteroid_city_theatrical_scope/)  
 [fanedit.org | Forums Restoration thread](https://forums.fanedit.org/threads/asteroid-city-scope-2-39-1-theatrical-restoration-1080p-program.30268/)  
 [Reddit | r/Bluray Proportions between aspect ratios was changed](https://www.reddit.com/r/Bluray/comments/195op7k/asteroid_city_bluray_the_proportions_between/)  
+
+## Independent assembly check (unreleased)
+
+Before final remux, Windows PowerShell runs the bundled FFmpeg to decode the
+assembled video and each input segment. Ordered SHA256 frame hashes, native
+pixel formats and dimensions must match. This catches missing, repeated or
+reordered decoded frames; missing tools, corrupt inputs and mismatches stop the
+job and retain evidence under `docs/temp/assembly-validation-*`.
+
+This extra full decoding pass adds substantial processing time, without changing
+the restoration's media settings. It does not verify intended cuts, timestamps,
+audio synchronization or HDR metadata. All intermediate files remain for now.
+Keep the `docs/scripts` folder with the launcher; copying the BAT alone is no
+longer sufficient. No additional user-installed runtime is needed beyond stock
+Windows PowerShell and the existing bundled tools.
