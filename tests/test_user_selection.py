@@ -59,7 +59,13 @@ class SelectionWindows(unittest.TestCase):
         trace=self.root/'trace.txt'; env=os.environ.copy(); env['SELECTION_TRACE']=str(trace)
         result=subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(HELPER),'-Film','Asteroid','-Manual','-Launcher',str(child)],input=f'{self.source}\n{self.dest}\n1\nwrong-answer\ny\n',capture_output=True,text=True, encoding='utf-8',timeout=30,env=env)
         self.assertEqual(result.returncode,7,result.stdout+result.stderr)
-        self.assertEqual(trace.read_text(encoding='utf-8').splitlines(),[str(self.source),str(self.dest),'1','y'])
+        recorded = trace.read_text(encoding='utf-8').splitlines()
+        self.assertEqual(len(recorded), 4)
+        # Windows canonicalizes an 8.3 runner directory to its long form.
+        self.assertEqual(Path(recorded[0]).resolve(), self.source.resolve())
+        self.assertEqual(Path(recorded[1]).resolve(), self.dest.resolve())
+        self.assertEqual(Path(recorded[0]).name, 'caf\u00e9 (video) & source.mkv')
+        self.assertEqual(recorded[2:], ['1', 'y'])
         self.assertIn('A file path is not a confirmation',result.stdout)
     def test_selected_entry_without_valid_settings_stops(self):
         env=os.environ.copy()
