@@ -117,3 +117,21 @@ synthetic-first task and does not block maintenance fixes. Real-media
 qualification requires explicit authorization. Resolve package redistribution
 and source-provision questions before preparing a current release candidate;
 publication remains separately approved.
+
+## Assembly-check branch — Windows evidence pending
+
+Adds docs/scripts/Validate-Assembly.ps1 and fixed ordered manifests derived from
+the actual Avidemux arguments. Before final remux it independently decodes all
+inputs and assembled output with bundled FFmpeg, comparing SHA256 rawvideo frame
+records and native per-frame pixel format/geometry. Status/parse/decode/mismatch
+failures preserve all work; evidence is disk-backed under docs/temp. No original
+media commands change, no new runtime is bundled, and automatic cleanup stays off.
+Full decoding adds substantial unmeasured runtime. Timing, HDR metadata, audio,
+intended source edits and full-film quality are outside this pixel-sequence gate.
+
+New tests include actual historical Avidemux/FFmpeg synthetic H.264 and HEVC10
+assemblies, wrong sequences and failed append; multiple-GOP/B-frame clips;
+malformed decoder evidence, corruption, paths, 10-bit and existing evidence.
+CI downloads checksum-locked historical archives and extracts only tool folders.
+No film-derived logo or protected media is used. Local checks pass; current-head
+Windows evidence is required before merge.

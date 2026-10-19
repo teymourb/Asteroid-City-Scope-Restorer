@@ -2,6 +2,11 @@
 
 ## 1.0.2 — unreleased candidate
 
+- Add an independent decoded-frame assembly check before final remux, using
+  bundled FFmpeg and Windows PowerShell. Verify ordered frames, native format
+  and geometry; retain all work and diagnostics. This adds a full decoding pass;
+  timing, audio, HDR metadata and intended edits still need qualification.
+
 - Anchor execution to the launcher folder and refuse an existing temporary
   workspace instead of deleting retained work on restart.
 - Remove wildcard cleanup; preserve unexpected temporary files/subdirectories

@@ -1,0 +1,15 @@
+docs\temp\AsteroidCity_b_Letterboxed.mkv
+docs\logos\AsteroidCity_Logo1.mkv
+docs\temp\AsteroidCity_Logo2_Letterboxed.mkv
+docs\temp\AsteroidCity_2a_Windowboxed.mkv
+docs\temp\AsteroidCity_3s.mkv
+docs\temp\AsteroidCity_4a_Windowboxed.mkv
+docs\temp\AsteroidCity_5s.mkv
+docs\temp\AsteroidCity_6a_Windowboxed.mkv
+docs\temp\AsteroidCity_7s.mkv
+docs\temp\AsteroidCity_8a_Windowboxed.mkv
+docs\temp\AsteroidCity_9s.mkv
+docs\temp\AsteroidCity_10a_Windowboxed.mkv
+docs\temp\AsteroidCity_11s.mkv
+docs\temp\AsteroidCity_12a_Windowboxed.mkv
+docs\temp\AsteroidCity_13s.mkv

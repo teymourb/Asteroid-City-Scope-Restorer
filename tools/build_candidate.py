@@ -31,6 +31,9 @@ OVERLAYS = {
     'PACKAGE-AUDIT-1.0.2.md': 'docs/PACKAGE-AUDIT-1.0.2.md',
     'docs/licenses/HandBrake-GPL-2.0.txt': 'docs/licenses/HandBrake-GPL-2.0.txt',
     'docs/licenses/FFmpeg-GPL-3.0.txt': 'docs/licenses/FFmpeg-GPL-3.0.txt',
+    'docs/scripts/Validate-Assembly.ps1': 'docs/scripts/Validate-Assembly.ps1',
+    'docs/scripts/assembly-inputs-unmasked.txt': 'docs/scripts/assembly-inputs-unmasked.txt',
+    'docs/scripts/assembly-inputs-masked.txt': 'docs/scripts/assembly-inputs-masked.txt',
 }
 
 
