@@ -2,6 +2,12 @@
 
 ## 1.0.2 — unreleased candidate
 
+- Replace legacy VBScript/mshta selection and ambiguous yes/no prompts with a
+  shared PowerShell setup: validated source/output paths, explicit dialog
+  cancellation/failure fallback, mode selection, final confirmation and quit.
+  Setup completes before temporary work is created. Unsupported CMD path
+  characters are rejected explicitly. Show stage activity and actionable errors.
+
 - Add an independent decoded-frame assembly check before final remux, using
   bundled FFmpeg and Windows PowerShell. Verify ordered frames, native format
   and geometry; retain all work and diagnostics. This adds a full decoding pass;
@@ -23,7 +29,7 @@
 
 Cuts, encoder arguments, transforms, stream-selection arguments, and successful
 output filenames are unchanged. This is not comprehensive output validation or
-resumable-job support. Earlier stages retain their legacy failure/cleanup behavior.
+resumable-job support. All processing stages have status/output gates and preserve work on failure.
 
 ## 1.0.1 — 2024-07-10
 

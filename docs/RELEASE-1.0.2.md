@@ -1,26 +1,26 @@
 # Proposed release 1.0.2 — not published
 
-Fixes a late failure in the unmasked restoration when you enter the output folder
-manually. Both restoration modes now retain their assembled video when final
-muxing fails or reports warnings, with details in `docs/temp/final-remux.log`.
-They also stop if the final output is missing or empty.
+This maintenance update adds clearer source/output/mode setup with validation,
+dialog cancellation/error handling, manual path fallback and final confirmation.
+No workspace is created until selection is complete. Use simple folder names;
+unsupported CMD path characters are rejected explicitly. Visible stage messages
+explain when tool details are being written to logs.
 
-On a warning or failure, copy the retained assembled video and log somewhere safe
-before restarting: the existing startup routine clears temporary files. A file
-left in the destination after an error may be incomplete and must not be used.
-A warning result needs inspection. There is no automatic resume function yet.
+Preparation, splitting, encoding, assembly and final muxing stop on errors or
+missing/empty outputs. Independent decoded-frame assembly validation checks the
+ordered frames, native format and geometry before final remux. It does not prove
+intended edits, timing, HDR metadata, audio/subtitle handling or synchronization.
 
-The required source edition, cuts, framing, encoding settings, audio/subtitle
-selection and successful output filenames are unchanged. Windows remains the
-only application target; this patch does not add macOS/Linux support.
+All intermediate videos and logs remain even after output creation. Disk use is
+substantially greater than the historical release; peak use is not yet measured.
+Do not restart or delete work after a failure: preserve processing.log and
+final-remux.log for troubleshooting. Startup refuses existing docs/temp instead
+of deleting it. Automatic resume is not implemented.
 
-Windows Server 2022 regression and synthetic-media tests pass (all six test
-methods; see PACKAGE-AUDIT-1.0.2.md for evidence and coverage). Publication is pending
-audit and targeted qualification of the actual downloadable package/tool version,
-resolution of the source/redistribution gaps in PACKAGE-AUDIT-1.0.2.md and owner
-approval. A local review candidate is prepared using the audited original tools;
-see its adjacent manifest for the exact source commit, checksum and contents. Existing releases
-remain available. See DEVELOPMENT.md for exact evidence and limitations.
+Film cuts, framing, encoder arguments, stream selection and successful output
+filenames remain unchanged. Windows is the only supported application target.
+See DEVELOPMENT.md for exact Windows evidence and qualification limitations.
 
-The candidate uses ZIP packaging and removes unused copied-installation
-uninstallers. Existing processing binaries are retained byte-for-byte.
+Publication remains gated on full-film qualification, package provenance and
+redistribution questions in PACKAGE-AUDIT-1.0.2.md, and explicit owner approval.
+Historical tools remain unchanged; no current public package has been published.
