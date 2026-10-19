@@ -36,6 +36,22 @@ and successful output names remain unchanged.
 - Explicit exits restore the caller directory. Generic helpers match BvS;
   film-specific processing remains separate. There is no automatic resume.
 
+## User interaction update — pending Windows evidence
+
+- Shared PowerShell 5.1 setup replaces VBScript/mshta and ambiguous yes/no
+  selection prompts. Source, destination, mode and final confirmation are
+  validated before docs/temp is created. Dialog cancellation/failure offers
+  manual entry or quit; existing outputs and workspaces are preserved.
+- Unicode, spaces, ampersands, parentheses and brackets are supported by
+  inherited environment transport; !, %, ^ and invalid/control characters
+  are explicitly refused while the legacy batch body still uses expansion.
+- Console stage messages explain quiet tool progress; failures direct users to
+  preserved logs and discourage repeating expensive encoding prematurely.
+- Exact processing-command digest remains unchanged. Native Windows tests add
+  actual helper-to-child transport, both complete synthetic pipeline branches,
+  cancellation, invalid confirmation and existing-output protection. No film
+  processing or desktop dialog qualification is claimed by these fixtures.
+
 ## Authorization and workflow
 
 The owner approved maintenance/refactoring, useful parallel work, source-only

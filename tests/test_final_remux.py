@@ -78,13 +78,16 @@ class WindowsRemux(unittest.TestCase):
         cls.build_dir.cleanup()
 
     def run_block(self, root, mode, dialog, dialog2, stub_code=0, missing=False,
-                  empty=False, no_output=False, real_tool=None, source=None, assembled=None):
+                  empty=False, no_output=False, real_tool=None, source=None, assembled=None, existing_output=False):
         temp = root / 'docs' / 'temp'
         tools = root / 'docs' / 'programs' / 'mkvtoolnix'
         temp.mkdir(parents=True)
         tools.mkdir(parents=True)
         output_dir = root / 'output with spaces'
         output_dir.mkdir()
+        if existing_output:
+            name = 'Asteroid City Theatrical Scope Restoration (' + ('unmasked' if mode == 1 else 'masked') + ').mkv'
+            (output_dir / name).write_bytes(b'preserve late output')
         source_path = root / 'source with spaces.mkv'
         intermediate = temp / 'AsteroidCity_S.mkv'
         if source:
@@ -120,6 +123,19 @@ class WindowsRemux(unittest.TestCase):
                                 env=env, capture_output=True, text=True, timeout=30)
         self.assertEqual(source_path.read_bytes(), before)
         return result, intermediate, root / 'args.txt', output_dir
+
+    def test_existing_destination_stops_all_remux_branches(self):
+        for mode, dialog, dialog2 in itertools.product((1, 2), ('y', 'n'), ('y', 'n')):
+            with self.subTest(mode=mode, dialog=dialog, dialog2=dialog2), tempfile.TemporaryDirectory() as folder:
+                result, intermediate, args_path, output_dir = self.run_block(
+                    Path(folder), mode, dialog, dialog2, existing_output=True)
+                self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+                self.assertFalse(args_path.exists())
+                self.assertTrue(intermediate.exists())
+                outputs = list(output_dir.iterdir())
+                self.assertEqual(len(outputs), 1)
+                self.assertEqual(outputs[0].read_bytes(), b'preserve late output')
+                self.assertIn('has not been overwritten', result.stdout)
 
     def test_branch_and_exit_status_matrix(self):
         for mode, dialog, dialog2, code in itertools.product((1, 2), ('y', 'n'), ('y', 'n'), (0, 1, 2, 9, -1073741819)):
