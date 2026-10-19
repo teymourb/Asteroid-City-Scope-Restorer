@@ -20,7 +20,7 @@ Choose between 2 **constant-height** Scope Restorations:
 
 #### REQUIREMENTS:  
 - An unaltered .mkv rip of the Blu-ray disc *Asteroid City*
-- 50 GB of free space (not including the source .mkv file)
+- Published version: 50 GB of free space, excluding the source. The unreleased maintenance version retains intermediate videos and requires substantially more; peak use has not yet been measured.
 
 > [!WARNING]
 > No other version will work with this program! You are free to keep whichever audio and subtitle tracks you wish when ripping your disc. Only the video track needs to be the same.
@@ -29,7 +29,7 @@ Choose between 2 **constant-height** Scope Restorations:
 
 #### INSTRUCTIONS:  
 - Download the versioned application archive from Releases. GitHub Source code archives do not include the processing executables.
-- Extract the complete application folder to a drive with at least 50 GB of free space
+- Extract the complete application folder to a drive with room for the prepared video, raw and encoded segments, assembled video and final output. The unreleased maintenance version retains all of these; the historical free-space figure above is not its storage requirement.
 - Launch *Asteroid-City-Scope-Restorer.bat* from the extracted application folder
 - Select your source rip .mkv file when prompted  
 - Select your destination folder for the output file  
