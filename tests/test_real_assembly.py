@@ -126,5 +126,11 @@ class RealAssembly(unittest.TestCase):
                 pieces.append(piece)
             output = root / 'split-assembly.mkv'
             self.assemble(pieces, output)
-            result, _ = self.validate(root, pieces, output, 'later-gop')
-            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            result, work = self.validate(root, pieces, output, 'later-gop')
+            diagnostics = []
+            if result.returncode:
+                for log in work.glob('*.stderr.log'):
+                    errors = [line for line in log.read_text(errors='replace').splitlines()
+                              if any(level in line for level in ('[error]', '[fatal]', '[panic]'))]
+                    diagnostics += [log.name] + errors[:12]
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr + '\n'.join(diagnostics))
