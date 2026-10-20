@@ -20,9 +20,25 @@ owner review; resolve the gaps below before public distribution.
 The FFmpeg configuration resembles a BtbN build, but this is only an inference.
 Its exact distributor, dependency source set and build recipe have not been
 verified. The embedded FFmpeg commit alone is not the complete corresponding
-source for this statically linked binary and all enabled components. HandBrake's
-exact executable provenance also remains unverified. Source submodule pointers
-in the restorer repository are not proof of matching binary source.
+source for this statically linked binary and all enabled components. HandBrakeCLI
+1.6.1's retained executable is byte-identical to the official upstream Windows
+x86_64 CLI release (SHA256
+`3ba066c1b962f5bfe56edf54e11b74ccd729aa14133583d26cb37c7566e647ca`).
+Its upstream signature was downloaded but not cryptographically verified. This
+establishes executable correspondence, not complete dependency-source provision.
+The official CLI archive also contains notices missing from the old tool folder;
+they are retained byte-for-byte under docs/programs/handbrake/doc in this full rebuild. Source submodule pointers in the restorer
+repository are not proof of matching binary source. Official artifact:
+https://github.com/HandBrake/HandBrake/releases/download/1.6.1/HandBrakeCLI-1.6.1-win-x86_64.zip
+
+A subsequent static comparison with the official Avidemux 2.8.1 Windows
+installer matched 416 retained runtime files, including avidemux_cli.exe, DLLs
+and plugins, byte-for-byte. The installer and official source tarball both match
+the upstream SHA256 sidecar. The other seven retained Avidemux files are an
+installation log, generated uninstall/configuration files and the retained
+license text; they are not conflicting runtime executables. Complete dependency
+source/build correspondence is still being inventoried. No installer was run.
+Upstream: https://github.com/mean00/avidemux2/releases/tag/2.8.1
 
 The public package includes docs/logos/AsteroidCity_Logo1.mkv. Its legacy release
 notes identify a Focus Features logo sourced from another commercial Blu-ray.
