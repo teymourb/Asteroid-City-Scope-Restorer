@@ -14,7 +14,7 @@ STARTUP = '@echo off\nsetlocal DisableDelayedExpansion\n' + TEXT.split('call :pr
 STARTUP = STARTUP.replace('\nif errorlevel 1 exit /b 2', 'call :prepare_workspace\nif errorlevel 1 exit /b 2', 1)
 # Only ownership helpers are under test here; preserve literal ! in cwd traces.
 STARTUP = STARTUP.replace('setlocal EnableDelayedExpansion\n', '')
-SUCCESS = TEXT[TEXT.index('echo Restoration complete.'):].split(':: Workspace helpers:', 1)[0]
+SUCCESS = TEXT[TEXT.index('echo [OK] Restoration complete.'):].split(':: Workspace helpers:', 1)[0]
 HELPERS = TEXT.split(':: Workspace helpers:', 1)[1].split('\n:remux_warning', 1)[0]
 HANDLERS = ':remux_warning' + TEXT.split('\n:remux_warning', 1)[1]
 

@@ -162,8 +162,7 @@ class WindowsSelection(unittest.TestCase):
                 self.assertIn(name, result.stdout.split('Restoration complete.', 1)[1])
                 self.assertEqual(source.read_bytes(), b'synthetic original')
                 self.assertFalse((install / 'docs/temp/assembly-check.txt').exists())
-                for label in ('Source size:', 'Available space (working drive):',
-                              'Available space (destination drive):', 'share the same free-space pool'):
+                for label in ('Source size:', 'Available space (working files and final output):', 'share this available space'):
                     self.assertIn(label, result.stdout)
                 self.assertTrue((install / 'docs/temp/processing.log').exists())
 

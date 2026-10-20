@@ -2,7 +2,10 @@
 setlocal DisableDelayedExpansion
 if "%~1"=="--selected" goto selected_entry
 if not exist "%~dp0docs\scripts\Select-Restoration.ps1" (
-    echo Setup helper is missing. Extract the complete updated program folder.
+    echo.
+    echo ================================================================
+    echo [STOP] Setup helper is missing. Extract the complete updated program folder.
+    echo ================================================================
     pause
     exit /b 2
 )
@@ -17,20 +20,28 @@ if errorlevel 1 exit /b 2
 call :prepare_workspace
 if errorlevel 1 exit /b 2
 if not exist "docs\scripts\Test-SourceFingerprint.ps1" (
-    echo Source-check helper is missing. Extract the complete updated program folder.
+    echo.
+    echo ================================================================
+    echo [STOP] Source-check helper is missing. Extract the complete updated program folder.
+    echo ================================================================
     pause
     exit /b 2
 )
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "docs\scripts\Test-SourceFingerprint.ps1" -Film Asteroid -Source "%file%" -WorkDirectory "docs\temp"
 set "fingerprint_result=%errorlevel%"
 if not "%fingerprint_result%"=="0" (
-    echo Source verification did not complete successfully. Processing has stopped.
+    echo.
+    echo ================================================================
+    echo [STOP] Source verification did not complete successfully. Processing has stopped.
+    echo ================================================================
     pause
     exit /b 2
 )
 setlocal EnableDelayedExpansion
 
 ::Making sure setup is confirmed before any processing starts.
+echo.
+echo ----------------------------------------------------------------
 echo Processing started. Keep this window open and the PC awake.
 echo Detailed tool progress: docs\temp\processing.log
 echo Copying and encoding can take a long time. Detailed progress is saved in the log.
@@ -42,6 +53,8 @@ if %version%==1 (
 
 	if %dialog%==y (
 		set "stage_name=mkvmerge docs\temp\AsteroidCity.mkv"
+		echo.
+		echo ----------------------------------------------------------------
 		echo [!time!] Preparing a video-only working copy; the original source is unchanged.
 		echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -54,6 +67,8 @@ if %version%==1 (
 		if errorlevel 1 goto stage_failed
 	) else if %dialog%==n (
 		set "stage_name=mkvmerge docs\temp\AsteroidCity.mkv"
+		echo.
+		echo ----------------------------------------------------------------
 		echo [!time!] Preparing a video-only working copy; the original source is unchanged.
 		echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -68,6 +83,8 @@ if %version%==1 (
 
 	::Extracting 6 unaltered (Scope) files
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_3s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -78,6 +95,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_3s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_5s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -88,6 +107,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_5s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_7s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -98,6 +119,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_7s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_9s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -108,6 +131,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_9s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_11s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -118,6 +143,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_11s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_13s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -128,6 +155,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_13s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_b.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -140,6 +169,8 @@ if %version%==1 (
 
 	echo Letterboxing AsteroidCity_b.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_b_Letterboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -150,6 +181,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_b_Letterboxed.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_Logo2.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -162,6 +195,8 @@ if %version%==1 (
 
 	echo Letterboxing AsteroidCity_Logo2.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_Logo2_Letterboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -172,6 +207,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_Logo2_Letterboxed.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_2a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -184,6 +221,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_2a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_2a_Windowboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -194,6 +233,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_2a_Windowboxed.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_4a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -206,6 +247,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_4a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_4a_Windowboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -216,6 +259,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_4a_Windowboxed.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_6a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -228,6 +273,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_6a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_6a_Windowboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -238,6 +285,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_6a_Windowboxed.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_8a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -250,6 +299,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_8a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_8a_Windowboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -260,6 +311,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_8a_Windowboxed.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_10a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -272,6 +325,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_10a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_10a_Windowboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -282,6 +337,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_10a_Windowboxed.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_12a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -294,6 +351,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_12a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_12a_Windowboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -342,6 +401,8 @@ if %version%==1 (
 	if errorlevel 1 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_13s.mkv"
 	if errorlevel 1 goto stage_failed
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Joining the completed video sections in order.
 	echo Working file: !stage_name!
 	echo Assembly diagnostics and any questions appear in this window, not processing.log.
@@ -360,6 +421,8 @@ if %version%==1 (
 
 
 	::Merging altered video with source rip, keeping only video track of the first and all but video track of the latter for the output file
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Creating the final file with original audio and subtitles.
 	echo Remuxing audio and subtitles
 	set "hello=Asteroid City Theatrical Scope Restoration (unmasked).mkv"
@@ -403,6 +466,8 @@ if %version%==1 (
 
 	if %dialog%==y (
 		set "stage_name=mkvmerge docs\temp\AsteroidCity.mkv"
+		echo.
+		echo ----------------------------------------------------------------
 		echo [!time!] Preparing a video-only working copy; the original source is unchanged.
 		echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -415,6 +480,8 @@ if %version%==1 (
 		if errorlevel 1 goto stage_failed
 	) else if %dialog%==n (
 		set "stage_name=mkvmerge docs\temp\AsteroidCity.mkv"
+		echo.
+		echo ----------------------------------------------------------------
 		echo [!time!] Preparing a video-only working copy; the original source is unchanged.
 		echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -429,6 +496,8 @@ if %version%==1 (
 
 	::Extracting 12 files
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_2a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -439,6 +508,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_2a.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_3s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -449,6 +520,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_3s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_4a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -459,6 +532,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_4a.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_5s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -469,6 +544,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_5s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_6a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -479,6 +556,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_6a.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_7s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -489,6 +568,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_7s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_8a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -499,6 +580,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_8a.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_9s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -509,6 +592,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_9s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_10a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -519,6 +604,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_10a.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_11s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -529,6 +616,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_11s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_12a.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -539,6 +628,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_12a.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_13s.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -549,6 +640,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_13s.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_b.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -559,6 +652,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_b.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_b_Cropped.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -572,6 +667,8 @@ if %version%==1 (
 
 	::Encoding(cropping) Logo 1
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_Logo1_Cropped.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -582,6 +679,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_Logo1_Cropped.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=ffmpeg docs\temp\AsteroidCity_Logo2.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -592,6 +691,8 @@ if %version%==1 (
 	call :require_stage_output "docs\temp\AsteroidCity_Logo2.mkv"
 	if errorlevel 1 goto stage_failed
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_Logo2_Cropped.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -606,6 +707,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_3s.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_3s_Cropped.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -619,6 +722,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_5s.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_5s_Cropped.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -632,6 +737,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_7s.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_7s_Cropped.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -645,6 +752,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_9s.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_9s_Cropped.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -658,6 +767,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_11s.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_11s_Cropped.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -671,6 +782,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_13s.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_13s_Cropped.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -684,6 +797,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_2a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_2a_Pillarboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -697,6 +812,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_4a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_4a_Pillarboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -710,6 +827,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_6a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_6a_Pillarboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -723,6 +842,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_8a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_8a_Pillarboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -736,6 +857,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_10a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_10a_Pillarboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -749,6 +872,8 @@ if %version%==1 (
 
 	echo Windowboxing AsteroidCity_12a.mkv
 	set "stage_name=HandBrakeCLI docs\temp\AsteroidCity_12a_Pillarboxed.mkv"
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
@@ -793,6 +918,8 @@ if %version%==1 (
 	if errorlevel 1 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_13s_Cropped.mkv"
 	if errorlevel 1 goto stage_failed
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Joining the completed video sections in order.
 	echo Working file: !stage_name!
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
@@ -808,6 +935,8 @@ if %version%==1 (
 
 
 	::Merging altered video with source rip, keeping only video track of the first and all but video track of the latter for the output file
+	echo.
+	echo ----------------------------------------------------------------
 	echo [!time!] Creating the final file with original audio and subtitles.
 	echo Remuxing audio and subtitles
 	set "hello=Asteroid City Theatrical Scope Restoration (masked).mkv"
@@ -853,7 +982,9 @@ if %version%==1 (
 )
 
 echo.
-echo Restoration complete.
+echo ================================================================
+echo [OK] Restoration complete.
+echo ================================================================
 echo Output: "%completed_output%"
 echo The final MKV contains the restored video and the selected original audio and subtitles.
 echo Working files and logs remain in "%~dp0docs\temp".
@@ -872,7 +1003,10 @@ for %%F in ("%~1") do if %%~zF EQU 0 (endlocal & exit /b 1)
 endlocal & exit /b 0
 
 :stage_warning
-echo Source preparation completed with warnings. Processing has stopped.
+echo.
+echo ================================================================
+echo [STOP] Source preparation completed with warnings. Processing has stopped.
+echo ================================================================
 echo Stage: !stage_name!
 echo NEXT: keep this window open and save docs\temp\processing.log for troubleshooting.
 echo Do not restart or delete temporary files; completed work may be reusable.
@@ -881,7 +1015,10 @@ popd
 exit /b 1
 
 :stage_failed
-echo STOP: a processing stage failed, or an expected output is missing or empty.
+echo.
+echo ================================================================
+echo [STOP] a processing stage failed, or an expected output is missing or empty.
+echo ================================================================
 echo Stage: !stage_name!
 echo Any partial output is untrusted. Temporary inputs have been preserved.
 echo NEXT: keep this window open and save docs\temp\processing.log for troubleshooting.
@@ -895,16 +1032,25 @@ exit /b 2
 rem Caller owns environment scope; keep pushd active until the final popd.
 pushd "%~dp0"
 if errorlevel 1 (
-    echo Cannot open the restorer program folder. Processing has not started.
+    echo.
+    echo ================================================================
+    echo [STOP] Cannot open the restorer program folder. Processing has not started.
+    echo ================================================================
     exit /b 2
 )
 if not exist "docs\" (
-    echo The docs folder is missing. Extract the complete application archive.
+    echo.
+    echo ================================================================
+    echo [STOP] The docs folder is missing. Extract the complete application archive.
+    echo ================================================================
     popd
     exit /b 2
 )
 if exist "docs\temp" (
-    echo STOP: an existing workspace was found at "%~dp0docs\temp".
+    echo.
+    echo ================================================================
+    echo [STOP] an existing workspace was found at "%~dp0docs\temp".
+    echo ================================================================
     echo Preserve or move that folder before starting another restoration.
     echo No existing temporary files have been deleted.
     popd
@@ -912,7 +1058,10 @@ if exist "docs\temp" (
 )
 mkdir "docs\temp"
 if errorlevel 1 (
-    echo Cannot create the temporary workspace. Processing has not started.
+    echo.
+    echo ================================================================
+    echo [STOP] Cannot create the temporary workspace. Processing has not started.
+    echo ================================================================
     popd
     exit /b 2
 )
@@ -921,7 +1070,10 @@ exit /b 0
 
 
 :remux_warning
-echo Final remux completed with warnings. The output needs review.
+echo.
+echo ================================================================
+echo [STOP] Final remux completed with warnings. The output needs review.
+echo ================================================================
 echo The assembled video is retained at docs\temp\AsteroidCity_S.mkv
 echo Details are in docs\temp\final-remux.log
 echo A new run will preserve this folder and stop until you move it aside.
@@ -931,7 +1083,10 @@ popd
 exit /b 1
 
 :remux_failed
-echo Final remux failed. Any destination output may be incomplete; do not use it.
+echo.
+echo ================================================================
+echo [STOP] Final remux failed. Any destination output may be incomplete; do not use it.
+echo ================================================================
 echo The assembled video is retained at docs\temp\AsteroidCity_S.mkv
 echo Details are in docs\temp\final-remux.log
 echo A new run will preserve this folder and stop until you move it aside.
@@ -941,7 +1096,10 @@ popd
 exit /b 2
 
 :output_exists
-echo STOP: a file appeared at the final output path after setup.
+echo.
+echo ================================================================
+echo [STOP] a file appeared at the final output path after setup.
+echo ================================================================
 echo It has not been overwritten. Completed processing files and logs are retained.
 echo NEXT: preserve both files and request help selecting a new output name.
 echo Do not restart encoding or delete the workspace.

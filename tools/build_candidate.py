@@ -23,6 +23,13 @@ OMIT = {
     'docs/programs/mkvtoolnix/uninst.exe',
 }
 OVERLAYS = {
+    'docs/programs/handbrake/doc/LICENSE': 'docs/licenses/HandBrake-1.6.1/LICENSE',
+    'docs/programs/handbrake/doc/README.markdown': 'docs/licenses/HandBrake-1.6.1/README.markdown',
+    'docs/programs/handbrake/doc/THANKS.markdown': 'docs/licenses/HandBrake-1.6.1/THANKS.markdown',
+    'docs/programs/handbrake/doc/AUTHORS.markdown': 'docs/licenses/HandBrake-1.6.1/AUTHORS.markdown',
+    'docs/programs/handbrake/doc/COPYING': 'docs/licenses/HandBrake-1.6.1/COPYING',
+    'docs/programs/handbrake/doc/NEWS.markdown': 'docs/licenses/HandBrake-1.6.1/NEWS.markdown',
+
     'Asteroid-City-Scope-Restorer.bat': 'Asteroid-City-Scope-Restorer.bat',
     'README.md': 'README.md',
     'CHANGELOG.md': 'CHANGELOG.md',
@@ -49,6 +56,30 @@ def inventory(root):
             for p in sorted(root.rglob('*')) if p.is_file()}
 
 
+def preflight(tar, baseline):
+    """Reject escapes, duplicates, links and special entries BEFORE extraction."""
+    names = subprocess.check_output([tar, '-tf', str(baseline)], text=True).splitlines()
+    details = subprocess.check_output([tar, '-tvf', str(baseline)], text=True).splitlines()
+    if not names or len(names) != len(details):
+        raise RuntimeError('archive listing cannot be verified')
+    seen = set()
+    for name, detail in zip(names, details):
+        clean = name.rstrip('/')
+        parts = clean.split('/')
+        if (not clean or '\\' in name or name.startswith('/') or
+                any(ord(c) < 32 or ord(c) == 127 for c in name) or
+                any(p in ('', '.', '..') or ':' in p for p in parts) or
+                parts[0] != BASELINE_ROOT):
+            raise RuntimeError('unsafe archive path: ' + repr(name))
+        folded = clean.casefold()
+        if folded in seen:
+            raise RuntimeError('duplicate/case-colliding archive path: ' + repr(name))
+        seen.add(folded)
+        if not detail or detail[0] not in '-d' or ' -> ' in detail or ' link to ' in detail:
+            raise RuntimeError('archive contains a link or unsupported entry: ' + repr(name))
+    return len(names)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('baseline', type=Path)
@@ -67,6 +98,7 @@ def main():
     tar = shutil.which('bsdtar')
     if not tar:
         parser.error('bsdtar is required; no tool will be installed automatically')
+    preflight(tar, baseline)
     with tempfile.TemporaryDirectory(prefix='asteroid-candidate-') as folder:
         scratch = Path(folder)
         subprocess.run([tar, '-xf', str(baseline), '-C', str(scratch),
@@ -91,7 +123,8 @@ def main():
         changed = sorted(p for p in before.keys() & after.keys() if before[p] != after[p])
         added = sorted(after.keys() - before.keys())
         removed = sorted(before.keys() - after.keys())
-        if changed != ['Asteroid-City-Scope-Restorer.bat', 'README.md'] or set(removed) != OMIT:
+        if (not set(changed) <= OVERLAYS.keys() or set(removed) != OMIT or
+                set(added) != OVERLAYS.keys() - before.keys()):
             raise RuntimeError('unexpected package delta')
         for rel in before:
             if rel.startswith('docs/programs/') and rel not in OMIT:
