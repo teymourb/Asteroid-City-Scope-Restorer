@@ -117,7 +117,7 @@ handling and evidence; it does not fix legacy codec/join compatibility.
 Run the BAT and select source, existing output folder, restoration mode and an
 explicit check level before confirming:
 
-- **Routine:** tool exit statuses and required nonempty outputs are checked.
+- **Basic (routine):** tool exit statuses and required nonempty outputs are checked.
   The decoded-frame assembly comparison is **NOT RUN**. This cannot establish
   pristine joins, complete picture identity, timestamps, HDR or synchronization.
 - **Exhaustive:** additionally decode the assembly and ordered sections and
@@ -129,8 +129,8 @@ explicit check level before confirming:
 FFmpeg does not accept accidental keyboard commands during splitting. Avidemux
 runs visibly in the console so its codec-compatibility questions can be answered
 explicitly. A warning remains unresolved even if you choose to continue. Full
-Avidemux diagnostics appear in the console; processing.log records its stage and
-status, not a complete assembly transcript. Other processing diagnostics and
+Avidemux diagnostics appear in the console; processing.log records its stage
+marker, not a complete assembly transcript. Other processing diagnostics and
 validation reports remain in docs/temp; final mux logs are in final-remux.log.
 
 Tool failures or missing/empty outputs stop the job. The bundled Avidemux may
