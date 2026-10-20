@@ -157,6 +157,7 @@ class WindowsSelection(unittest.TestCase):
                 self.assertIn('Restoration complete.', result.stdout)
                 name = 'Asteroid City Theatrical Scope Restoration (' + ('unmasked' if mode == '1' else 'masked') + ').mkv'
                 self.assertTrue((destination / name).is_file(), result.stdout + result.stderr)
+                self.assertIn(name, result.stdout.split('Restoration complete.', 1)[1])
                 self.assertEqual(source.read_bytes(), b'synthetic original')
                 self.assertFalse((install / 'docs/temp/assembly-check.txt').exists())
                 for label in ('Source size:', 'Available space (working drive):',
