@@ -32,7 +32,7 @@ before restoration. It reads and temporarily extracts the compressed video; it
 does not decode or encode it. Unsupported sources or check failures stop the run.
 The check itself needs room for one extracted video track. See
 [the fingerprint recipe and limitations](docs/SOURCE-FINGERPRINT.md). Final Windows
-qualification of this new check is pending; this is not a new published download.
+qualification is recorded in the source pull request; this is not a new published download.
 
 #### INSTRUCTIONS:  
 - Download the versioned application archive from Releases. GitHub Source code archives do not include the processing executables.
@@ -146,8 +146,8 @@ a safe location; an existing workspace or destination output is never replaced.
 
 Spaces, Unicode, ampersands, brackets and parentheses are supported in selected
 paths. Legacy batch paths containing `!`, `%`, `^`, embedded quotes or control
-characters are rejected with guidance. Source identity is not automatically
-verified; the required disc video track described above is still essential.
+characters are rejected with guidance. The mandatory fingerprint check recognizes the supported video track;
+it does not qualify output timing, joins or HDR preservation.
 
 Published 1.0.1 downloads remain unchanged. No new encoding/join engine is
 introduced. Local source-only candidates contain no processing tools or media;
