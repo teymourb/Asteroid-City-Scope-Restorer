@@ -35,7 +35,7 @@ Choose between 2 **constant-height** Scope Restorations:
 - Choose restoration 1 or 2, review the source, destination, mode and storage summary, then explicitly confirm before processing. Type Q to leave setup without creating temporary work.
 - Keep the PC awake during processing. Stage names appear in the console; detailed tool progress is recorded in the logs. A quiet console does not necessarily mean processing has stopped.
 - The unreleased launcher requires Windows PowerShell 5.1 with its standard Windows Forms support. Paths containing unsupported CMD characters (including !, % and ^) are refused with guidance instead of risking incorrect processing. Use a simple folder name for this version.
-- In the unreleased version 1.0.2, source preparation, splitting and encoding stop on reported errors or missing/empty outputs. Progress and diagnostics are in `docs/temp/processing.log`; final-remux diagnostics are in `docs/temp/final-remux.log`. All intermediate videos and logs remain for review, even when an output is created, because Avidemux does not reliably report append/save failures. A final output must be checked for completeness. This uses substantially more disk space. After review, move or manually remove `docs/temp` before another run; startup preserves any existing workspace. A destination file left after an error may be incomplete. An independent decoded-frame check verifies assembly order, format and geometry before final remux; it does not establish intended edits, timing, HDR metadata or audio synchronization. Automatic resume is not implemented.
+- In the unreleased version 1.0.2, source preparation, splitting and encoding stop on reported errors or missing/empty outputs. Progress and diagnostics are in `docs/temp/processing.log`; final-remux diagnostics are in `docs/temp/final-remux.log`. All intermediate videos and logs remain for review, even when an output is created, because Avidemux does not reliably report append/save failures. A final output must be checked for completeness. This uses substantially more disk space. After review, move or manually remove `docs/temp` before another run; startup preserves any existing workspace. A destination file left after an error may be incomplete. An explicit routine/exhaustive choice controls decoded-frame comparison; routine records NOT RUN, exhaustive compares frames before final remux. Neither establishes intended edits, timing, HDR metadata or audio synchronization. Automatic resume is not implemented.
 
 <br>
 
@@ -107,17 +107,45 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 [fanedit.org | Forums Restoration thread](https://forums.fanedit.org/threads/asteroid-city-scope-2-39-1-theatrical-restoration-1080p-program.30268/)  
 [Reddit | r/Bluray Proportions between aspect ratios was changed](https://www.reddit.com/r/Bluray/comments/195op7k/asteroid_city_bluray_the_proportions_between/)  
 
-## Independent assembly check (unreleased)
+## Maintenance candidate 1.0.2 — not published
 
-Before final remux, Windows PowerShell runs the bundled FFmpeg to decode the
-assembled video and each input segment. Ordered SHA256 frame hashes, native
-pixel formats and dimensions must match. This catches missing, repeated or
-reordered decoded frames; missing tools, corrupt inputs and mismatches stop the
-job and retain evidence under `docs/temp/assembly-validation-*`.
+The film-processing recipe is preserved: the same cut points, crops/scaling,
+HandBrake encoding settings, Avidemux section order and copy-mode assembly.
+Processing tool versions are unchanged. This update improves setup, failure
+handling and evidence; it does not fix legacy codec/join compatibility.
 
-This extra full decoding pass adds substantial processing time, without changing
-the restoration's media settings. It does not verify intended cuts, timestamps,
-audio synchronization or HDR metadata. All intermediate files remain for now.
-Keep the `docs/scripts` folder with the launcher; copying the BAT alone is no
-longer sufficient. No additional user-installed runtime is needed beyond stock
-Windows PowerShell and the existing bundled tools.
+Run the BAT and select source, existing output folder, restoration mode and an
+explicit check level before confirming:
+
+- **Basic (routine):** tool exit statuses and required nonempty outputs are checked.
+  The decoded-frame assembly comparison is **NOT RUN**. This cannot establish
+  pristine joins, complete picture identity, timestamps, HDR or synchronization.
+- **Exhaustive:** additionally decode the assembly and ordered sections and
+  compare every decoded frame's fingerprint, pixel format and geometry. This
+  can take many hours. It still does not qualify intended edits, timing, HDR,
+  source identity or universal player compatibility. During decoding, progress
+  messages appear and the console offers Q to stop while retaining evidence.
+
+FFmpeg does not accept accidental keyboard commands during splitting. Avidemux
+runs visibly in the console so its codec-compatibility questions can be answered
+explicitly. A warning remains unresolved even if you choose to continue. Full
+Avidemux diagnostics appear in the console; processing.log records its stage
+marker, not a complete assembly transcript. Other processing diagnostics and
+validation reports remain in docs/temp; final mux logs are in final-remux.log.
+
+Tool failures or missing/empty outputs stop the job. The bundled Avidemux may
+return success after an incomplete save, so routine checks alone cannot prove
+assembly completeness. Check the selected level and assembly-check.txt; a NOT RUN
+record is never a PASS. Final completion still requests review and retains work.
+
+All intermediates remain, including after final output creation. Prepared video,
+raw/encoded sections, assembly and output may coexist; free-space figures are
+not a guarantee the job fits. There is no automatic resume or cleanup. A new run
+refuses an existing docs/temp or output. Keep completed encodes/logs after errors.
+
+Dialogs support cancel, manual path entry and quit. Spaces, Unicode, ampersands,
+brackets and parentheses are supported. Legacy batch paths containing !, %, ^,
+embedded quotes or control characters are rejected with guidance.
+Published 1.0.1 downloads remain unchanged. No source fingerprint registry or
+new encoding/join engine is introduced. Local source-only candidates require a
+separate complete trusted historical installation; they contain no tools/media.

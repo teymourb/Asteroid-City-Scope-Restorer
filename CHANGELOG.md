@@ -8,10 +8,13 @@
   Setup completes before temporary work is created. Unsupported CMD path
   characters are rejected explicitly. Show stage activity and actionable errors.
 
-- Add an independent decoded-frame assembly check before final remux, using
-  bundled FFmpeg and Windows PowerShell. Verify ordered frames, native format
-  and geometry; retain all work and diagnostics. This adds a full decoding pass;
-  timing, audio, HDR metadata and intended edits still need qualification.
+- Offer an explicit routine/exhaustive check choice. Exhaustive checks compare
+  decoded frames, native format and geometry before final remux and can take
+  many hours; routine records NOT RUN. Neither proves timing, HDR, source
+  identity, intended edits or universal playback. Retain all work and reports.
+- Disable accidental FFmpeg keyboard commands. Show Avidemux questions directly
+  in the console; never automatically accept codec warnings. Show decoder
+  validation elapsed time and allow controlled cancellation during decoding.
 
 - Anchor execution to the launcher folder and refuse an existing temporary
   workspace instead of deleting retained work on restart.
