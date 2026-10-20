@@ -128,8 +128,9 @@ class WindowsProcessing(unittest.TestCase):
                         1 if code == 1 and '\\mkvmerge ' in item[1] else 2)
                     self.assertEqual(result.returncode, expected, result.stdout + result.stderr)
                     self.assertEqual((root / 'downstream.txt').exists(), expected == 0)
-                    self.assertIn('synthetic processing diagnostic',
-                                  (root / 'docs' / 'temp' / 'processing.log').read_text())
+                    diagnostic = (result.stdout + result.stderr if 'avidemux_cli --load' in item[1]
+                                  else (root / 'docs' / 'temp' / 'processing.log').read_text())
+                    self.assertIn('synthetic processing diagnostic', diagnostic)
 
     def test_missing_tools_and_assembly_inputs_stop(self):
         commands = stages()
