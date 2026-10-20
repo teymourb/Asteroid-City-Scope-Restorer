@@ -8,13 +8,18 @@
   Setup completes before temporary work is created. Unsupported CMD path
   characters are rejected explicitly. Show stage activity and actionable errors.
 
-- Offer an explicit routine/exhaustive check choice. Exhaustive checks compare
-  decoded frames, native format and geometry before final remux and can take
-  many hours; routine records NOT RUN. Neither proves timing, HDR, source
-  identity, intended edits or universal playback. Retain all work and reports.
-- Disable accidental FFmpeg keyboard commands. Show Avidemux questions directly
-  in the console; never automatically accept codec warnings. Show decoder
-  validation elapsed time and allow controlled cancellation during decoding.
+- Rewrite setup, processing and completion messages using the original source
+  requirements and restoration descriptions; remove developer qualification
+  choices and frame-comparison reports from the released workflow.
+- Keep frame comparison, fixtures and qualification helpers in developer tools,
+  separate from the application and its public package.
+- Disable accidental FFmpeg keyboard input and show Avidemux questions and
+  diagnostics directly in the console. Warnings are not automatically accepted.
+- Stop failed preparation/splitting/encoding/assembly, record stage diagnostics
+  and reject missing/empty outputs before dependent work. Catch native crashes.
+- Preserve intermediates and logs after completion or failure. Retention alone
+  does not turn successful completion into a warning; actual tool warnings and
+  errors remain separate. Allow additional disk space for retained files.
 
 - Anchor execution to the launcher folder and refuse an existing temporary
   workspace instead of deleting retained work on restart.
