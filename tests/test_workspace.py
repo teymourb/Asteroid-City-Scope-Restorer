@@ -10,7 +10,7 @@ import unittest
 from test_final_remux import TEXT
 
 # Exercise workspace ownership independently of interactive selection.
-STARTUP = '@echo off\nsetlocal DisableDelayedExpansion\n' + TEXT.split('call :prepare_workspace', 1)[1].split('::Making sure', 1)[0]
+STARTUP = '@echo off\nsetlocal DisableDelayedExpansion\n' + TEXT.split('call :prepare_workspace', 1)[1].split('if not exist \"docs\\scripts\\Test-SourceFingerprint.ps1\"', 1)[0]
 STARTUP = STARTUP.replace('\nif errorlevel 1 exit /b 2', 'call :prepare_workspace\nif errorlevel 1 exit /b 2', 1)
 # Only ownership helpers are under test here; preserve literal ! in cwd traces.
 STARTUP = STARTUP.replace('setlocal EnableDelayedExpansion\n', '')

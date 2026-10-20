@@ -3,8 +3,10 @@
 This maintenance update clarifies source/output selection, restoration choices,
 confirmation, processing stages and completion. Cancel a dialog to enter a path
 manually or quit. No processing starts before confirmation. The required source
-remains an unaltered Asteroid City Blu-ray video track; source identity is not
-automatically verified.
+remains the supported Asteroid City Blu-ray video track. A mandatory extracted
+video-track SHA256 check is being added before preparation/encoding; unsupported
+sources and check failures stop processing. This implementation still requires
+final Windows qualification. See SOURCE-FINGERPRINT.md for the recipe and limits.
 
 The program stops on reported preparation, splitting, encoding, assembly or
 packaging failures and missing/empty expected outputs. FFmpeg ignores accidental

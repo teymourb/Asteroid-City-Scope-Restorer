@@ -119,6 +119,8 @@ class WindowsSelection(unittest.TestCase):
         scripts.mkdir(parents=True)
         shutil.copyfile(HELPER, scripts / HELPER.name)
         launcher = install / 'Asteroid-City-Scope-Restorer.bat'
+        # Synthetic pipeline transport fixture substitutes only the separately tested identity gate.
+        (scripts / "Test-SourceFingerprint.ps1").write_text("exit 0\n")
         # Only remove attended terminal pauses; all setup and processing code stays real.
         launcher.write_bytes(re.sub(r'(?im)^\s*PAUSE\s*$', 'rem unattended terminal pause', TEXT).replace('\n', '\r\n').encode())
         logo = install / 'docs/logos/AsteroidCity_Logo1.mkv'
@@ -199,3 +201,16 @@ class WindowsSelection(unittest.TestCase):
             self.assertEqual(output.read_text(), 'late output sentinel')
             self.assertFalse((install / 'docs/temp/final-remux.log').exists())
             self.assertTrue((install / 'docs/temp/AsteroidCity_S.mkv').exists())
+
+    def test_fingerprint_failure_stops_before_any_processing(self):
+        with tempfile.TemporaryDirectory() as td:
+            install, launcher, source, destination = self.make_case(Path(td))
+            (install / 'docs/scripts/Test-SourceFingerprint.ps1').write_text(
+                "Write-Host 'Synthetic fingerprint mismatch: restoration not started.'\nexit 2\n")
+            answers = str(source) + '\n' + str(destination) + '\n1\ny\n'
+            result = self.invoke(install, launcher, source, destination, answers=answers)
+            self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+            self.assertIn('Synthetic fingerprint mismatch', result.stdout)
+            self.assertFalse((install / 'called.txt').exists(), 'processing tool ran after rejected source')
+            self.assertEqual(list(destination.iterdir()), [])
+            self.assertEqual(source.read_bytes(), b'synthetic original')
