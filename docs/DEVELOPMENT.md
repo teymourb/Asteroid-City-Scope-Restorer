@@ -1,3 +1,28 @@
+# Current public/developer boundary — 2026-10-20
+
+The owner requested removal of developer qualification from the public program.
+The launcher now asks only for the required source, output folder, restoration
+and confirmation. It never invokes frame comparison or asks for a check level.
+Frame comparison and its manifests are developer tools under `tools/qualification`;
+BvS storage and continuation helpers are also separate developer experiments.
+They are excluded from the application payload. There is no public validation
+report or skipped-test status. Processing exit/output/input safeguards remain.
+Successful completion returns 0; actual MKVToolNix warnings retain their warning
+status. Retaining temporary files alone is not a warning. All intermediates are
+still retained: no cleanup or automatic resume has been introduced.
+
+Cuts, requested frame counts, transformations, HandBrake settings, Avidemux
+section order and tool versions remain unchanged. FFmpeg uses -nostdin and
+Avidemux questions remain visible. This does not resolve codec/join uncertainty.
+Windows evidence for this revision must be recorded before validated merge;
+earlier results below qualify their historical source revisions only.
+
+## Historical implementation/evidence record
+
+The following dated sections describe prior work, including the now withdrawn
+public validation-level design. They are retained as development history and
+must not be read as the current application workflow or release instructions.
+
 # Development status — 2026-10-19
 
 ## Current state

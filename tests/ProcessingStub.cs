@@ -13,6 +13,9 @@ class ProcessingStub {
             Console.WriteLine("SYNTHETIC ANSWER: " + answer);
             if (answer != "y") return 2;
         }
+        string late = Environment.GetEnvironmentVariable("LATE_OUTPUT");
+        if (Array.IndexOf(args, "--save") >= 0 && !String.IsNullOrEmpty(late))
+            File.WriteAllText(late, "late output sentinel");
         string output = args[args.Length - 1];
         for (int i = 0; i < args.Length - 1; i++)
             if (args[i] == "-o" || args[i] == "--save") output = args[i + 1];

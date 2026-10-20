@@ -36,8 +36,9 @@ class ProcessingSource(unittest.TestCase):
         commands = [line for line in TEXT.splitlines() if 'avidemux_cli --load' in line]
         for mode, command in zip(('unmasked', 'masked'), commands):
             expected = re.findall(r'--(?:load|append) "([^"]+)"', command)
-            self.assertEqual((ROOT / 'docs/scripts' / ('assembly-inputs-' + mode + '.txt')).read_text().splitlines(), expected)
-            self.assertIn('call :validate_assembly "' + mode + '" "docs\\temp\\AsteroidCity_S.mkv"', TEXT)
+            self.assertEqual((ROOT / 'tools/qualification' / ('assembly-inputs-' + mode + '.txt')).read_text().splitlines(), expected)
+        for token in ('validate_assembly', 'RESTORER_VALIDATION_MODE', 'assembly-check.txt', 'Validate-Assembly.ps1'):
+            self.assertNotIn(token, TEXT)
 
     def test_every_stage_has_status_and_output_gate(self):
         self.assertEqual(len(stages()), 57)
@@ -183,8 +184,8 @@ class WindowsProcessing(unittest.TestCase):
                                                        + pipeline, encoding='utf-8')
                         result = subprocess.run(['cmd.exe', '/d', '/c', 'full.cmd'], cwd=root,
                                                 env=env, capture_output=True, text=True, timeout=30)
-                        rejected = bool(fail_at or validator_code or missing_validator)
-                        self.assertEqual(result.returncode, 2 if rejected else 1, result.stdout + result.stderr)
+                        rejected = bool(fail_at)
+                        self.assertEqual(result.returncode, 2 if rejected else 0, result.stdout + result.stderr)
                         self.assertEqual(source.read_bytes(), b'original synthetic source')
                         self.assertEqual(logo.read_bytes(), b'synthetic logo sentinel')
                         self.assertTrue((root / 'docs' / 'temp' / 'AsteroidCity.mkv').exists())
@@ -192,10 +193,7 @@ class WindowsProcessing(unittest.TestCase):
                         if fail_at:
                             self.assertEqual(len((root / 'called.txt').read_text().splitlines()), 2)
                             self.assertFalse((root / 'docs' / 'temp' / 'AsteroidCity_S.mkv').exists())
-                        elif validator_code or missing_validator:
-                            self.assertTrue((root / 'docs/temp/AsteroidCity_S.mkv').exists())
-                            self.assertFalse((root / 'docs/temp/final-remux.log').exists())
                         else:
-                            self.assertIn('PASS:', (root / 'docs/temp/assembly-check.txt').read_text())
+                            self.assertFalse((root / 'docs/temp/assembly-check.txt').exists())
                             self.assertTrue((root / 'docs' / 'temp' / 'AsteroidCity_S.mkv').exists())
                             self.assertTrue((root / 'docs' / 'temp' / 'final-remux.log').exists())

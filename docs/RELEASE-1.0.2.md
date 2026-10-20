@@ -1,32 +1,30 @@
 # Proposed release 1.0.2 — not published
 
-This maintenance update adds clearer source/output/mode setup with validation,
-dialog cancellation/error handling, manual path fallback and final confirmation.
-No workspace is created until selection is complete. Use simple folder names;
-unsupported CMD path characters are rejected explicitly. Visible stage messages
-explain when tool details are being written to logs.
+This maintenance update clarifies source/output selection, restoration choices,
+confirmation, processing stages and completion. Cancel a dialog to enter a path
+manually or quit. No processing starts before confirmation. The required source
+remains an unaltered Asteroid City Blu-ray video track; source identity is not
+automatically verified.
 
-Preparation, splitting, encoding, assembly and final muxing stop on errors or
-missing/empty outputs. Setup explicitly selects routine checks or exhaustive
-decoded-frame comparison. Routine records NOT RUN; exhaustive checks frame order,
-native format and geometry and may take many hours. Neither proves intended
-edits, timing, HDR metadata, source identity or synchronization. Avidemux
-questions/diagnostics are visible in the console; only its stage/status is logged.
-FFmpeg ignores accidental keyboard commands during splitting.
+The program stops on reported preparation, splitting, encoding, assembly or
+packaging failures and missing/empty expected outputs. FFmpeg ignores accidental
+keyboard commands. Avidemux questions and warnings are visible in the console
+and require a deliberate answer. Continuing does not resolve a codec warning.
+Developer frame comparisons and qualification experiments are separate tools,
+not part of the application workflow or download payload.
 
-All intermediate videos and logs remain even after output creation. Disk use is
-substantially greater than the historical release; peak use is not yet measured.
-Do not restart or delete work after a failure: preserve processing.log and
-final-remux.log for troubleshooting. Startup refuses existing docs/temp instead
-of deleting it. Automatic resume is not implemented.
+Intermediate videos and logs are retained, including after successful output
+creation. Disk use is substantially greater than the historical release; peak
+use is not yet measured. After a failure, keep completed encodes and diagnostic
+logs rather than restarting. Startup preserves existing docs/temp and existing
+output. There is no automatic resume or cleanup.
 
-Film cuts, framing, encoder arguments, stream selection and successful output
-filenames remain unchanged. Windows is the only supported application target.
-See DEVELOPMENT.md for exact Windows evidence and qualification limitations.
+Film cuts, framing, encoder settings, stream selection, processing tool versions
+and successful output names remain unchanged. The unmasked manual-destination
+remux now uses the correct AsteroidCity_S.mkv filename. Existing codec/join
+compatibility limitations remain unresolved; no pristine-output claim is made.
+Windows is the supported application target.
 
-Full-film qualification is incomplete and legacy join compatibility remains
-unresolved; no pristine-output claim is made. A local source-only candidate can
-be reviewed without new film encoding. Full-package publication remains gated
-on package provenance/redistribution questions in PACKAGE-AUDIT-1.0.2.md and
-an explicit owner release decision with the qualification limits disclosed.
-Historical tools remain unchanged; no current public package has been published.
+No new public package has been published. Full-package preparation still depends
+on tool-source/provenance and logo redistribution decisions, followed by explicit
+owner release approval. Historical processing binaries remain unchanged.
