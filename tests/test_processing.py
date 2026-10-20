@@ -196,6 +196,6 @@ class WindowsProcessing(unittest.TestCase):
                             self.assertTrue((root / 'docs/temp/AsteroidCity_S.mkv').exists())
                             self.assertFalse((root / 'docs/temp/final-remux.log').exists())
                         else:
-                            self.assertIn('independent assembly validation passed', result.stdout)
+                            self.assertIn('PASS:', (root / 'docs/temp/assembly-check.txt').read_text())
                             self.assertTrue((root / 'docs' / 'temp' / 'AsteroidCity_S.mkv').exists())
                             self.assertTrue((root / 'docs' / 'temp' / 'final-remux.log').exists())
