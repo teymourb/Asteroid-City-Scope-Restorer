@@ -1,3 +1,11 @@
+## Mandatory source recognition — unreleased
+
+Check the supported compressed video before restoration starts. BvS recognizes
+its confirmed HDR10 base stream with or without the tested added Profile 8.1 RPU;
+Asteroid checks its original AVC extraction. Wrong sources and failed checks stop
+with diagnostics. No video encoding or decoding is performed by this check.
+Only its own temporary extraction is removed. Film-processing recipes are unchanged.
+
 # Changelog
 
 ## 1.0.2 — unreleased candidate
