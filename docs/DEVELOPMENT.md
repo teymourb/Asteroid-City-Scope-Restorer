@@ -19,7 +19,8 @@ and successful output names remain unchanged.
 - Stage progress/diagnostics append to docs/temp/processing.log; final-remux
   diagnostics go to docs/temp/final-remux.log. Final-remux warnings/errors and
   missing/empty final outputs prevent successful completion.
-- PR #6 checks the assembled video before final remux. Fixed ordered manifests
+- PR #6 introduced the assembled-video check; current RC runs it only when
+  exhaustive checking is selected. Fixed ordered manifests
   match the actual Avidemux load/append arguments. Windows PowerShell 5.1 invokes
   the existing bundled FFmpeg to decode every input and the assembled output.
   Disk-backed SHA256 frame records and per-frame native pixel format/geometry
@@ -36,7 +37,7 @@ and successful output names remain unchanged.
 - Explicit exits restore the caller directory. Generic helpers match BvS;
   film-specific processing remains separate. There is no automatic resume.
 
-## User interaction update — pending Windows evidence
+## User interaction update — see PROJECT-STATUS.md for current evidence
 
 - Shared PowerShell 5.1 setup replaces VBScript/mshta and ambiguous yes/no
   selection prompts. Source, destination, mode and final confirmation are
@@ -155,3 +156,32 @@ Simplify repeated input/remux branches using equivalent-command tests, then grow
 shared planning/profile components from demonstrated needs. No engine language
 or GUI stack is selected. Fingerprint research remains synthetic-first and does
 not block these maintenance fixes. Publication stays separately approved.
+
+## Maintenance RC interaction and validation policy (2026-10-20)
+
+Setup now requires an explicit choice between basic checks and exhaustive decoded
+frame comparison. Basic retains process-status, expected-output and input checks;
+it does not establish assembly frame identity, codec compatibility, timestamps,
+HDR, audio synchronization or playback. Its assembly-check.txt explicitly says
+NOT RUN. Exhaustive records RUNNING, then PASS only after validator exit 0; a
+failure or controlled cancellation records NOT PASSED and stops final remux.
+Neither mode enables automatic cleanup. Both retain all intermediates and logs.
+
+All production FFmpeg split invocations add only -nostdin, disabling accidental
+keyboard commands. Cut positions, frame counts, stream-copy flags, HandBrake
+settings, Avidemux load/append order and tool versions remain unchanged.
+Avidemux runs attached to the console so codec questions and answers are visible.
+No warning is automatically accepted. Its detailed stdout/stderr now appear only
+in that console, not processing.log; the log retains the assembly stage marker
+and subsequent validation status. Declining a question does not guarantee the
+historical tool reports failure; basic checks cannot qualify a partial assembly.
+
+Exhaustive validation prints the active file and ten-second elapsed heartbeats.
+Press Q to cancel its decoding, parsing or comparison; it stops processing,
+terminates only its own decoder child if active and preserves evidence. The
+optional CancellationFile parameter requests the same cancellation for automation
+and tests; it cannot bypass validation or establish a pass. Ctrl+C and forced
+host termination cannot guarantee a completed status record; never infer PASS
+from a RUNNING record. Actual interactive Windows keyboard behavior still needs
+bounded desktop qualification; native cancellation-file tests cover the shared
+stop/child-cleanup path using synthetic data.

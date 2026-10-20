@@ -7,6 +7,12 @@ class ProcessingStub {
         int index = File.Exists(marker) ? File.ReadAllLines(marker).Length + 1 : 1;
         File.AppendAllText(marker, "called\n");
         Console.WriteLine("synthetic processing diagnostic");
+        if (Array.IndexOf(args, "--save") >= 0 && Environment.GetEnvironmentVariable("STAGE_QUESTION") == "yes") {
+            Console.Error.WriteLine("SYNTHETIC CODEC QUESTION: continue? y/n");
+            string answer = Console.ReadLine();
+            Console.WriteLine("SYNTHETIC ANSWER: " + answer);
+            if (answer != "y") return 2;
+        }
         string output = args[args.Length - 1];
         for (int i = 0; i < args.Length - 1; i++)
             if (args[i] == "-o" || args[i] == "--save") output = args[i + 1];

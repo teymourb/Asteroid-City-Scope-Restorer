@@ -18,7 +18,7 @@ def stages():
     result = []
     lines = TEXT.splitlines()
     for index, line in enumerate(lines):
-        if line.strip().startswith('docs\\programs\\') and 'processing.log' in line:
+        if line.strip().startswith('docs\\programs\\') and ('processing.log' in line or 'avidemux_cli --load' in line):
             start = index
             while not lines[start].strip().startswith('set "stage_name='):
                 start -= 1
@@ -68,7 +68,7 @@ class WindowsProcessing(unittest.TestCase):
     def tearDownClass(cls):
         cls.build.cleanup()
 
-    def run_stage(self, root, item, code, kind, missing_tool=False, missing_input=False):
+    def run_stage(self, root, item, code, kind, missing_tool=False, missing_input=False, assembly_question=False):
         block, command, output = item
         temp = root / 'docs' / 'temp'
         temp.mkdir(parents=True)
@@ -93,16 +93,27 @@ class WindowsProcessing(unittest.TestCase):
                            + '(\n' + block + '\n)\necho downstream> downstream.txt\npopd\nexit /b 0\n'
                            + helper.replace('PAUSE', 'rem PAUSE'), encoding='utf-8')
         env = os.environ.copy()
+        env['RESTORER_VALIDATION_MODE'] = 'exhaustive'
+        env['STAGE_QUESTION'] = 'yes' if assembly_question else ''
         env.update(file=str(source), STAGE_MARKER=str(root / 'called.txt'),
                    STAGE_EXIT=str(code), STAGE_OUTPUT=kind)
         result = subprocess.run(['cmd.exe', '/d', '/c', 'stage.cmd'], cwd=root,
-                                env=env, capture_output=True, text=True, timeout=15)
+                                env=env, capture_output=True, text=True, timeout=15,
+                                input='y\n' if assembly_question else None)
         self.assertEqual(source.read_bytes(), b'original synthetic source')
         self.assertEqual(sentinel.read_bytes(), b'preserved previous result')
         for name in inputs:
             if not missing_input:
                 self.assertEqual((root / Path(name)).read_bytes(), b'preserved input')
         return result
+
+    def test_assembly_question_is_visible_and_requires_explicit_answer(self):
+        item = next(item for item in stages() if 'avidemux_cli --load' in item[1])
+        with tempfile.TemporaryDirectory() as td:
+            result = self.run_stage(Path(td), item, 0, 'normal', assembly_question=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn('SYNTHETIC CODEC QUESTION', result.stderr)
+            self.assertIn('SYNTHETIC ANSWER: y', result.stdout)
 
     def test_every_processing_command_stops_before_downstream_work(self):
         for number, item in enumerate(stages()):
@@ -162,6 +173,7 @@ class WindowsProcessing(unittest.TestCase):
                         source = root / 'synthetic source.mkv'
                         source.write_bytes(b'original synthetic source')
                         env = os.environ.copy()
+                        env['RESTORER_VALIDATION_MODE'] = 'exhaustive'
                         env.update(version=str(mode), dialog=dialog, dialog2='y',
                                    file=str(source) if dialog == 'y' else '"' + str(source) + '"',
                                    folder=str(root), STAGE_MARKER=str(root / 'called.txt'),

@@ -61,7 +61,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:03:54.609 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 20792 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_3s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:03:54.609 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 20792 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_3s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_3s.mkv"
@@ -73,7 +73,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:23:26.780 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 14780 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_5s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:23:26.780 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 14780 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_5s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_5s.mkv"
@@ -85,7 +85,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:37:01.010 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 21248 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_7s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:37:01.010 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 21248 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_7s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_7s.mkv"
@@ -97,7 +97,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:54:40.694 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 25396 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_9s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:54:40.694 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 25396 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_9s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_9s.mkv"
@@ -109,7 +109,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:15:26.230 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 18249 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_11s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:15:26.230 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 18249 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_11s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_11s.mkv"
@@ -121,7 +121,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:33:46.746 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_13s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:33:46.746 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_13s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_13s.mkv"
@@ -134,7 +134,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_b.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_b.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_b.mkv"
@@ -159,7 +159,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:00:18.727 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 475 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_Logo2.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:00:18.727 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 475 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_Logo2.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_Logo2.mkv"
@@ -185,7 +185,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:00:38.580 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4700 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_2a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:00:38.580 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4700 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_2a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_2a.mkv"
@@ -210,7 +210,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:18:21.809 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 7312 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_4a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:18:21.809 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 7312 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_4a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_4a.mkv"
@@ -235,7 +235,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:33:43.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4742 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_6a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:33:43.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4742 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_6a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_6a.mkv"
@@ -260,7 +260,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:51:47.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4159 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_8a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:51:47.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4159 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_8a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_8a.mkv"
@@ -285,7 +285,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:12:19.918 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4467 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_10a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:12:19.918 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4467 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_10a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_10a.mkv"
@@ -310,7 +310,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:28:07.365 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 8137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -map_metadata -1 -y "docs\temp\AsteroidCity_12a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:28:07.365 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 8137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -map_metadata -1 -y "docs\temp\AsteroidCity_12a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_12a.mkv"
@@ -370,8 +370,11 @@ if %version%==1 (
 	echo [!time!] Joining the completed video sections in order.
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
+	echo Assembly diagnostics and any questions appear in this window, not processing.log.
+	echo Answer only an explicit assembly question: y continues despite its warning; n declines.
+	echo Continuing does not establish codec compatibility or seamless joins.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\avidemux\avidemux_cli --load "docs\temp\AsteroidCity_b_Letterboxed.mkv" --append "docs\logos\AsteroidCity_Logo1.mkv" --append "docs\temp\AsteroidCity_Logo2_Letterboxed.mkv" --append "docs\temp\AsteroidCity_2a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_3s.mkv" --append "docs\temp\AsteroidCity_4a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_5s.mkv" --append "docs\temp\AsteroidCity_6a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_7s.mkv" --append "docs\temp\AsteroidCity_8a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_9s.mkv" --append "docs\temp\AsteroidCity_10a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_11s.mkv" --append "docs\temp\AsteroidCity_12a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_13s.mkv" --video-codec copy --audio-codec copy --output-format mkv --save "docs\temp\AsteroidCity_S.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\avidemux\avidemux_cli --load "docs\temp\AsteroidCity_b_Letterboxed.mkv" --append "docs\logos\AsteroidCity_Logo1.mkv" --append "docs\temp\AsteroidCity_Logo2_Letterboxed.mkv" --append "docs\temp\AsteroidCity_2a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_3s.mkv" --append "docs\temp\AsteroidCity_4a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_5s.mkv" --append "docs\temp\AsteroidCity_6a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_7s.mkv" --append "docs\temp\AsteroidCity_8a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_9s.mkv" --append "docs\temp\AsteroidCity_10a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_11s.mkv" --append "docs\temp\AsteroidCity_12a_Windowboxed.mkv" --append "docs\temp\AsteroidCity_13s.mkv" --video-codec copy --audio-codec copy --output-format mkv --save "docs\temp\AsteroidCity_S.mkv"
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_S.mkv"
@@ -459,7 +462,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:00:38.580 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4700 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_2a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:00:38.580 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4700 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_2a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_2a.mkv"
@@ -471,7 +474,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:03:54.609 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 20792 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_3s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:03:54.609 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 20792 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_3s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_3s.mkv"
@@ -483,7 +486,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:18:21.809 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 7312 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_4a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:18:21.809 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 7312 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_4a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_4a.mkv"
@@ -495,7 +498,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:23:26.780 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 14780 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_5s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:23:26.780 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 14780 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_5s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_5s.mkv"
@@ -507,7 +510,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:33:43.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4742 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_6a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:33:43.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4742 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_6a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_6a.mkv"
@@ -519,7 +522,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:37:01.010 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 21248 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_7s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:37:01.010 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 21248 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_7s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_7s.mkv"
@@ -531,7 +534,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:51:47.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4159 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_8a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:51:47.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4159 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_8a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_8a.mkv"
@@ -543,7 +546,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:54:40.694 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 25396 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_9s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:54:40.694 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 25396 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_9s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_9s.mkv"
@@ -555,7 +558,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:12:19.918 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4467 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_10a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:12:19.918 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4467 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_10a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_10a.mkv"
@@ -567,7 +570,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:15:26.230 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 18249 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_11s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:15:26.230 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 18249 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_11s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_11s.mkv"
@@ -579,7 +582,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:28:07.365 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 8137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -map_metadata -1 -y "docs\temp\AsteroidCity_12a.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:28:07.365 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 8137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -map_metadata -1 -y "docs\temp\AsteroidCity_12a.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_12a.mkv"
@@ -591,7 +594,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 01:33:46.746 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_13s.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:33:46.746 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_13s.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_13s.mkv"
@@ -604,7 +607,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_b.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_b.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_b.mkv"
@@ -642,7 +645,7 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\ffmpeg\ffmpeg -threads 0 -ss 00:00:18.727 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 475 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_Logo2.mkv" >> "docs\temp\processing.log" 2>&1
+	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:00:18.727 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 475 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_Logo2.mkv" >> "docs\temp\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_Logo2.mkv"
@@ -856,7 +859,10 @@ if %version%==1 (
 	echo Working file: !stage_name!
 	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
 	echo Stage: !stage_name!>> "docs\temp\processing.log"
-	docs\programs\avidemux\avidemux_cli --load "docs\temp\AsteroidCity_b_Cropped.mkv" --append "docs\temp\AsteroidCity_Logo1_Cropped.mkv" --append "docs\temp\AsteroidCity_Logo2_Cropped.mkv" --append "docs\temp\AsteroidCity_2a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_3s_Cropped.mkv" --append "docs\temp\AsteroidCity_4a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_5s_Cropped.mkv" --append "docs\temp\AsteroidCity_6a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_7s_Cropped.mkv" --append "docs\temp\AsteroidCity_8a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_9s_Cropped.mkv" --append "docs\temp\AsteroidCity_10a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_11s_Cropped.mkv" --append "docs\temp\AsteroidCity_12a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_13s_Cropped.mkv" --video-codec copy --audio-codec copy --output-format mkv --save "docs\temp\AsteroidCity_S.mkv" >> "docs\temp\processing.log" 2>&1
+	echo Assembly diagnostics and any questions appear in this window, not processing.log.
+	echo Answer only an explicit assembly question: y continues despite its warning; n declines.
+	echo Continuing does not establish codec compatibility or seamless joins.
+	docs\programs\avidemux\avidemux_cli --load "docs\temp\AsteroidCity_b_Cropped.mkv" --append "docs\temp\AsteroidCity_Logo1_Cropped.mkv" --append "docs\temp\AsteroidCity_Logo2_Cropped.mkv" --append "docs\temp\AsteroidCity_2a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_3s_Cropped.mkv" --append "docs\temp\AsteroidCity_4a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_5s_Cropped.mkv" --append "docs\temp\AsteroidCity_6a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_7s_Cropped.mkv" --append "docs\temp\AsteroidCity_8a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_9s_Cropped.mkv" --append "docs\temp\AsteroidCity_10a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_11s_Cropped.mkv" --append "docs\temp\AsteroidCity_12a_Pillarboxed.mkv" --append "docs\temp\AsteroidCity_13s_Cropped.mkv" --video-codec copy --audio-codec copy --output-format mkv --save "docs\temp\AsteroidCity_S.mkv"
 	if errorlevel 1 goto stage_failed
 	if not errorlevel 0 goto stage_failed
 	call :require_stage_output "docs\temp\AsteroidCity_S.mkv"
@@ -921,7 +927,8 @@ popd
 exit /b 0
 
 :cleanup_incomplete
-echo An output was created; independent assembly validation passed.
+echo An output was created. Validation policy: %RESTORER_VALIDATION_MODE%.
+echo See docs\temp\assembly-check.txt for whether frame comparison ran and passed.
 echo NEXT: keep this output and review picture, transitions, audio and subtitles.
 echo This check does not establish intended edits, timing, HDR or synchronization.
 echo Temporary inputs and logs remain in "%~dp0docs\temp".
@@ -933,20 +940,36 @@ exit /b 1
 
 :: Processing helpers: never remove predecessors on a failed stage.
 :validate_assembly
+rem Unset policy is only for legacy development harnesses; selected entry requires it.
+if not defined RESTORER_VALIDATION_MODE set "RESTORER_VALIDATION_MODE=exhaustive"
+if /i "%RESTORER_VALIDATION_MODE%"=="basic" (
+ echo NOT RUN: exhaustive frame comparison was not selected.> "docs\temp\assembly-check.txt"
+ echo Basic checks only. Codec joins, frame identity, timing and HDR are not verified.
+ echo Stage: exhaustive assembly validation NOT RUN by explicit selection.>> "docs\temp\processing.log"
+ exit /b 0
+)
+if /i not "%RESTORER_VALIDATION_MODE%"=="exhaustive" exit /b 2
+echo RUNNING: exhaustive frame comparison.> "docs\temp\assembly-check.txt"
 echo Checking assembled video against every input, frame by frame.
-echo This can take a long time. No HandBrake encoding is repeated by this check.
+echo This can take hours. No HandBrake encoding is repeated.
+echo Press Q in this window to cancel validation and stop processing; files are retained.
 set "stage_name=independent assembly validation: %~1"
-echo [!time!] Validating the assembled video frame sequence.
-echo Working file: !stage_name!
-	echo Detailed progress: docs\temp\processing.log - this window may be quiet.
-	echo Stage: !stage_name!>> "docs\temp\processing.log"
+echo Stage: !stage_name!>> "docs\temp\processing.log"
 if not exist "docs\scripts\Validate-Assembly.ps1" (
  echo Missing assembly validator.>> "docs\temp\processing.log"
+ echo NOT PASSED: assembly validator is missing.> "docs\temp\assembly-check.txt"
  exit /b 2
 )
-powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "docs\scripts\Validate-Assembly.ps1" -FFmpegPath "docs\programs\ffmpeg\ffmpeg.exe" -AssemblyPath "%~2" -InputListPath "docs\scripts\assembly-inputs-%~1.txt" -WorkDirectory "docs\temp\assembly-validation-%~1" >> "docs\temp\processing.log" 2>&1
-if errorlevel 1 exit /b 2
-if not errorlevel 0 exit /b 2
+powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "docs\scripts\Validate-Assembly.ps1" -FFmpegPath "docs\programs\ffmpeg\ffmpeg.exe" -AssemblyPath "%~2" -InputListPath "docs\scripts\assembly-inputs-%~1.txt" -WorkDirectory "docs\temp\assembly-validation-%~1"
+if errorlevel 1 (
+ echo NOT PASSED: validation failed or was cancelled.> "docs\temp\assembly-check.txt"
+ exit /b 2
+)
+if not errorlevel 0 (
+ echo NOT PASSED: validation process failed.> "docs\temp\assembly-check.txt"
+ exit /b 2
+)
+echo PASS: decoded video frames match ordered inputs. Timing, HDR and audio are not verified.> "docs\temp\assembly-check.txt"
 exit /b 0
 
 :: Structural output check only; does not qualify media contents.

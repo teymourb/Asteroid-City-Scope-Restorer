@@ -32,6 +32,8 @@ def media_commands(text):
             line = line.replace('AsteroidCity_S.mkv.mkv', 'AsteroidCity_S.mkv')
             line = line.split(' > "docs\\temp\\final-remux.log"', 1)[0]
             line = line.split(' >> "docs\\temp\\processing.log"', 1)[0]
+            if line.startswith('docs\\programs\\ffmpeg\\ffmpeg '):
+                line = line.replace(' -nostdin', '')
             commands.append(line)
     return '\n'.join(commands).encode()
 
@@ -106,6 +108,7 @@ class WindowsRemux(unittest.TestCase):
             else:
                 shutil.copyfile(self.stub, tools / 'mkvmerge.exe')
         env = os.environ.copy()
+        env['RESTORER_VALIDATION_MODE'] = 'exhaustive'
         env.update(dialog=dialog, dialog2=dialog2,
                    file=str(source_path) if dialog == 'y' else '"' + str(source_path) + '"',
                    folder=str(output_dir) + ('\\' if dialog2 == 'n' else ''),

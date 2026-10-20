@@ -7,9 +7,12 @@ unsupported CMD path characters are rejected explicitly. Visible stage messages
 explain when tool details are being written to logs.
 
 Preparation, splitting, encoding, assembly and final muxing stop on errors or
-missing/empty outputs. Independent decoded-frame assembly validation checks the
-ordered frames, native format and geometry before final remux. It does not prove
-intended edits, timing, HDR metadata, audio/subtitle handling or synchronization.
+missing/empty outputs. Setup explicitly selects routine checks or exhaustive
+decoded-frame comparison. Routine records NOT RUN; exhaustive checks frame order,
+native format and geometry and may take many hours. Neither proves intended
+edits, timing, HDR metadata, source identity or synchronization. Avidemux
+questions/diagnostics are visible in the console; only its stage/status is logged.
+FFmpeg ignores accidental keyboard commands during splitting.
 
 All intermediate videos and logs remain even after output creation. Disk use is
 substantially greater than the historical release; peak use is not yet measured.
@@ -21,6 +24,9 @@ Film cuts, framing, encoder arguments, stream selection and successful output
 filenames remain unchanged. Windows is the only supported application target.
 See DEVELOPMENT.md for exact Windows evidence and qualification limitations.
 
-Publication remains gated on full-film qualification, package provenance and
-redistribution questions in PACKAGE-AUDIT-1.0.2.md, and explicit owner approval.
+Full-film qualification is incomplete and legacy join compatibility remains
+unresolved; no pristine-output claim is made. A local source-only candidate can
+be reviewed without new film encoding. Full-package publication remains gated
+on package provenance/redistribution questions in PACKAGE-AUDIT-1.0.2.md and
+an explicit owner release decision with the qualification limits disclosed.
 Historical tools remain unchanged; no current public package has been published.
