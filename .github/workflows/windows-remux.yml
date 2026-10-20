@@ -38,6 +38,7 @@ jobs:
             /Asteroid-City-Scope-Restorer.bat
             /tests/
             /docs/scripts/
+            /tools/qualification/
       - name: Run batch regression matrix with native executable stub
         shell: pwsh
         run: |
