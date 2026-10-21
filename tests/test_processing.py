@@ -95,7 +95,9 @@ class WindowsProcessing(unittest.TestCase):
                            + '(\n' + block + '\n)\necho downstream> downstream.txt\npopd\nexit /b 0\n'
                            + helper.replace('PAUSE', 'rem PAUSE'), encoding='utf-8')
         env = os.environ.copy()
-        env['RESTORER_LOG_DIRECTORY'] = str(temp)
+        # Keep the isolated log path relative: this fixture deliberately tests
+        # ! in its installation path while delayed expansion is active.
+        env['RESTORER_LOG_DIRECTORY'] = r'docs\temp'
         env['RESTORER_VALIDATION_MODE'] = 'exhaustive'
         env['STAGE_QUESTION'] = 'yes' if assembly_question else ''
         env.update(file=str(source), STAGE_MARKER=str(root / 'called.txt'),
@@ -177,7 +179,7 @@ class WindowsProcessing(unittest.TestCase):
                         source = root / 'synthetic source.mkv'
                         source.write_bytes(b'original synthetic source')
                         env = os.environ.copy()
-                        env['RESTORER_LOG_DIRECTORY'] = str(root/'docs/temp')
+                        env['RESTORER_LOG_DIRECTORY'] = r'docs\temp'
                         env['RESTORER_VALIDATION_MODE'] = 'exhaustive'
                         env.update(version=str(mode), dialog=dialog, dialog2='y',
                                    file=str(source) if dialog == 'y' else '"' + str(source) + '"',
