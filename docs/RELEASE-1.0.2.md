@@ -1,32 +1,27 @@
-# Proposed release 1.0.2 — not published
+# Asteroid-City-Scope-Restorer v1.0.2 — release notes
 
-This maintenance update clarifies source/output selection, restoration choices,
-confirmation, processing stages and completion. Cancel a dialog to enter a path
-manually or quit. No processing starts before confirmation. The required source
-remains the supported Asteroid City Blu-ray video track. A mandatory extracted
-video-track SHA256 check runs before preparation/encoding; unsupported
-sources and check failures stop processing. This implementation still requires
-final Windows qualification. See SOURCE-FINGERPRINT.md for the recipe and limits.
+This maintenance update makes the existing restoration easier to start and
+troubleshoot while preserving its film-specific processing recipe.
 
-The program stops on reported preparation, splitting, encoding, assembly or
-packaging failures and missing/empty expected outputs. FFmpeg ignores accidental
-keyboard commands. Avidemux questions and warnings are visible in the console
-and require a deliberate answer. Continuing does not resolve a codec warning.
-Developer frame comparisons and qualification experiments are separate tools,
-not part of the application workflow or download payload.
+- A source-video fingerprint check requires the supported original Blu-ray video before restoration starts. Audio and subtitle selections may vary.
+- Clearer source and destination dialogs, with time to read the instructions before opening them, plus manual path entry and cancellation.
+- More descriptive restoration choices, a grouped confirmation screen, and clearer progress, completion and error messages.
+- Processing stops on reported failures or missing/empty expected files. Existing destination outputs are protected.
+- Generated working videos are removed automatically after success and when a fresh run is confirmed. Small diagnostic records remain separately in `docs/logs`.
+- FFmpeg ignores accidental keyboard commands; assembly questions are visible in the program window.
 
-Intermediate videos and logs are retained, including after successful output
-creation. Disk use is substantially greater than the historical release; peak
-use is not yet measured. After a failure, keep completed encodes and diagnostic
-logs rather than restarting. Startup preserves existing docs/temp and existing
-output. There is no automatic resume or cleanup.
+Split points, requested frame counts, crop/scale/pad settings, encoding settings
+and assembly order remain unchanged. Processing tool versions are unchanged.
+This update does not redesign encoding or joining.
 
-Film cuts, framing, encoder settings, stream selection, processing tool versions
-and successful output names remain unchanged. The unmasked manual-destination
-remux now uses the correct AsteroidCity_S.mkv filename. Existing codec/join
-compatibility limitations remain unresolved; no pristine-output claim is made.
-Windows is the supported application target.
+## Download and use
 
-No new public package has been published. Full-package preparation still depends
-on tool-source/provenance and logo redistribution decisions, followed by explicit
-owner release approval. Historical processing binaries remain unchanged.
+Download the complete application ZIP, which includes the launcher, required
+helpers and processing tools with their support files. The film is not included.
+Extract the entire ZIP to its own folder, keep the source MKV outside that folder,
+and double-click the launcher BAT. Your original source is unchanged.
+
+Allow room for temporary source-video extraction, restoration working videos
+and the final MKV. After an interruption, close the program before deleting
+`docs/temp` or retaining it for troubleshooting. Never alter it during processing.
+A fresh run begins from the start; automatic resume is not available.

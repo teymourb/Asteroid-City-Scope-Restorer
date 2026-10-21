@@ -44,7 +44,7 @@ setlocal EnableDelayedExpansion
 echo.
 echo ----------------------------------------------------------------
 echo Processing started. Keep this window open and the PC awake.
-echo Detailed tool progress: %RESTORER_LOG_DIRECTORY%\processing.log
+echo Detailed tool progress: "%RESTORER_LOG_DIRECTORY%\processing.log"
 echo Copying and encoding can take a long time. Detailed progress is saved in the log.
 
 
@@ -58,7 +58,7 @@ if %version%==1 (
 		echo ----------------------------------------------------------------
 		echo [!time!] Preparing a video-only working copy; the original source is unchanged.
 		echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 		docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "%file%" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 		if errorlevel 2 goto stage_failed
@@ -72,7 +72,7 @@ if %version%==1 (
 		echo ----------------------------------------------------------------
 		echo [!time!] Preparing a video-only working copy; the original source is unchanged.
 		echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 		docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags !file! >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 		if errorlevel 2 goto stage_failed
@@ -88,7 +88,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:03:54.609 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 20792 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_3s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -100,7 +100,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:23:26.780 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 14780 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_5s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -112,7 +112,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:37:01.010 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 21248 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_7s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -124,7 +124,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:54:40.694 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 25396 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_9s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -136,7 +136,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:15:26.230 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 18249 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_11s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -148,7 +148,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:33:46.746 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_13s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -160,7 +160,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_b.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -174,7 +174,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_b.mkv" -o "docs\temp\AsteroidCity_b_Letterboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic --pad "width=1920:height=1080" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -186,7 +186,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:00:18.727 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 475 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_Logo2.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -200,7 +200,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_Logo2.mkv" -o "docs\temp\AsteroidCity_Logo2_Letterboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic --pad "width=1920:height=1080" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -212,7 +212,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:00:38.580 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4700 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_2a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -226,7 +226,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_2a.mkv" -o "docs\temp\AsteroidCity_2a_Windowboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=1080" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -238,7 +238,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:18:21.809 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 7312 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_4a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -252,7 +252,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_4a.mkv" -o "docs\temp\AsteroidCity_4a_Windowboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=1080" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -264,7 +264,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:33:43.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4742 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_6a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -278,7 +278,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_6a.mkv" -o "docs\temp\AsteroidCity_6a_Windowboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=1080" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -290,7 +290,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:51:47.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4159 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_8a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -304,7 +304,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_8a.mkv" -o "docs\temp\AsteroidCity_8a_Windowboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=1080" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -316,7 +316,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:12:19.918 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4467 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_10a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -330,7 +330,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_10a.mkv" -o "docs\temp\AsteroidCity_10a_Windowboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=1080" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -342,7 +342,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:28:07.365 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 8137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -map_metadata -1 -y "docs\temp\AsteroidCity_12a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -356,7 +356,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_12a.mkv" -o "docs\temp\AsteroidCity_12a_Windowboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=1080" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -471,7 +471,7 @@ if %version%==1 (
 		echo ----------------------------------------------------------------
 		echo [!time!] Preparing a video-only working copy; the original source is unchanged.
 		echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 		docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags "%file%" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 		if errorlevel 2 goto stage_failed
@@ -485,7 +485,7 @@ if %version%==1 (
 		echo ----------------------------------------------------------------
 		echo [!time!] Preparing a video-only working copy; the original source is unchanged.
 		echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 		docs\programs\mkvtoolnix\mkvmerge -o "docs\temp\AsteroidCity.mkv" -A --no-audio -S --no-subtitles -B --no-buttons --no-chapters -M --no-attachments --no-global-tags !file! >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 		if errorlevel 2 goto stage_failed
@@ -501,7 +501,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:00:38.580 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4700 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_2a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -513,7 +513,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:03:54.609 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 20792 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_3s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -525,7 +525,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:18:21.809 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 7312 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_4a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -537,7 +537,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:23:26.780 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 14780 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_5s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -549,7 +549,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:33:43.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4742 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_6a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -561,7 +561,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:37:01.010 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 21248 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_7s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -573,7 +573,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:51:47.229 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4159 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_8a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -585,7 +585,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:54:40.694 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 25396 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_9s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -597,7 +597,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:12:19.918 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 4467 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_10a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -609,7 +609,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:15:26.230 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 18249 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_11s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -621,7 +621,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:28:07.365 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 8137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -map_metadata -1 -y "docs\temp\AsteroidCity_12a.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -633,7 +633,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 01:33:46.746 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_13s.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -645,7 +645,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 137 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_b.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -657,7 +657,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_b.mkv" -o "docs\temp\AsteroidCity_b_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -672,7 +672,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\logos\AsteroidCity_Logo1.mkv" -o "docs\temp\AsteroidCity_Logo1_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -684,7 +684,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Copying a film section without re-encoding.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\ffmpeg\ffmpeg -nostdin -threads 0 -ss 00:00:18.727 -noaccurate_seek -i "docs\temp\AsteroidCity.mkv" -vframes 475 -c:v copy -map v:0 -map_chapters -1 -map_metadata -1 -y "docs\temp\AsteroidCity_Logo2.mkv" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -696,7 +696,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_Logo2.mkv" -o "docs\temp\AsteroidCity_Logo2_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -712,7 +712,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_3s.mkv" -o "docs\temp\AsteroidCity_3s_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -727,7 +727,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_5s.mkv" -o "docs\temp\AsteroidCity_5s_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -742,7 +742,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_7s.mkv" -o "docs\temp\AsteroidCity_7s_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -757,7 +757,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_9s.mkv" -o "docs\temp\AsteroidCity_9s_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -772,7 +772,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_11s.mkv" -o "docs\temp\AsteroidCity_11s_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -787,7 +787,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_13s.mkv" -o "docs\temp\AsteroidCity_13s_Cropped.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 --crop 138:138:0:0 --inline-parameter-sets --non-anamorphic >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -802,7 +802,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_2a.mkv" -o "docs\temp\AsteroidCity_2a_Pillarboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=804" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -817,7 +817,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_4a.mkv" -o "docs\temp\AsteroidCity_4a_Pillarboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=804" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -832,7 +832,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_6a.mkv" -o "docs\temp\AsteroidCity_6a_Pillarboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=804" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -847,7 +847,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_8a.mkv" -o "docs\temp\AsteroidCity_8a_Pillarboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=804" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -862,7 +862,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_10a.mkv" -o "docs\temp\AsteroidCity_10a_Pillarboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=804" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -877,7 +877,7 @@ if %version%==1 (
 	echo ----------------------------------------------------------------
 	echo [!time!] Encoding a section with its restoration framing. This may take a long time.
 	echo Working file: !stage_name!
-	echo Detailed progress: %RESTORER_LOG_DIRECTORY%\processing.log - this window may be quiet.
+	echo Detailed progress: "%RESTORER_LOG_DIRECTORY%\processing.log" - this window may be quiet.
 	echo Stage: !stage_name!>> "%RESTORER_LOG_DIRECTORY%\processing.log"
 	docs\programs\handbrake\HandBrakeCLI -i "docs\temp\AsteroidCity_12a.mkv" -o "docs\temp\AsteroidCity_12a_Pillarboxed.mkv" -e x264 --encoder-preset "fast" --encoder-profile "auto" --encoder-level "auto" -b 29500 --cfr -2 -w 1430 -l 804 --crop-mode "none" --inline-parameter-sets --non-anamorphic --pad "width=1920:height=804" >> "%RESTORER_LOG_DIRECTORY%\processing.log" 2>&1
 	if errorlevel 1 goto stage_failed
@@ -1062,7 +1062,7 @@ echo ================================================================
 echo [STOP] Final remux completed with warnings. The output needs review.
 echo ================================================================
 echo The assembled video is retained at docs\temp\AsteroidCity_S.mkv
-echo Details are in %RESTORER_LOG_DIRECTORY%\final-remux.log
+echo Details are in "%RESTORER_LOG_DIRECTORY%\final-remux.log"
 echo Temporary work is cleared automatically when you start a new restoration.
 echo You can start a new restoration after closing this run.
 PAUSE
@@ -1075,7 +1075,7 @@ echo ================================================================
 echo [STOP] Final remux failed. Any destination output may be incomplete; do not use it.
 echo ================================================================
 echo The assembled video is retained at docs\temp\AsteroidCity_S.mkv
-echo Details are in %RESTORER_LOG_DIRECTORY%\final-remux.log
+echo Details are in "%RESTORER_LOG_DIRECTORY%\final-remux.log"
 echo Temporary work is cleared automatically when you start a new restoration.
 echo You can start a new restoration after closing this run.
 PAUSE
