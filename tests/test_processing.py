@@ -1,7 +1,8 @@
 """Execute every production processing gate with native fault injection on Windows.
 
-These fixtures do not prove Avidemux assembled every input. Production therefore
-retains all intermediates even after a successful final remux.
+These extracted-stage fixtures intentionally bypass the separately tested
+workspace supervisor and keep their files for assertion. Whole-launcher fixtures
+in test_user_selection verify automatic cleanup after successful supervised runs.
 """
 import os
 from pathlib import Path
@@ -94,6 +95,7 @@ class WindowsProcessing(unittest.TestCase):
                            + '(\n' + block + '\n)\necho downstream> downstream.txt\npopd\nexit /b 0\n'
                            + helper.replace('PAUSE', 'rem PAUSE'), encoding='utf-8')
         env = os.environ.copy()
+        env['RESTORER_LOG_DIRECTORY'] = str(temp)
         env['RESTORER_VALIDATION_MODE'] = 'exhaustive'
         env['STAGE_QUESTION'] = 'yes' if assembly_question else ''
         env.update(file=str(source), STAGE_MARKER=str(root / 'called.txt'),
@@ -175,6 +177,7 @@ class WindowsProcessing(unittest.TestCase):
                         source = root / 'synthetic source.mkv'
                         source.write_bytes(b'original synthetic source')
                         env = os.environ.copy()
+                        env['RESTORER_LOG_DIRECTORY'] = str(root/'docs/temp')
                         env['RESTORER_VALIDATION_MODE'] = 'exhaustive'
                         env.update(version=str(mode), dialog=dialog, dialog2='y',
                                    file=str(source) if dialog == 'y' else '"' + str(source) + '"',

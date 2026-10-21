@@ -16,8 +16,9 @@ class SelectionSource(unittest.TestCase):
         self.assertIn('-STA',text)
         helper=HELPER.read_text()
         self.assertNotIn('Invoke-Expression',helper)
-        self.assertIn("$start.EnvironmentVariables['file'] = $Source",helper)
-        self.assertIn('exit $process.ExitCode',helper)
+        self.assertIn("$env:file = $Source",helper)
+        self.assertIn('Manage-Workspace.ps1',helper)
+        self.assertIn('Supervise',helper)
         self.assertNotIn('mshta',text.lower())
         for term in ('ValidationMode', 'RESTORER_VALIDATION_MODE', 'Exhaustive', 'Basic', 'Selection validation passed'):
             self.assertNotIn(term, helper)
@@ -28,10 +29,14 @@ class SelectionWindows(unittest.TestCase):
         self.tmp=tempfile.TemporaryDirectory(prefix='selection & (test) ')
         self.addCleanup(self.tmp.cleanup)
         self.root=Path(self.tmp.name)
+        scripts=self.root/'installation/docs/scripts'; scripts.mkdir(parents=True)
+        for name in ('Select-Restoration.ps1', 'Manage-Workspace.ps1'):
+            shutil.copyfile(ROOT/'docs/scripts'/name, scripts/name)
+        self.helper=scripts/'Select-Restoration.ps1'
         self.source=self.root/'source.mkv'; self.source.write_bytes(b'synthetic-not-video')
         self.dest=self.root/'output'; self.dest.mkdir()
     def run_selection(self,source=None,destination=None,mode='1',extra=(),env=None):
-        return subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(HELPER),'-Film','Asteroid','-ValidateOnly','-Source',str(source or self.source),'-Destination',str(destination or self.dest),'-Mode',mode,*extra],capture_output=True,text=True, encoding='utf-8',timeout=30,env=env)
+        return subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(self.helper),'-Film','Asteroid','-ValidateOnly','-Source',str(source or self.source),'-Destination',str(destination or self.dest),'-Mode',mode,*extra],capture_output=True,text=True, encoding='utf-8',timeout=30,env=env)
     def test_spaces_ampersands_parentheses_unicode_and_quotes(self):
         self.source.rename(self.root/'caf\u00e9 (video) & source.mkv'); self.source=self.root/'caf\u00e9 (video) & source.mkv'
         result=self.run_selection(source='"'+str(self.source)+'"')
@@ -53,14 +58,14 @@ class SelectionWindows(unittest.TestCase):
         output=self.dest/'Asteroid City Theatrical Scope Restoration (unmasked).mkv'; output.write_bytes(b'keep')
         self.assertEqual(self.run_selection(source=output).returncode,2)
     def test_manual_quit_no_workspace_or_child(self):
-        result=subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(HELPER),'-Film','Asteroid','-Manual'],input='q\n',capture_output=True,text=True, encoding='utf-8',timeout=30)
+        result=subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(self.helper),'-Film','Asteroid','-Manual'],input='q\n',capture_output=True,text=True, encoding='utf-8',timeout=30)
         self.assertEqual(result.returncode,3,result.stdout+result.stderr)
     def test_helper_launches_child_with_unicode_environment_and_returns_status(self):
         self.source.rename(self.root/'caf\u00e9 (video) & source.mkv'); self.source=self.root/'caf\u00e9 (video) & source.mkv'
         child=self.root/'child (launcher) & test.bat'
         child.write_text('@echo off\nsetlocal DisableDelayedExpansion\npowershell.exe -NoProfile -Command "[IO.File]::WriteAllText($env:SELECTION_TRACE, $env:file + [Environment]::NewLine + $env:folder + [Environment]::NewLine + $env:version + [Environment]::NewLine + $env:dialog)"\nexit /b 7\n')
         trace=self.root/'trace.txt'; env=os.environ.copy(); env['SELECTION_TRACE']=str(trace)
-        result=subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(HELPER),'-Film','Asteroid','-Manual','-Launcher',str(child)],input=f'{self.source}\n{self.dest}\n1\nwrong-answer\ny\n',capture_output=True,text=True, encoding='utf-8',timeout=30,env=env)
+        result=subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(self.helper),'-Film','Asteroid','-Manual','-Launcher',str(child)],input=f'{self.source}\n{self.dest}\n1\nwrong-answer\ny\n',capture_output=True,text=True, encoding='utf-8',timeout=30,env=env)
         self.assertEqual(result.returncode,7,result.stdout+result.stderr)
         recorded = trace.read_text(encoding='utf-8').splitlines()
         self.assertEqual(len(recorded), 4)
@@ -73,7 +78,7 @@ class SelectionWindows(unittest.TestCase):
     def test_confirmation_retry_and_cancel_before_launch(self):
         child=self.root/'child.bat'; child.write_text('@echo off\npowershell.exe -NoProfile -Command "[IO.File]::WriteAllText($env:SELECTION_TRACE,\'started\')"\nexit /b 0\n')
         trace=self.root/'trace.txt';env=os.environ.copy();env['SELECTION_TRACE']=str(trace)
-        cmd=['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(HELPER),'-Film','Asteroid','-Manual','-Launcher',str(child)]
+        cmd=['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(self.helper),'-Film','Asteroid','-Manual','-Launcher',str(child)]
         prefix=f'{self.source}\n{self.dest}\n1\n'
         for ending in ('q\n','\n','n\n'):
             result=subprocess.run(cmd,input=prefix+ending,env=env,capture_output=True,text=True,encoding='utf-8',timeout=30)
@@ -101,7 +106,7 @@ class SelectionWindows(unittest.TestCase):
     def test_selected_entry_valid_settings_are_silent(self):
         env=os.environ.copy()
         env.update(file=str(self.source),folder=str(self.dest),version='1',dialog='y',dialog2='y',RESTORER_SELECTION_READY='1')
-        cmd=['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(HELPER),'-Film','Asteroid','-ValidateEnvironment']
+        cmd=['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(self.helper),'-Film','Asteroid','-ValidateEnvironment']
         result=subprocess.run(cmd,env=env,capture_output=True,text=True,encoding='utf-8',timeout=30)
         self.assertEqual(result.returncode,0,result.stdout+result.stderr)
         self.assertEqual(result.stdout,'')
@@ -109,7 +114,7 @@ class SelectionWindows(unittest.TestCase):
     def test_selected_entry_without_valid_settings_stops(self):
         env=os.environ.copy()
         for key in ('file','folder','version','dialog','dialog2','RESTORER_SELECTION_READY'): env.pop(key,None)
-        result=subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(HELPER),'-Film','Asteroid','-ValidateEnvironment'],env=env,capture_output=True,text=True, encoding='utf-8',timeout=30)
+        result=subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(self.helper),'-Film','Asteroid','-ValidateEnvironment'],env=env,capture_output=True,text=True, encoding='utf-8',timeout=30)
         self.assertEqual(result.returncode,2,result.stdout+result.stderr)
 
 @unittest.skipUnless(os.name == 'nt', 'requires Windows PowerShell 5.1 and cmd.exe')
@@ -131,6 +136,7 @@ class WindowsSelection(unittest.TestCase):
         scripts = install / 'docs/scripts'
         scripts.mkdir(parents=True)
         shutil.copyfile(HELPER, scripts / HELPER.name)
+        shutil.copyfile(ROOT/'docs/scripts/Manage-Workspace.ps1', scripts/'Manage-Workspace.ps1')
         launcher = install / 'Asteroid-City-Scope-Restorer.bat'
         # Synthetic pipeline transport fixture substitutes only the separately tested identity gate.
         (scripts / "Test-SourceFingerprint.ps1").write_text("exit 0\n")
@@ -177,7 +183,10 @@ class WindowsSelection(unittest.TestCase):
                 self.assertFalse((install / 'docs/temp/assembly-check.txt').exists())
                 for label in ('Source size:', 'Available space (working files and final output):', 'share this available space'):
                     self.assertIn(label, result.stdout)
-                self.assertTrue((install / 'docs/temp/processing.log').exists())
+                self.assertFalse((install/'docs/temp').exists(), 'successful supervised run must remove owned videos')
+                logs=list((install/'docs/logs').glob('run-*/processing.log'))
+                self.assertEqual(len(logs), 1)
+                self.assertIn('Stage:', logs[0].read_text())
 
     def test_quit_and_invalid_confirmation_do_not_create_workspace(self):
         for answers in ('q\n', None):
@@ -211,7 +220,7 @@ class WindowsSelection(unittest.TestCase):
                                  env_extra={'LATE_OUTPUT': str(output)})
             self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
             self.assertEqual(output.read_text(), 'late output sentinel')
-            self.assertFalse((install / 'docs/temp/final-remux.log').exists())
+            self.assertFalse(any((install/'docs/logs').glob('run-*/final-remux.log')))
             self.assertTrue((install / 'docs/temp/AsteroidCity_S.mkv').exists())
 
     def test_fingerprint_failure_stops_before_any_processing(self):
