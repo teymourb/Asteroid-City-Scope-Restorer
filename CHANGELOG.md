@@ -1,73 +1,31 @@
-## Pending release preparation — 2026-10-21
-
-- Silently clean generated temporary videos after success and before a confirmed
-  fresh run; keep diagnostic logs in a separate folder.
-- Protect source/output locations and exclude concurrent workspace use.
-- Explain where interrupted temporary work can be deleted after closing the program.
-- Refresh public README installation/use instructions while retaining restoration descriptions.
-
-## Dialog readiness — unreleased
-
-Pause for Enter before opening each file/folder dialog, so the preceding
-instructions remain readable. Q quits before a dialog opens. Manual path entry,
-source verification and restoration behavior are unchanged.
-
-## Console presentation — unreleased
-
-Group setup and results with ASCII headings and spacing. Wrap long displayed
-paths without changing their values. Show one shared free-space figure for a
-shared drive. Source-check elapsed progress updates in place on an interactive
-console; redirected logs remain ordinary lines. Processing recipes are unchanged.
-
-## Mandatory source recognition — unreleased
-
-Check the supported compressed video before restoration starts. BvS recognizes
-its confirmed HDR10 base stream with or without the tested added Profile 8.1 RPU;
-Asteroid checks its original AVC extraction. Wrong sources and failed checks stop
-with diagnostics. No video encoding or decoding is performed by this check.
-Only its own temporary extraction is removed. Film-processing recipes are unchanged.
-
 # Changelog
 
-## 1.0.2 — unreleased candidate
+## 1.0.2 — 2026-10-21
 
-- Replace legacy VBScript/mshta selection and ambiguous yes/no prompts with a
-  shared PowerShell setup: validated source/output paths, explicit dialog
-  cancellation/failure fallback, mode selection, final confirmation and quit.
-  Setup completes before temporary work is created. Unsupported CMD path
-  characters are rejected explicitly. Show stage activity and actionable errors.
+- Check the supported source-video fingerprint before restoration starts; stop on
+  unsupported sources or source-check failures without re-encoding the source.
+- Provide native source/output dialogs, Enter-before-dialog instructions, manual
+  path fallback, clear restoration choices, confirmation and cancellation.
+- Improve setup, stage progress, completion and error messages.
+- Stop on reported tool failures or missing/empty expected outputs; protect
+  existing destination files and retain diagnostic logs.
+- Keep generated temporary videos in `docs/temp` and run logs separately in
+  `docs/logs`. Silently clean known temporary videos after success and before a
+  confirmed fresh run; protect unrelated files and active workspaces.
+- Explain safe manual removal of interrupted work after closing the program.
+  Automatic resume is not implemented.
+- Fix the unmasked restoration's manual-destination final packaging: use
+  `AsteroidCity_S.mkv` instead of the incorrect `.mkv.mkv` filename.
+- Refresh the README while retaining original comparison GIFs, credits and modes.
+- Validate the maintenance changes with Windows synthetic regression tests.
 
-- Rewrite setup, processing and completion messages using the original source
-  requirements and restoration descriptions; remove developer qualification
-  choices and frame-comparison reports from the released workflow.
-- Keep frame comparison, fixtures and qualification helpers in developer tools,
-  separate from the application and its public package.
-- Disable accidental FFmpeg keyboard input and show Avidemux questions and
-  diagnostics directly in the console. Warnings are not automatically accepted.
-- Stop failed preparation/splitting/encoding/assembly, record stage diagnostics
-  and reject missing/empty outputs before dependent work. Catch native crashes.
-- Preserve intermediates and logs after completion or failure. Retention alone
-  does not turn successful completion into a warning; actual tool warnings and
-  errors remain separate. Allow additional disk space for retained files.
+Film-specific split points, transformations, encoding settings, assembly order
+and bundled processing tool versions remain unchanged.
 
-- Anchor execution to the launcher folder and refuse an existing temporary
-  workspace instead of deleting retained work on restart.
-- Remove wildcard cleanup; preserve unexpected temporary files/subdirectories
-  and restore the caller directory on success, warnings and errors.
-
-- Fix unmasked restoration's final remux when the destination is entered manually:
-  use `AsteroidCity_S.mkv`, rather than the nonexistent `.mkv.mkv` filename.
-- In both modes, stop before cleanup on final-remux errors, and retain the
-  assembled video and `docs/temp/final-remux.log`.
-- Distinguish MKVToolNix warnings from errors. Warnings also retain the
-  intermediate and request output review instead of displaying “Done!”.
-- Reject a missing or empty destination output after a nominally successful remux.
-- Add focused regression tests and a proposed Windows Actions workflow.
-
-Cuts, encoder arguments, transforms, stream-selection arguments, and successful
-output filenames are unchanged. This is not comprehensive output validation or
-resumable-job support. All processing stages have status/output gates and preserve work on failure.
+[Release notes and complete download](https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases/tag/v1.0.2)
 
 ## 1.0.1 — 2024-07-10
 
-Existing published version: manual source-input fallback added.
+Manual source-input fallback added.
+
+[Earlier releases](https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases)
