@@ -19,3 +19,9 @@ The local Windows correction passed 64 methods with zero skips under MKVToolNix 
 Resume, configurable work drives, richer progress and lower peak storage are future work. Public validation-level selection was withdrawn; developer assembly checks remain separate. Logo permission/publication were resolved in later records. Historical candidate blockers are not automatically current blockers.
 
 BvS optional final RPU injection and trim reconstruction are distant research, not an Asteroid commitment. Hardware signing investigation was dropped. Source integration and releases remain separate authorized steps.
+
+## Fuller handoff reconciliation
+
+The owner later supplied a fuller prior-chat handoff. The newer two-standalone-products and reliable-jobs-first choices remain current under its precedence rule. Additional explicit requirements: occasional nontechnical users, self-contained local operation without accounts/dev runtimes/PATH or a managed server, accessible concise UI with owner review of major prompt redesigns, additional curated profiles, small-clip programmatic-first joining evidence and correct processed references. Do not assume old owner intermediates or capacity remain.
+
+Platform direction: Windows, then Apple Silicon macOS, then Linux when justified. Earlier provisional versions were 1.1 foundation, 1.2 resume, 1.3 joins, 2.0 unified Windows GUI, 2.1 Apple Silicon, 2.2 Linux. Later assistant numbering suggestions did not establish an accepted replacement. Working milestones and future release numbers remain separate; the older unified scope must respect the newer separate-products decision. Full reconciliation and attributed requirements are in the common planning register.
