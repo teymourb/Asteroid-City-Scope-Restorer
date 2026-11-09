@@ -1,5 +1,10 @@
 # 1.0.2 candidate package audit — 2026-10-18
 
+Historical audit of a candidate/baseline. Later publication and logo permission
+were resolved; see [CHANGELOG](../CHANGELOG.md). Remaining exact dependency
+source/build provenance limits are described in [notices](THIRD-PARTY-NOTICES.md).
+Do not treat old candidate blockers as the current release status.
+
 ## Audited baseline
 
 Public asset: https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases/download/v1.0.1/Asteroid-City-Scope-Restorer_v1.0.1.7z

@@ -1,5 +1,8 @@
 # Windows development compatibility — 2026-11-09
 
+Current design and planning: [documentation index](README.md). Dated historical
+notes below do not override the current feature status or accepted decisions.
+
 This workspace now develops on native Windows; older macOS-only host guidance
 below is historical. Preserve the existing synthetic-first and release-approval
 boundaries.

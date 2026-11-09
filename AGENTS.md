@@ -11,3 +11,9 @@ install substantial infrastructure as a workaround for missing access.
 
 Run the focused tests for this patch. Windows skips on macOS are not Windows
 validation. Update the single status/evidence record rather than duplicating it.
+
+For documentation and planning tasks, read docs/README.md and the relevant current
+architecture/roadmap before historical notes. Update affected feature/decision and
+user-facing documentation with behavior changes. Keep owner decisions, proposals,
+research, local validation and shipped features distinct; do not infer new scope
+from a backlog item.
