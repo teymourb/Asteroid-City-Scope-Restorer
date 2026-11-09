@@ -998,7 +998,11 @@ exit /b 0
 :require_stage_output
 setlocal DisableDelayedExpansion
 if not exist "%~1" (endlocal & exit /b 1)
-if exist "%~1\" (endlocal & exit /b 1)
+rem Inspect file attributes: a trailing slash can misclassify files on Windows.
+set "stage_attributes="
+for %%F in ("%~1") do set "stage_attributes=%%~aF"
+if not defined stage_attributes (endlocal & exit /b 1)
+if /I "%stage_attributes:~0,1%"=="d" (endlocal & exit /b 1)
 for %%F in ("%~1") do if %%~zF EQU 0 (endlocal & exit /b 1)
 endlocal & exit /b 0
 

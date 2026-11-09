@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Correct working-video file checks on Windows so nonempty regular files are not
+  mistaken for directories. Missing files, empty files and directories still stop
+  processing. Restoration cuts, transforms and encoding settings are unchanged.
+
+
 ## 1.0.2 — 2026-10-21
 
 - Check the supported source-video fingerprint before restoration starts; stop on

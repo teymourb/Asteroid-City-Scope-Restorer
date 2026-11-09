@@ -1,3 +1,20 @@
+# Windows development compatibility — 2026-11-09
+
+This workspace now develops on native Windows; older macOS-only host guidance
+below is historical. Preserve the existing synthetic-first and release-approval
+boundaries.
+
+The stage-output guard reads file attributes instead of treating a trailing slash
+as a directory test. On this Windows host the old check rejected nonempty regular
+files in C: temporary directories, while accepting equivalent files on H:.
+Missing files, empty files and directories must still stop processing. Cuts,
+transforms, encoding arguments and assembly order are unchanged.
+
+The dialog-readiness test passes ExecutionPolicy Bypass only to its own generated
+PowerShell child, matching the other harnesses. It changes no persistent Windows
+policy. Run the two projects' suites serially: concurrent short-lived media stubs
+can trigger the legacy-worker inspection guard. Do not weaken that guard.
+
 # Published checkpoint — 2026-10-21
 
 Version 1.0.2 is published with its complete ZIP and SHA256SUMS.txt:

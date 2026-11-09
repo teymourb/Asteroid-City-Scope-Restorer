@@ -97,7 +97,7 @@ class SelectionWindows(unittest.TestCase):
         for is_source in ('$true', '$false'):
             harness.write_text(prefix + "\ntry { Wait-ForDialog " + is_source + "; Write-Host 'DIALOG_READY'; exit 0 } catch [OperationCanceledException] { Write-Host $_.Exception.Message; exit 3 }\n")
             for answer, status in (('\n', 0), ('q\n', 3), ('not-ready\n\n', 0)):
-                result = subprocess.run(['powershell.exe', '-NoProfile', '-File', str(harness)],
+                result = subprocess.run(['powershell.exe', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', str(harness)],
                                         input=answer, capture_output=True, text=True, timeout=30)
                 self.assertEqual(result.returncode, status, result.stdout + result.stderr)
                 self.assertEqual('DIALOG_READY' in result.stdout, status == 0)
