@@ -2,6 +2,8 @@
 
 Owner decisions dated 2026-11-09: two standalone restorers with one maintained engine; reliable jobs first. Stable IDs below refer to the cross-project register under docs/planning in the Batman repository. This is a scoped view, not a competing register or implementation approval.
 
+The authorized bounded design/prototype checkpoint is complete; see [review report](FOUNDATION-CHECKPOINT.md). All mode plans are audited and actual preparation parity is demonstrated on generated media. Full engine migration, native supervision parity, packaging and resume are not implemented by that proof; production replacement is stopped for review.
+
 | Milestone | Outcome | Feature references |
 |---|---|---|
 | M0 maintenance | Finalize Windows fixes; accurately document shipped fingerprints/cleanup | SAFE-02/08, SRC-01/03/04, DOC-01 |

@@ -3,6 +3,7 @@
 - Running the released program: repository [README](../README.md), [CHANGELOG](../CHANGELOG.md) and [release notes](RELEASE-1.0.2.md).
 - Current design and proposed boundaries: [architecture](ARCHITECTURE.md).
 - Asteroid priorities and stable feature references: [roadmap](ROADMAP.md).
+- Bounded shared-engine experiment and review stop: [foundation checkpoint](FOUNDATION-CHECKPOINT.md).
 - Exact source acceptance: [fingerprint specification](SOURCE-FINGERPRINT.md).
 - Workflow and dated implementation history: [development guide](DEVELOPMENT.md).
 - Dependency context: [third-party notices](THIRD-PARTY-NOTICES.md) and [historical package audit](PACKAGE-AUDIT-1.0.2.md).
