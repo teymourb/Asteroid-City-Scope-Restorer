@@ -21,7 +21,10 @@ checks do not qualify complete-film framing, joining, timing or playback.
 
 Earlier sections are historical unless explicitly carried forward. Existing
 v1.0.2 remains the release for users needing the retired masked output. Do not
-remove historical evidence, assets, previous tags or downloads.
+remove historical evidence, assets, previous tags or downloads. The owner
+subsequently clarified that the current README must not retain the retired
+masked comparison image or description; those remain only in prior Git/release
+history. Keep the source and unmasked comparisons.
 
 Local native Windows qualification completed on 2026-11-09: **80 tests, zero
 skips in each MKVToolNix 78.0 and 102.0 configuration**. This includes seven

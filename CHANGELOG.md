@@ -9,8 +9,8 @@
 - Retain the existing unmasked output name and 1920 x 1080 container. Its split
   points, frame counts, transforms, encoding settings and assembly order are
   unchanged, as are bundled processing-tool versions and source recognition.
-- Update instructions and preserve the retired masked comparison as explicitly
-  historical documentation with a link to v1.0.2.
+- Update instructions and remove the retired masked comparison image and
+  description from the README. Retain source/unmasked comparisons and credits.
 
 ### Removed
 

@@ -97,33 +97,6 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 
 ---
 
-<a id="2-theatrical-scope-version-masked"></a>
-
-## Historical comparison: masked output in v1.0.2
-
-**This output is not available in v2.0.0.** The description and original comparison
-image below document the retired option. Download [v1.0.2](https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases/tag/v1.0.2)
-if you specifically need its native 1920 x 804 Scope container. The v2.0.0
-unmasked output remains 1920 x 1080; on suitable Scope displays, the playback
-crop described above can remove its top and bottom borders.
-
-The retired masked recipe worked as follows:
-  - Black and White sequences downscaled to **1102 x 804** (**1.37:1**) active picture, 1430 x 804 (1.78:1) container, then
-  - Black and White sequences container **pillarboxed** to 1920 x 804 (2.39:1)
-  - Scope sequences **cropped** to 1920 x 804 (2.39:1), removing the top and bottom black bars
-  - Picture Variable width: 1102 (Black and White 1.37:1 sequences), 1920 (Scope 2.39:1 sequences), Constant height: 804
-  - Active image: 1920 x 804 (2.39:1)
-  - **Container**: 1920 x 804 (2.39:1)
-
-**Historical use cases:**
-  - Projectors with ~2.39:1 wall/screen (or with decent masking options)
-  - ~2.39:1 displays
-  - VR
-
-![AsteroidCity_Scope(masked)](https://github.com/teymourb/Asteroid-City-Scope-Restorer/assets/53331006/d9e14010-d28d-4c89-b79f-5df0ed05434a)
-
----
-
 ## Community and discussion
 
 [Reddit | r/fanedits Program thread](https://www.reddit.com/r/fanedits/comments/199y61n/fanedit_program_asteroid_city_theatrical_scope/)  

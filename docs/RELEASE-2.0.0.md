@@ -11,8 +11,8 @@ and avoid its additional cropping/re-encoding path.
 - The sole output remains **`Asteroid City Theatrical Scope Restoration (unmasked).mkv`**.
 - Correct a Windows working-file check that could mistake valid nonempty files
   for directories. Missing, empty or directory outputs still stop processing.
-- Refresh the instructions while retaining original credits, artwork and
-  comparison images. The masked comparison is labelled as historical.
+- Refresh the instructions while retaining credits, artwork and the source/unmasked
+  comparisons. Remove the retired masked comparison image and description.
 
 Removing a supported output option is the reason for the major version number.
 If you specifically need the old native 1920 x 804 masked container, use
