@@ -1,5 +1,15 @@
 # Published v2.0.0 checkpoint — 2026-11-09
 
+Release-page editorial correction (2026-11-09): at the owner's request, shorten
+the GitHub description to shipped user-facing changes and download instructions.
+Remove roadmap discussion, version-number reasoning and internal qualification
+commentary. The source copy in RELEASE-2.0.0.md follows the corrected page.
+Published ZIP/checksum bytes and the v2.0.0 tag are unchanged; RELEASE-NOTES.md
+inside that immutable ZIP retains the original longer wording. This is a text
+difference, not a change to application behavior or source/asset identity.
+Future releases require owner review of the exact public copy before publication;
+AGENTS.md records the mandatory final review checkpoint.
+
 Asteroid v2.0.0 was published after explicit owner approval, with the complete
 application ZIP and SHA256SUMS.txt. It is the latest stable release:
 https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases/tag/v2.0.0

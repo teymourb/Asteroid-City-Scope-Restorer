@@ -17,3 +17,10 @@ architecture/roadmap before historical notes. Update affected feature/decision a
 user-facing documentation with behavior changes. Keep owner decisions, proposals,
 research, local validation and shipped features distinct; do not infer new scope
 from a backlog item.
+
+Before each future release publication, show the owner the exact final release
+notes, README changes, version/tag and asset/checksum list, then stop for review
+and explicit publication approval. A general go-ahead is not this final review.
+Keep public notes focused on user-visible changes and essential usage information;
+roadmaps, implementation debates and internal qualification belong in developer docs.
+Editorial release-page corrections must not silently replace published ZIP bytes.
