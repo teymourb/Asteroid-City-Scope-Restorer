@@ -1,13 +1,33 @@
 # Changelog
 
-## Unreleased
+## 2.0.0 — 2026-11-09
+
+### Changed
+
+- Provide Theatrical Scope (unmasked) as the sole restoration. Review the fixed
+  restoration in the confirmation summary instead of choosing a numbered mode.
+- Retain the existing unmasked output name and 1920 x 1080 container. Its split
+  points, frame counts, transforms, encoding settings and assembly order are
+  unchanged, as are bundled processing-tool versions and source recognition.
+- Update instructions and preserve the retired masked comparison as explicitly
+  historical documentation with a link to v1.0.2.
+
+### Removed
+
+- Remove the masked restoration and its additional cropping/re-encoding path.
+  This intentionally removes a supported output choice, so v2.0.0 is a major
+  version. Existing v1.0.2 remains the release for users needing masked output.
 
 ### Fixed
 
 - Correct working-video file checks on Windows so nonempty regular files are not
   mistaken for directories. Missing files, empty files and directories still stop
-  processing. Restoration cuts, transforms and encoding settings are unchanged.
+  processing.
 
+Existing source fingerprinting, dialogs/manual fallback, destination protection,
+process/workspace safeguards, separate logs and guarded cleanup remain. This
+release does not introduce general resume, a shared engine, a graphical interface
+or a new encoding/joining pipeline.
 
 ## 1.0.2 — 2026-10-21
 

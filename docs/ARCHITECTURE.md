@@ -2,11 +2,11 @@
 
 ## Current implementation
 
-The Windows BAT delegates setup, workspace supervision and source acceptance to PowerShell 5.1 helpers, then runs film-specific processing, assembly and final remux with bundled tools. Those three helpers currently match the Batman copies byte for byte. Ownership, owned-process supervision, bounded cleanup and separate logs exist; general resume does not.
+The Windows BAT delegates setup, workspace supervision and source acceptance to PowerShell 5.1 helpers, then runs film-specific processing, assembly and final remux with bundled tools. These helpers share historical mechanisms with Batman, but Asteroid selection now fixes the restoration to unmasked and rejects retired mode settings. Ownership, owned-process supervision, bounded cleanup and separate logs remain; general resume does not.
 
 The supported source is documented AVC video. Fingerprinting hashes normally extracted AVC bytes, independently of audio/subtitles/track order. [SOURCE-FINGERPRINT.md](SOURCE-FINGERPRINT.md) gives exact contracts. BvS HEVC AUD/RPU normalization is not Asteroid's algorithm.
 
-The film profile must preserve masked/unmasked Scope modes, segment boundaries, B&W/Scope crop/scale/pad settings, logo inputs, encoder instructions, recorded 15-input assemblies and output naming. Structural refactoring preserves restoration intent.
+The v2.0.0 film recipe preserves the sole unmasked Scope restoration: exact segment boundaries, B&W/Scope crop/scale/pad settings, logo inputs, encoder instructions, the ordered 15-input assembly and existing output naming. Masked mode is intentionally retired; older two-mode plans describe v1.0.2, not the current release branch. Future structural refactoring must preserve the retained restoration intent.
 
 ## Accepted direction, proposed implementation
 
@@ -19,3 +19,12 @@ No language, framework, engine repository or GUI is selected. Demonstrate a repr
 Asteroid has an AVC pipeline and distinct opening/logo/framing transformations. BvS uses 4K HEVC/HDR10 and different modes. Shared operating behavior does not make media recipes or qualification interchangeable. A future BvS HEVC RPU injection feature does not apply automatically to Asteroid; any Asteroid DV route requires a separate codec/color proposal.
 
 Cross-platform distribution needs native dependencies and OS/output evidence per film, not just a portable interface. Public source integration, packages and media-affecting changes retain existing authorization boundaries.
+
+## v2.0.0 scope
+
+This major version removes a supported output mode; it does not deliver the future
+shared engine or graphical application. A fixed restoration removes the public
+mode-selection menu while preserving source/output selection, confirmation and
+all applicable unmasked processing safeguards. Shared-engine source audits from
+the earlier checkpoint retain historical two-mode provenance and must be updated
+when that separate work resumes; they do not execute production v2.0.0.

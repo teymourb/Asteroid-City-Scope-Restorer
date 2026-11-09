@@ -35,14 +35,15 @@ def stages():
 class ProcessingSource(unittest.TestCase):
     def test_assembly_manifests_match_actual_append_order(self):
         commands = [line for line in TEXT.splitlines() if 'avidemux_cli --load' in line]
-        for mode, command in zip(('unmasked', 'masked'), commands):
+        self.assertEqual(len(commands), 1, 'Only the retained unmasked assembly may be invoked')
+        for mode, command in zip(('unmasked',), commands):
             expected = re.findall(r'--(?:load|append) "([^"]+)"', command)
             self.assertEqual((ROOT / 'tools/qualification' / ('assembly-inputs-' + mode + '.txt')).read_text().splitlines(), expected)
         for token in ('validate_assembly', 'RESTORER_VALIDATION_MODE', 'assembly-check.txt', 'Validate-Assembly.ps1'):
             self.assertNotIn(token, TEXT)
 
     def test_every_stage_has_status_and_output_gate(self):
-        self.assertEqual(len(stages()), 57)
+        self.assertEqual(len(stages()), 25)
         for block, command, output in stages():
             self.assertIn('if not errorlevel 0 goto stage_failed', block)
             self.assertIn('call :require_stage_output "' + output + '"', block)
@@ -158,7 +159,7 @@ class WindowsProcessing(unittest.TestCase):
     def test_full_mode_controlflow_retains_work_and_stops_cascades(self):
         pipeline = TEXT[TEXT.index('if %version%==1 ('):]
         pipeline = re.sub(r'(?im)^\s*PAUSE\s*$', 'rem noninteractive', pipeline)
-        for mode in (1, 2):
+        for mode in (1,):
             for dialog in ('y', 'n'):
                 for fail_at, validator_code, missing_validator in ((0, 0, False), (2, 0, False), (0, 2, False), (0, -1, False), (0, 0, True)):
                     with self.subTest(mode=mode, dialog=dialog, fail_at=fail_at, validator_code=validator_code, missing_validator=missing_validator), tempfile.TemporaryDirectory(prefix='full processing ') as td:

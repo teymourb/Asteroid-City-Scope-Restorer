@@ -81,11 +81,12 @@ function Check-Selection {
     if (-not [IO.File]::Exists($Source)) { throw 'The source file does not exist. Select an existing MKV file.' }
     if ([IO.Path]::GetExtension($Source) -ine '.mkv' -or (Get-Item -LiteralPath $Source).Length -eq 0) { throw 'The source must be a nonempty MKV file.' }
     if (-not [IO.Directory]::Exists($Destination)) { throw 'The output folder does not exist. Create or select an existing folder.' }
-    if ($Mode -notin @('1','2')) { throw 'Choose mode 1 or 2.' }
+    if ($Film -eq 'Asteroid' -and $Mode -ne '1') { throw 'Asteroid City v2.0.0 supports only the unmasked restoration. Masked mode 2 was retired.' }
+    if ($Film -eq 'BvS' -and $Mode -notin @('1','2')) { throw 'Choose mode 1 or 2.' }
     $name = if ($Film -eq 'BvS') {
         if ($Mode -eq '1') { 'Batman v Superman Dawn of Justice Ultimate Edition IMAX 1.78.mkv' } else { 'Batman v Superman Dawn of Justice Ultimate Edition IMAX 1.43 (unmasked).mkv' }
     } else {
-        if ($Mode -eq '1') { 'Asteroid City Theatrical Scope Restoration (unmasked).mkv' } else { 'Asteroid City Theatrical Scope Restoration (masked).mkv' }
+        'Asteroid City Theatrical Scope Restoration (unmasked).mkv'
     }
     $script:ExpectedOutput = Join-Path $Destination $name
     if ([string]::Equals($Source,$ExpectedOutput,[StringComparison]::OrdinalIgnoreCase)) { throw 'The source and output paths must be different.' }
@@ -138,6 +139,7 @@ function Select-Path([bool]$IsSource) {
     return Read-Answer 'Paste the full output folder path (quotes accepted), or q to quit'
 }
 try {
+    if ($Film -eq 'Asteroid' -and $Mode -and $Mode -ne '1') { throw 'Masked mode is retired in Asteroid City v2.0.0.' }
     if ($ValidateEnvironment) {
         $Source = $env:file; $Destination = $env:folder; $Mode = $env:version
         if ($env:RESTORER_SELECTION_READY -ne '1' -or $env:dialog -ne 'y' -or $env:dialog2 -ne 'y') { throw 'Selection is missing. Start the launcher normally.' }
@@ -148,8 +150,8 @@ try {
             Show-Heading 'Required source'
             Show-Wrapped 'An MKV rip of the 4K Ultra HD Blu-ray (2021 Remaster).'
         } else {
-            Show-Banner 'Asteroid City Theatrical Scope Restorer'
-            Show-Wrapped 'Restore your preferred constant-height Scope theatrical presentation.'
+            Show-Banner 'Asteroid City Theatrical Scope Restorer v2.0.0'
+            Show-Wrapped 'Restore the constant-height theatrical Scope presentation in a 16:9 container.'
             Show-Heading 'Required source'
             Show-Wrapped 'An MKV rip of the Asteroid City Blu-ray disc.'
         }
@@ -159,7 +161,7 @@ try {
         Show-Wrapped 'Your original MKV is not modified. The restoration is saved as a separate file.'
         Write-Host ''
         Show-Wrapped 'No processing has started. Enter Q to quit during setup.'
-        Show-Heading 'Step 1 of 3 - Source MKV'
+        Show-Heading $(if ($Film -eq 'BvS') { 'Step 1 of 3 - Source MKV' } else { 'Step 1 of 2 - Source MKV' })
         Show-Wrapped 'Select your source MKV in the file dialog.'
         while ($true) {
             try {
@@ -169,7 +171,7 @@ try {
             } catch [OperationCanceledException] { throw } catch { Write-Host ('Source: ' + $_.Exception.Message) }
         }
         Show-Field 'Selected source' $Source
-        Show-Heading 'Step 2 of 3 - Output folder'
+        Show-Heading $(if ($Film -eq 'BvS') { 'Step 2 of 3 - Output folder' } else { 'Step 2 of 2 - Output folder' })
         Show-Wrapped 'Select the folder where the restored MKV will be saved.'
         while ($true) {
             try {
@@ -179,8 +181,8 @@ try {
             } catch [OperationCanceledException] { throw } catch { Write-Host ('Destination: ' + $_.Exception.Message) }
         }
         Show-Field 'Selected output folder' $Destination
-        Show-Heading 'Step 3 of 3 - Restoration'
         if ($Film -eq 'BvS') {
+            Show-Heading 'Step 3 of 3 - Restoration'
             Show-Wrapped 'Choose your constant-width IMAX restoration.'
             Write-Host ''
             Show-Wrapped '[1] IMAX 1.78:1'
@@ -188,20 +190,14 @@ try {
             Write-Host ''
             Show-Wrapped '[2] IMAX 1.43:1 (unmasked)'
             Show-Wrapped 'Scope scenes downscaled and windowboxed in a 16:9 container. IMAX scenes remain unchanged. Preserves the full height of the IMAX image.' 6
+            Write-Host ''
+            while ($true) {
+                $Mode = Read-Answer 'Choose 1 or 2'
+                if ($Mode -in @('1','2')) { break }
+                Write-Host 'Enter 1 or 2; your source and destination selections are retained.'
+            }
         } else {
-            Show-Wrapped 'Choose your constant-height Scope theatrical restoration.'
-            Write-Host ''
-            Show-Wrapped '[1] Scope Theatrical (unmasked)'
-            Show-Wrapped 'Black and White scenes downscaled and windowboxed. Keeps the 16:9 container; Blu-ray compliant.' 6
-            Write-Host ''
-            Show-Wrapped '[2] Scope Theatrical (masked)'
-            Show-Wrapped 'Black and White scenes downscaled and pillarboxed. Uses a 2.39:1 container with the top and bottom black bars removed.' 6
-        }
-        Write-Host ''
-        while ($true) {
-            $Mode = Read-Answer 'Choose 1 or 2'
-            if ($Mode -in @('1','2')) { break }
-            Write-Host 'Enter 1 or 2; your source and destination selections are retained.'
+            $Mode = '1'
         }
     }
     Check-Selection
@@ -210,7 +206,7 @@ try {
     $modeName = if ($Film -eq 'BvS') {
         if ($Mode -eq '1') { 'IMAX 1.78:1 (constant-width; IMAX scenes vertically centre-cropped)' } else { 'IMAX 1.43:1 (constant-width; unmasked 16:9 container)' }
     } else {
-        if ($Mode -eq '1') { 'Scope Theatrical (constant-height; unmasked 16:9 container)' } else { 'Scope Theatrical (constant-height; masked 2.39:1 container)' }
+        'Scope Theatrical (constant-height; unmasked 16:9 container)'
     }
     Show-Field 'Restoration' $modeName
     Show-Field 'Source' $Source

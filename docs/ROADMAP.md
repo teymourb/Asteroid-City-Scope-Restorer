@@ -14,9 +14,9 @@ The authorized bounded design/prototype checkpoint is complete; see [review repo
 | M4+ interface/platforms | GUI using same engine; select and qualify native OS/CPU packages | UI-01, PLAT-02/03 |
 | Stewardship | Source/build provenance; explicitly selected dependency upgrades | DIST-01–03 |
 
-Already shipped: extracted-AVC source gate, dialogs/fallback, clearer prompts, stage/remux guards, destination protection, separate logs and bounded cleanup. The manual-unmasked .mkv.mkv packaging typo is fixed in v1.0.2. Do not schedule these as absent features.
+Already shipped: extracted-AVC source gate, dialogs/fallback, clearer prompts, stage/remux guards, destination protection, separate logs and bounded cleanup. The manual-unmasked .mkv.mkv packaging typo is fixed in v1.0.2. Do not schedule these as absent features. The current release branch separately prepares the approved single-mode v2.0.0 change below.
 
-The local Windows correction passed 64 methods with zero skips under MKVToolNix 78 and 102. Run cross-project suites serially. Synthetic success is not complete-film qualification.
+The earlier local Windows correction passed 64 methods with zero skips under MKVToolNix 78 and 102 before mode retirement. That is historical evidence; v2.0.0 requires its own recorded results. Run cross-project suites serially. Synthetic success is not complete-film qualification.
 
 Resume, configurable work drives, richer progress and lower peak storage are future work. Public validation-level selection was withdrawn; developer assembly checks remain separate. Logo permission/publication were resolved in later records. Historical candidate blockers are not automatically current blockers.
 
@@ -28,6 +28,22 @@ The owner later supplied a fuller prior-chat handoff. The newer two-standalone-p
 
 Platform direction: Windows, then Apple Silicon macOS, then Linux when justified. Earlier provisional versions were 1.1 foundation, 1.2 resume, 1.3 joins, 2.0 unified Windows GUI, 2.1 Apple Silicon, 2.2 Linux. Later assistant numbering suggestions did not establish an accepted replacement. Working milestones and future release numbers remain separate; the older unified scope must respect the newer separate-products decision. Full reconciliation and attributed requirements are in the common planning register.
 
-## Pending product consideration: masked mode
+## Approved v2.0.0 scope: masked mode retired
 
-The owner is considering removing the masked option because of its encoding cost and limited use case (AST-01). This is not yet an implementation decision. The current code has 8 HandBrake invocations in unmasked versus 15 in masked mode (25/32 total media stages). Masked creates a native 1920x804 container and re-encodes additional Scope/logo material; unmasked keeps a 1920x1080 container and preserves copied Scope sections. Runtime savings are not measured by invocation counts. If confirmed, treat removal as a deliberate product/compatibility change with profile, UI, docs and test updates, separate from the current maintenance patch. Existing modes and audited stage maps remain unchanged for now.
+The owner approved retiring masked output and preparing v2.0.0 for publication
+review (AST-01). The sole unmasked recipe retains its original compressed Scope
+sections in a 1920 x 1080 container. Source/output selection now proceeds to a
+fixed-restoration confirmation summary; legacy mode 2 is rejected. The masked
+1920 x 804 output remains available in historical v1.0.2, not in the new program.
+
+The earlier audit counted 8 HandBrake invocations/25 media stages for unmasked and
+15/32 for masked. This explains the removed processing path; it is not a measured
+time-saving percentage. The unmasked media recipe and processing tools remain
+unchanged. This deliberate feature removal makes v2.0.0 a compatibility milestone;
+it does not imply that the engine/GUI generation formerly labelled 2.0 is ready.
+Future release numbers must reflect the actual chosen scope, not old planning labels.
+
+The former 64-method Windows result and two-mode shared-foundation audit are
+historical baselines. New release qualification and exact candidate identity must
+come from the release-ready evidence. Public source integration, tag and release
+publication still await the final owner approval.

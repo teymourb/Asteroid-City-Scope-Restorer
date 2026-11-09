@@ -65,7 +65,7 @@ class SelectionWindows(unittest.TestCase):
         child=self.root/'child (launcher) & test.bat'
         child.write_text('@echo off\nsetlocal DisableDelayedExpansion\npowershell.exe -NoProfile -Command "[IO.File]::WriteAllText($env:SELECTION_TRACE, $env:file + [Environment]::NewLine + $env:folder + [Environment]::NewLine + $env:version + [Environment]::NewLine + $env:dialog)"\nexit /b 7\n')
         trace=self.root/'trace.txt'; env=os.environ.copy(); env['SELECTION_TRACE']=str(trace)
-        result=subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(self.helper),'-Film','Asteroid','-Manual','-Launcher',str(child)],input=f'{self.source}\n{self.dest}\n1\nwrong-answer\ny\n',capture_output=True,text=True, encoding='utf-8',timeout=30,env=env)
+        result=subprocess.run(['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(self.helper),'-Film','Asteroid','-Manual','-Launcher',str(child)],input=f'{self.source}\n{self.dest}\nwrong-answer\ny\n',capture_output=True,text=True, encoding='utf-8',timeout=30,env=env)
         self.assertEqual(result.returncode,7,result.stdout+result.stderr)
         recorded = trace.read_text(encoding='utf-8').splitlines()
         self.assertEqual(len(recorded), 4)
@@ -79,7 +79,7 @@ class SelectionWindows(unittest.TestCase):
         child=self.root/'child.bat'; child.write_text('@echo off\npowershell.exe -NoProfile -Command "[IO.File]::WriteAllText($env:SELECTION_TRACE,\'started\')"\nexit /b 0\n')
         trace=self.root/'trace.txt';env=os.environ.copy();env['SELECTION_TRACE']=str(trace)
         cmd=['powershell.exe','-NoProfile','-STA','-ExecutionPolicy','Bypass','-File',str(self.helper),'-Film','Asteroid','-Manual','-Launcher',str(child)]
-        prefix=f'{self.source}\n{self.dest}\n1\n'
+        prefix=f'{self.source}\n{self.dest}\n'
         for ending in ('q\n','\n','n\n'):
             result=subprocess.run(cmd,input=prefix+ending,env=env,capture_output=True,text=True,encoding='utf-8',timeout=30)
             self.assertEqual(result.returncode,3,result.stdout+result.stderr)
@@ -92,7 +92,8 @@ class SelectionWindows(unittest.TestCase):
 
     def test_dialog_readiness_enter_quit_and_retry(self):
         # Exercise the real readiness function without opening native UI in CI.
-        prefix = HELPER.read_text().split('\ntry {\n    if ($ValidateEnvironment)', 1)[0]
+        prefix, main = HELPER.read_text(encoding='utf-8').split('\ntry {\n', 1)
+        self.assertIn('Check-Selection', main)
         harness = self.root / 'readiness.ps1'
         for is_source in ('$true', '$false'):
             harness.write_text(prefix + "\ntry { Wait-ForDialog " + is_source + "; Write-Host 'DIALOG_READY'; exit 0 } catch [OperationCanceledException] { Write-Host $_.Exception.Message; exit 3 }\n")
@@ -168,11 +169,11 @@ class WindowsSelection(unittest.TestCase):
         return subprocess.run(cmd, cwd=install.parent, env=env, input=answers, text=True, encoding='utf-8',
                               capture_output=True, timeout=60)
 
-    def test_real_setup_child_transport_both_modes_and_quoted_paths(self):
-        for mode in ('1', '2'):
+    def test_real_setup_child_transport_unmasked_and_quoted_paths(self):
+        for mode in ('1',):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as td:
                 install, launcher, source, destination = self.make_case(Path(td))
-                answers = '"' + str(source) + '"\n"' + str(destination) + '"\n' + mode + '\ny\n'
+                answers = '"' + str(source) + '"\n"' + str(destination) + '"\n' + 'y\n'
                 result = self.invoke(install, launcher, source, destination, mode, answers)
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 self.assertIn('Restoration complete.', result.stdout)
@@ -193,7 +194,7 @@ class WindowsSelection(unittest.TestCase):
             with tempfile.TemporaryDirectory() as td:
                 install, launcher, source, destination = self.make_case(Path(td))
                 if answers is None:
-                    answers = str(source) + '\n' + str(destination) + '\n1\n' + str(source) + '\nn\n'
+                    answers = str(source) + '\n' + str(destination) + '\n' + str(source) + '\nn\n'
                 result = self.invoke(install, launcher, source, destination, answers=answers)
                 self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
                 self.assertFalse((install / 'docs/temp').exists())
@@ -215,7 +216,7 @@ class WindowsSelection(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             install, launcher, source, destination = self.make_case(Path(td))
             output = destination / 'Asteroid City Theatrical Scope Restoration (unmasked).mkv'
-            answers = str(source) + '\n' + str(destination) + '\n1\ny\n'
+            answers = str(source) + '\n' + str(destination) + '\ny\n'
             result = self.invoke(install, launcher, source, destination, answers=answers,
                                  env_extra={'LATE_OUTPUT': str(output)})
             self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
@@ -229,7 +230,7 @@ class WindowsSelection(unittest.TestCase):
                 install, launcher, source, destination = self.make_case(Path(td))
                 (install / 'docs/scripts/Test-SourceFingerprint.ps1').write_text(
                     "Write-Host 'Synthetic fingerprint mismatch: restoration not started.'\nexit %s\n" % status)
-                answers = str(source) + '\n' + str(destination) + '\n1\ny\n'
+                answers = str(source) + '\n' + str(destination) + '\ny\n'
                 result = self.invoke(install, launcher, source, destination, answers=answers)
                 self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
                 self.assertIn('Synthetic fingerprint mismatch', result.stdout)

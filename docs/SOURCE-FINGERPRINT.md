@@ -3,9 +3,11 @@
 Current status (2026-11-09): this runtime gate shipped in v1.0.2. The
 reference values below come from preserved owner-operated Windows evidence, not
 agent inspection of private films. PR #12 belongs to the implementation history;
-it is not a still-pending release prerequisite. The current local synthetic suite
-also covers source normalization/acceptance. See [documentation index](README.md)
-and the changelog for current versus historical status.
+it is not a still-pending release prerequisite. The source-acceptance algorithm and reference are unchanged for the v2.0.0
+single-restoration release. Its current qualification is recorded separately from
+these preserved source-reference observations. See the application README and
+changelog for current behavior; developer documentation is maintained in the
+source repository.
 
 ## Version 1 recipes and acceptance values
 

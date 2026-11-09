@@ -20,7 +20,7 @@ TEXT = SCRIPT.read_text(encoding='utf-8')
 
 def remux_blocks():
     chunks = TEXT.split('\techo Remuxing audio and subtitles\n')[1:]
-    assert len(chunks) == 2
+    assert len(chunks) == 1
     return [c.split('\n) else', 1)[0] for c in chunks]
 
 
@@ -41,9 +41,14 @@ def media_commands(text):
 
 class SourceRegression(unittest.TestCase):
     def test_processing_commands_preserved(self):
-        # v1.0.1 command baseline, normalizing only the approved filename fix.
+        # Retained v1.0.2 unmasked command baseline; masked mode intentionally retired.
+        baseline = (ROOT / 'tests/fixtures/unmasked-v1.0.2-commands.txt').read_bytes().replace(b'\r\n', b'\n').rstrip(b'\n')
+        self.assertEqual(hashlib.sha256(baseline).hexdigest(),
+                         '963b3f220c4ceedfa808a247f5b9a8e29ae444d85e07f150e067a3c055e65e8a')
+        self.assertEqual(media_commands(TEXT), baseline,
+                         'The retained unmasked recipe must match its independent v1.0.2 command fixture')
         self.assertEqual(hashlib.sha256(media_commands(TEXT)).hexdigest(),
-                         'e9c8aed48e8fed6e327edfe2b6230f0d87f0dae63b63065ed7eee033c050be33')
+                         '963b3f220c4ceedfa808a247f5b9a8e29ae444d85e07f150e067a3c055e65e8a')
 
     def test_every_remux_branch_checks_status_before_cleanup(self):
         for block in remux_blocks():
@@ -130,7 +135,7 @@ class WindowsRemux(unittest.TestCase):
         return result, intermediate, root / 'args.txt', output_dir
 
     def test_existing_destination_stops_all_remux_branches(self):
-        for mode, dialog, dialog2 in itertools.product((1, 2), ('y', 'n'), ('y', 'n')):
+        for mode, dialog, dialog2 in itertools.product((1,), ('y', 'n'), ('y', 'n')):
             with self.subTest(mode=mode, dialog=dialog, dialog2=dialog2), tempfile.TemporaryDirectory() as folder:
                 result, intermediate, args_path, output_dir = self.run_block(
                     Path(folder), mode, dialog, dialog2, existing_output=True)
@@ -143,7 +148,7 @@ class WindowsRemux(unittest.TestCase):
                 self.assertIn('has not been overwritten', result.stdout)
 
     def test_branch_and_exit_status_matrix(self):
-        for mode, dialog, dialog2, code in itertools.product((1, 2), ('y', 'n'), ('y', 'n'), (0, 1, 2, 9, -1073741819)):
+        for mode, dialog, dialog2, code in itertools.product((1,), ('y', 'n'), ('y', 'n'), (0, 1, 2, 9, -1073741819)):
             with self.subTest(mode=mode, source=dialog, destination=dialog2, code=code):
                 with tempfile.TemporaryDirectory(prefix='restorer with spaces ') as folder:
                     root = Path(folder)
@@ -191,7 +196,7 @@ class WindowsRemux(unittest.TestCase):
                             '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-c:a', 'pcm_s16le',
                             str(source)], check=True)
             subprocess.run([str(tool), '-o', str(video), '-A', str(source)], check=True)
-            for mode in (1, 2):
+            for mode in (1,):
                 with tempfile.TemporaryDirectory(prefix='synthetic remux ') as run_dir:
                     result, intermediate, _, output_dir = self.run_block(
                         Path(run_dir), mode, 'y', 'n', real_tool=tool,

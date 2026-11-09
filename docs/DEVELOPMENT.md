@@ -1,3 +1,36 @@
+# v2.0.0 release preparation — 2026-11-09
+
+The owner approved removing Asteroid's masked output and preparing v2.0.0 for a
+final publication checkpoint. This branch is release preparation, not evidence of
+an already published release. The sole current restoration is Theatrical Scope
+(unmasked); source and destination selection lead directly to a fixed-restoration
+confirmation summary. Obsolete Asteroid mode 2 must be rejected rather than
+silently redirected. The unmasked output filename and 1920 x 1080 container remain.
+
+The retained recipe's split points, requested frame counts, crop/scale/pad values,
+encoding arguments and assembly order are unchanged. Tools, the mandatory AVC
+fingerprint, existing-output protection, ownership/process safeguards, separate
+logs and guarded cleanup remain. General resume, shared-engine migration, GUI,
+platform expansion and codec/join/DV redesign are not part of this release.
+
+Use README.md and RELEASE-2.0.0.md for current public behavior. Source identity,
+test results, complete package/checksum validation and the proposed GitHub
+version/title/tag/assets are recorded in the release-ready evidence prepared for
+owner review. Do not infer v2.0.0 qualification from old counts below. Synthetic
+checks do not qualify complete-film framing, joining, timing or playback.
+
+Earlier sections are historical unless explicitly carried forward. Existing
+v1.0.2 remains the release for users needing the retired masked output. Do not
+remove historical evidence, assets, previous tags or downloads.
+
+Local native Windows qualification completed on 2026-11-09: **80 tests, zero
+skips in each MKVToolNix 78.0 and 102.0 configuration**. This includes seven
+single-restoration tests and nine packaging tests. The retained media-command
+fixture is pinned to the preceding unmasked recipe. External release-ready
+records retain timestamped logs, source commit, deterministic package hashes
+and extracted-package checks. These local results do not mean GitHub CI has
+run for this branch: pushing and publication remain held for owner approval.
+
 # Windows development compatibility — 2026-11-09
 
 Current design and planning: [documentation index](README.md). Dated historical
