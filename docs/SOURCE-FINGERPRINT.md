@@ -1,8 +1,13 @@
 # Source-video fingerprint gate — implementation record, 2026-10-20
 
-This runtime gate is implemented. Reviewed synthetic Windows checks in PR #12
-are required before candidate qualification. No agent inspected a private film. The
-reference values below come from owner-operated Windows commands/screenshots.
+Current status (2026-11-09): this runtime gate shipped in v1.0.2. The
+reference values below come from preserved owner-operated Windows evidence, not
+agent inspection of private films. PR #12 belongs to the implementation history;
+it is not a still-pending release prerequisite. The source-acceptance algorithm and reference are unchanged for the v2.0.0
+single-restoration release. Its current qualification is recorded separately from
+these preserved source-reference observations. See the application README and
+changelog for current behavior; developer documentation is maintained in the
+source repository.
 
 ## Version 1 recipes and acceptance values
 
@@ -60,6 +65,8 @@ require recipe compatibility tests before adopting them as production tools.
 
 Required synthetic coverage includes a matching control, changed-video mismatch,
 metadata/audio/remux/track-order variants, wrong or multiple video tracks, failed
-native processes, malformed output and preserved predecessor files. Historical
-passing workflows do not qualify this new implementation. Actual Windows results
-and exact source/run identities must be added before validated merge or RC claims.
+native processes, malformed output and preserved predecessor files. New
+recipe/tool revisions must record their own Windows evidence before qualification;
+old passing results do not qualify a changed algorithm. Synthetic type-62 tests
+prove filtering, not valid Dolby Vision playback. Source matching remains separate
+from actual output, timing, HDR and synchronization qualification.

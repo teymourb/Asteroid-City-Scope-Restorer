@@ -8,12 +8,11 @@
     <a href="https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases" target="_blank" rel="noopener"><img src="https://img.shields.io/github/release/teymourb/Asteroid-City-Scope-Restorer.svg" alt="Latest releases" /></a>
 </p>
 
-***Asteroid-City-Scope-Restorer*** is an experimental program from the fanedit community which allows you to restore your preferred Scope theatrical version of the Blu-Ray of *Asteroid City*.
+***Asteroid-City-Scope-Restorer*** is an experimental program from the fanedit community which restores the **constant-height theatrical Scope presentation** of the Blu-ray of *Asteroid City*.
 
-Choose between two **constant-height** Scope restorations:
+**Version 2.0.0 provides one restoration: [Theatrical Scope (unmasked)](#theatrical-scope-restoration-unmasked).** It preserves the original compressed Scope sections and places the altered Black and White sequences in a 1920 x 1080 container. There is no restoration-mode menu.
 
-- [Theatrical Scope (unmasked)](#1-theatrical-scope-version-unmasked): Black and White sequences are windowboxed inside a 16:9 container; Blu-ray compliant.
-- [Theatrical Scope (masked)](#2-theatrical-scope-version-masked): Black and White sequences are pillarboxed inside a 2.39:1 container.
+The separate masked 1920 x 804 output has been retired. If you need that legacy output, use [v1.0.2](https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases/tag/v1.0.2). The unmasked recipe is unchanged: v2.0.0 simplifies the program rather than introducing a new edit, encoder or shared engine.
 
 ## Requirements
 
@@ -35,7 +34,7 @@ it. Your original MKV is unchanged.
 3. Double-click **`Asteroid-City-Scope-Restorer.bat`**.
 4. Read the source requirements, then press Enter to open the source-file dialog. Choose your MKV.
 5. Press Enter to open the destination-folder dialog. Choose an existing folder for the restored MKV.
-6. Choose restoration **1** or **2**, review the paths, restoration and storage information, then enter **Y** to begin. Enter **N** or **Q** to cancel.
+6. Review the source, destination, fixed **Theatrical Scope (unmasked)** restoration and storage information, then enter **Y** to begin. Enter **N** or **Q** to cancel.
 7. Keep the program window open and your PC awake. Encoding can take several hours. Progress messages identify the current stage; a quiet window does not necessarily mean processing has stopped.
 
 If a file/folder dialog is cancelled or unavailable, you can enter the full path
@@ -43,8 +42,9 @@ manually or quit. Paths with spaces and Unicode characters are supported. Paths
 containing `!`, `%`, `^`, embedded quotes or control characters are refused with
 guidance; use a simpler name for that file or folder.
 
-The final MKV is saved in your selected output folder. Your original source is
-not modified, and existing destination files are not overwritten.
+The final MKV is saved in your selected output folder as
+**`Asteroid City Theatrical Scope Restoration (unmasked).mkv`**. Your original
+source is not modified, and existing destination files are not overwritten.
 
 ## Temporary files and troubleshooting
 
@@ -72,7 +72,9 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 
 ---
 
-## 1. Theatrical Scope version (unmasked)
+<a id="1-theatrical-scope-version-unmasked"></a>
+
+## Theatrical Scope restoration (unmasked)
 > Blu-ray compliant
   - Black and White sequences downscaled to **1102 x 804** (**1.37:1**) active picture, 1430 x 804 (1.78:1) container, then
   - Black and White sequences container **windowboxed** (pillarboxed + letterboxed) to 1920 x 1080 (1.78:1)
@@ -95,25 +97,12 @@ On the Blu-ray disc of Asteroid City, the different types of scenes are encoded 
 
 ---
 
-## 2. Theatrical Scope version (masked)
-  - Black and White sequences downscaled to **1102 x 804** (**1.37:1**) active picture, 1430 x 804 (1.78:1) container, then
-  - Black and White sequences container **pillarboxed** to 1920 x 804 (2.39:1)
-  - Scope sequences **cropped** to 1920 x 804 (2.39:1), removing the top and bottom black bars
-  - Picture Variable width: 1102 (Black and White 1.37:1 sequences), 1920 (Scope 2.39:1 sequences), Constant height: 804
-  - Active image: 1920 x 804 (2.39:1)
-  - **Container**: 1920 x 804 (2.39:1)
-
-**Best suited for:**
-  - Projectors with ~2.39:1 wall/screen (or with decent masking options)
-  - ~2.39:1 displays
-  - VR
-
-![AsteroidCity_Scope(masked)](https://github.com/teymourb/Asteroid-City-Scope-Restorer/assets/53331006/d9e14010-d28d-4c89-b79f-5df0ed05434a)
-
----
-
 ## Community and discussion
 
 [Reddit | r/fanedits Program thread](https://www.reddit.com/r/fanedits/comments/199y61n/fanedit_program_asteroid_city_theatrical_scope/)  
 [fanedit.org | Forums Restoration thread](https://forums.fanedit.org/threads/asteroid-city-scope-2-39-1-theatrical-restoration-1080p-program.30268/)  
 [Reddit | r/Bluray Proportions between aspect ratios was changed](https://www.reddit.com/r/Bluray/comments/195op7k/asteroid_city_bluray_the_proportions_between/)
+
+## Development documentation
+
+Architecture, roadmap, source-check specifications and development history are in the [source-repository documentation](https://github.com/teymourb/Asteroid-City-Scope-Restorer/tree/main/docs). Developer qualification tools are separate from the complete application ZIP.

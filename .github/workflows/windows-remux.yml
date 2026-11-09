@@ -6,6 +6,8 @@ on:
       - 'Asteroid-City-Scope-Restorer.bat'
       - 'tests/**'
       - 'docs/scripts/**'
+      - 'VERSION.txt'
+      - 'tools/build_candidate.py'
       - '.github/workflows/windows-remux.yml'
   workflow_dispatch:
 
@@ -36,9 +38,11 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /Asteroid-City-Scope-Restorer.bat
+            /VERSION.txt
             /tests/
             /docs/scripts/
             /tools/qualification/
+            /tools/build_candidate.py
       - name: Run batch regression matrix with native executable stub
         shell: pwsh
         run: |

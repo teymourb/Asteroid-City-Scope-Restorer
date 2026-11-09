@@ -1,3 +1,59 @@
+# v2.0.0 release preparation — 2026-11-09
+
+The owner approved removing Asteroid's masked output and preparing v2.0.0 for a
+final publication checkpoint. This branch is release preparation, not evidence of
+an already published release. The sole current restoration is Theatrical Scope
+(unmasked); source and destination selection lead directly to a fixed-restoration
+confirmation summary. Obsolete Asteroid mode 2 must be rejected rather than
+silently redirected. The unmasked output filename and 1920 x 1080 container remain.
+
+The retained recipe's split points, requested frame counts, crop/scale/pad values,
+encoding arguments and assembly order are unchanged. Tools, the mandatory AVC
+fingerprint, existing-output protection, ownership/process safeguards, separate
+logs and guarded cleanup remain. General resume, shared-engine migration, GUI,
+platform expansion and codec/join/DV redesign are not part of this release.
+
+Use README.md and RELEASE-2.0.0.md for current public behavior. Source identity,
+test results, complete package/checksum validation and the proposed GitHub
+version/title/tag/assets are recorded in the release-ready evidence prepared for
+owner review. Do not infer v2.0.0 qualification from old counts below. Synthetic
+checks do not qualify complete-film framing, joining, timing or playback.
+
+Earlier sections are historical unless explicitly carried forward. Existing
+v1.0.2 remains the release for users needing the retired masked output. Do not
+remove historical evidence, assets, previous tags or downloads. The owner
+subsequently clarified that the current README must not retain the retired
+masked comparison image or description; those remain only in prior Git/release
+history. Keep the source and unmasked comparisons.
+
+Local native Windows qualification completed on 2026-11-09: **80 tests, zero
+skips in each MKVToolNix 78.0 and 102.0 configuration**. This includes seven
+single-restoration tests and nine packaging tests. The retained media-command
+fixture is pinned to the preceding unmasked recipe. External release-ready
+records retain timestamped logs, source commit, deterministic package hashes
+and extracted-package checks. These local results do not mean GitHub CI has
+run for this branch: pushing and publication remain held for owner approval.
+
+# Windows development compatibility — 2026-11-09
+
+Current design and planning: [documentation index](README.md). Dated historical
+notes below do not override the current feature status or accepted decisions.
+
+This workspace now develops on native Windows; older macOS-only host guidance
+below is historical. Preserve the existing synthetic-first and release-approval
+boundaries.
+
+The stage-output guard reads file attributes instead of treating a trailing slash
+as a directory test. On this Windows host the old check rejected nonempty regular
+files in C: temporary directories, while accepting equivalent files on H:.
+Missing files, empty files and directories must still stop processing. Cuts,
+transforms, encoding arguments and assembly order are unchanged.
+
+The dialog-readiness test passes ExecutionPolicy Bypass only to its own generated
+PowerShell child, matching the other harnesses. It changes no persistent Windows
+policy. Run the two projects' suites serially: concurrent short-lived media stubs
+can trigger the legacy-worker inspection guard. Do not weaken that guard.
+
 # Published checkpoint — 2026-10-21
 
 Version 1.0.2 is published with its complete ZIP and SHA256SUMS.txt:
