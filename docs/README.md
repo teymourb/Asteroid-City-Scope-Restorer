@@ -12,10 +12,10 @@ The authoritative cross-project FEATURES.md, ROADMAP.md and DECISIONS.md are tem
 
 For future tasks, distinguish shipped behavior, local fixes, owner directions, assistant proposals and research. Update user instructions when behavior changes, architecture explanations when contracts change, feature/decision status when scope changes, and CHANGELOG Unreleased for notable user changes. Preserve history with current-status pointers; keep private media, credentials and large generated logs out of source documentation. Recording a proposal does not authorize a framework, rewrite or release.
 
-## v2.0.0 release preparation
+## Published v2.0.0
 
-The owner approved retiring the masked option. The release branch prepares a
-single fixed Theatrical Scope (unmasked) restoration, preserving its media recipe,
-source gate and existing safeguards. Public publication remains a separate final
-approval. Exact source commit, test evidence, package hashes and proposed tag/assets
-belong in the external release-ready record, not in aspirational roadmap text.
+The sole restoration is Theatrical Scope (unmasked); masked output is retired.
+The exact retained recipe, source gate and existing safeguards remain.
+The owner-approved [stable release](https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases/tag/v2.0.0)
+includes the complete application ZIP and checksums. [Development evidence](DEVELOPMENT.md)
+records the source/tag identity, 80-test Windows matrix and verified public downloads.

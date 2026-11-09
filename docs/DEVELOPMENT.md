@@ -1,4 +1,23 @@
-# v2.0.0 release preparation — 2026-11-09
+# Published v2.0.0 checkpoint — 2026-11-09
+
+Asteroid v2.0.0 was published after explicit owner approval, with the complete
+application ZIP and SHA256SUMS.txt. It is the latest stable release:
+https://github.com/teymourb/Asteroid-City-Scope-Restorer/releases/tag/v2.0.0
+
+- Source integration: [PR #17](https://github.com/teymourb/Asteroid-City-Scope-Restorer/pull/17).
+- Annotated tag targets `c3901718c07ebe2707152cd5a0f1ebc1d4053978`.
+- Both provisioned [GitHub Windows jobs](https://github.com/teymourb/Asteroid-City-Scope-Restorer/actions/runs/42656536883) passed 80 methods with zero skips (MKVToolNix 78.0/102.0).
+- Complete ZIP: 174129740 bytes; SHA256 `a75409497b80c2632ef1146c188ee19a88fd3b7e282afb50fcd2b093ab5a71b5`.
+- Two local builds matched. Uploaded draft and published downloads matched approved sizes/hashes; ZIP CRCs passed. Notes, tag and title match v2.0.0.
+- All 621 bundled tool/support files and the approved logo retain prior bytes. The retained unmasked commands match the actual published v1.0.2 ZIP. Current README excludes the retired masked image/description.
+- Extracted-package checks passed on generated media. No private films were accessed; full-film framing, joins, synchronization and playback remain unqualified.
+- The previous v1.0.2 asset IDs, sizes and digests were rechecked unchanged. No existing release bytes were replaced.
+
+The preparation and older qualification sections below are historical. Shared
+engine, resume, GUI, codec/join/DV changes and platform expansion remain future
+work. Release approval is specific to v2.0.0, not blanket future publication approval.
+
+# Historical v2.0.0 release preparation — 2026-11-09
 
 The owner approved removing Asteroid's masked output and preparing v2.0.0 for a
 final publication checkpoint. This branch is release preparation, not evidence of

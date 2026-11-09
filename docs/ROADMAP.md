@@ -28,10 +28,9 @@ The owner later supplied a fuller prior-chat handoff. The newer two-standalone-p
 
 Platform direction: Windows, then Apple Silicon macOS, then Linux when justified. Earlier provisional versions were 1.1 foundation, 1.2 resume, 1.3 joins, 2.0 unified Windows GUI, 2.1 Apple Silicon, 2.2 Linux. Later assistant numbering suggestions did not establish an accepted replacement. Working milestones and future release numbers remain separate; the older unified scope must respect the newer separate-products decision. Full reconciliation and attributed requirements are in the common planning register.
 
-## Approved v2.0.0 scope: masked mode retired
+## Shipped v2.0.0 scope: masked mode retired
 
-The owner approved retiring masked output and preparing v2.0.0 for publication
-review (AST-01). The sole unmasked recipe retains its original compressed Scope
+The owner approved and published v2.0.0 with masked output retired (AST-01). The sole unmasked recipe retains its original compressed Scope
 sections in a 1920 x 1080 container. Source/output selection now proceeds to a
 fixed-restoration confirmation summary; legacy mode 2 is rejected. The masked
 1920 x 804 output remains available in historical v1.0.2, not in the new program.
@@ -44,6 +43,7 @@ it does not imply that the engine/GUI generation formerly labelled 2.0 is ready.
 Future release numbers must reflect the actual chosen scope, not old planning labels.
 
 The former 64-method Windows result and two-mode shared-foundation audit are
-historical baselines. New release qualification and exact candidate identity must
-come from the release-ready evidence. Public source integration, tag and release
-publication still await the final owner approval.
+historical baselines. v2.0.0 passed 80 methods with zero skips in each provisioned
+GitHub Windows configuration; complete public assets were verified against their
+approved hashes. [Published evidence](DEVELOPMENT.md) records source/tag identity
+and release links. Future work and future publication require their own bounded scope.
